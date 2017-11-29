@@ -35,29 +35,50 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(
         indexes = {
             @Index(
-                name = "findByUserId",
-                columnList = "userId"
+                name = "findByApplicationResourceId",
+                columnList = "applicationResourceId"
             )
         }
 )
 @Entity
-public @Data class _ca98529941b3449daa514284866eb762 implements BaseEntity {
+public @Data class _f13e7e73496f4cfcab511d4403fda88d implements BaseEntity {
 
 
     @Id
+    @NotNull(message = "Primary key id is mandatory")
     @Length(max = 36)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     public void setId(UUID uuidValue) {
+        this.id = (uuidValue != null) ? uuidValue.toString() : null;
     }
 
     @Length(max = 255)
- 	private String Status;
+ 	private String use_ssn_1;
 
     @Length(max = 255)
- 	private String Priority;
+ 	private String use_ssn;
 
     @Length(max = 255)
- 	private String userId;
+ 	private String business_license_number;
+
+    @Length(max = 255)
+ 	private String business_license_number_please_explain;
+
+    @Length(max = 255)
+ 	private String ocial_security_number_field;
+
+    @Length(max = 255)
+ 	private String workers_compensation_insurance_please_explain;
+
+    @Length(max = 255)
+ 	private String tax_identification_number;
+
+    @NotBlank(message = "applicationResourceId is required")
+    @Length(max = 255)
+ 	private String applicationResourceId;
+
+    @Length(max = 255)
+ 	private String workers_compensation_insurance;
 
 }
 

@@ -64,6 +64,12 @@ public @Data class _89ae45aedf2e4120aab29e9b0b0a78b7 implements BaseEntity {
     @Length(max = 255)
  	private String lease_city_field;
 
+    @Length(max = 255)
+ 	private String rendering_provider;
+
+    @Length(max = 255)
+ 	private String rendering_provider_1;
+
  	private Integer lease_zip_field = 0;
 
     @Length(max = 255)

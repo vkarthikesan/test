@@ -35,29 +35,69 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(
         indexes = {
             @Index(
-                name = "findByUserId",
-                columnList = "userId"
+                name = "findByApplicationResourceId",
+                columnList = "applicationResourceId"
             )
         }
 )
 @Entity
-public @Data class _ca98529941b3449daa514284866eb762 implements BaseEntity {
+public @Data class _98ae45aedf2e4120aab29e9b0b0a78b7_fines_debts_table_1 implements BaseEntity {
 
 
     @Id
+    @NotNull(message = "Primary key id is mandatory")
     @Length(max = 36)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     public void setId(UUID uuidValue) {
+        this.id = (uuidValue != null) ? uuidValue.toString() : null;
     }
 
     @Length(max = 255)
- 	private String Status;
+ 	private String subcontractors_city_field;
 
     @Length(max = 255)
- 	private String Priority;
+ 	private String subcontractors_middle_name_field;
+
+ 	private Integer subcontractors_zip_field = 0;
+
+ 	private Integer subcontractors_percent_interest_value_field = 0;
 
     @Length(max = 255)
- 	private String userId;
+ 	private String subcontractors_county_field;
+
+ 	private Integer subcontractors_percent_interest_title_field = 0;
+
+    @NotBlank(message = "applicationResourceId is required")
+    @Length(max = 255)
+ 	private String applicationResourceId;
+
+    @Length(max = 255)
+ 	private String subcontractors_legal_name_field;
+
+ 	private Integer subcontractors_significant_transaction_amount_field = 0;
+
+    @Length(max = 255)
+ 	private String subcontractors_street_field;
+
+ 	private Integer subcontractors_significant_transactions_description_field = 0;
+
+    @Length(max = 255)
+ 	private String subcontractors_state_field;
+
+    @Length(max = 255)
+ 	private String subcontractors_last_name_field;
+
+    @Length(max = 255)
+ 	private String subcontractors_type_radio;
+
+    @Length(max = 255)
+ 	private String subcontractors_first_name_field;
+
+    @Length(max = 255)
+ 	private String has_subcontractors_significant_transactions_checkbox;
+
+    @Length(max = 255)
+ 	private String has_subcontractors_percent_enterest_field;
 
 }
 

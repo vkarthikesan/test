@@ -13,51 +13,32 @@ Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of thi
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
 
-package com.dharbor.set.fusion.dynamicentityservice.model;
+package com.dharbor.set.fusion.dynamicentityservice.repository;
 
-import java.io.Serializable;
-import com.dharbor.set.fusion.dynamicentityservice.enums.*;
-import java.util.Date;
-import java.util.UUID;
-import java.util.List;
-import java.util.Map;
-import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.Valid;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.dharbor.set.fusion.dynamicentityservice.model._f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name;
+import com.dharbor.set.fusion.dynamicentityservice.enums.*;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@Table(
-        indexes = {
-            @Index(
-                name = "findByUserId",
-                columnList = "userId"
-            )
-        }
-)
-@Entity
-public @Data class _ca98529941b3449daa514284866eb762 implements BaseEntity {
+import java.util.*;
 
-
-    @Id
-    @Length(max = 36)
-    private String id = UUID.randomUUID().toString();
-    public void setId(UUID uuidValue) {
-    }
-
-    @Length(max = 255)
- 	private String Status;
-
-    @Length(max = 255)
- 	private String Priority;
-
-    @Length(max = 255)
- 	private String userId;
+@Api(tags = "_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name:")
+@RepositoryRestResource(path="f13e7e73-496f-4cfc-ab51-1da8736da88d_prof_cert_table_name")
+public interface _f13e7e73496f4cfcab511da8736da88d_prof_cert_table_nameRepository extends JpaRepository<_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name, String>{
+    @RestResource(path="findByApplication_resource_id")
+    @Transactional
+    Page<_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name> findByApplicationResourceId(
+             @Param("application_resource_id") @RequestParam("application_resource_id") String application_resource_id,
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
 
 }
-
