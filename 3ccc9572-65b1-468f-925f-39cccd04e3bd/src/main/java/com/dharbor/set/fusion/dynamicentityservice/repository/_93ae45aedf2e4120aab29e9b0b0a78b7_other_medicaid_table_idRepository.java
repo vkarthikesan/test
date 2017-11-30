@@ -17,7 +17,6 @@ package com.dharbor.set.fusion.dynamicentityservice.repository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -36,7 +35,7 @@ import java.util.*;
 public interface _93ae45aedf2e4120aab29e9b0b0a78b7_other_medicaid_table_idRepository extends JpaRepository<_93ae45aedf2e4120aab29e9b0b0a78b7_other_medicaid_table_id, String>{
     @RestResource(path="findByApplication_resource_id")
     @Transactional
-    Page<_93ae45aedf2e4120aab29e9b0b0a78b7_other_medicaid_table_id> findByApplicationResourceId(
+    List<_93ae45aedf2e4120aab29e9b0b0a78b7_other_medicaid_table_id> findByApplicationResourceId(
              @Param("application_resource_id") @RequestParam("application_resource_id") String application_resource_id,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );

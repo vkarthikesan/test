@@ -56,6 +56,9 @@ public @Data class _3377aa29172543d1ab8faaf647fdb867 implements BaseEntity {
  	private String has_name_alias;
 
     @Length(max = 255)
+ 	private String email_address;
+
+    @Length(max = 255)
  	private String gender;
 
     @Length(max = 255)
@@ -73,19 +76,6 @@ public @Data class _3377aa29172543d1ab8faaf647fdb867 implements BaseEntity {
  	private String suffix;
 
     @Length(max = 255)
- 	private String has_residental_address;
-
-    @NotBlank(message = "applicationResourceId is required")
-    @Length(max = 255)
- 	private String applicationResourceId;
-
-    @Length(max = 255)
- 	private String email_address;
-
-    @Length(max = 255)
- 	private String has_business_information;
-
-    @Length(max = 255)
  	private String first_name;
 
     @Length(max = 255)
@@ -93,6 +83,10 @@ public @Data class _3377aa29172543d1ab8faaf647fdb867 implements BaseEntity {
 
     @Length(max = 255)
  	private String has_email;
+
+    @NotBlank(message = "applicationResourceId is required")
+    @Length(max = 255)
+ 	private String applicationResourceId;
 
 }
 
