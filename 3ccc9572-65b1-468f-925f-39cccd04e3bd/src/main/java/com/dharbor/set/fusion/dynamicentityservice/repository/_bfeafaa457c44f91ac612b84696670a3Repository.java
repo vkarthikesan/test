@@ -17,6 +17,7 @@ package com.dharbor.set.fusion.dynamicentityservice.repository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -35,7 +36,7 @@ import java.util.*;
 public interface _bfeafaa457c44f91ac612b84696670a3Repository extends JpaRepository<_bfeafaa457c44f91ac612b84696670a3, String>{
     @RestResource(path="findByApplication_resource_id")
     @Transactional
-    List<_bfeafaa457c44f91ac612b84696670a3> findByApplicationResourceId(
+    Page<_bfeafaa457c44f91ac612b84696670a3> findByApplicationResourceId(
              @Param("application_resource_id") @RequestParam("application_resource_id") String application_resource_id,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
