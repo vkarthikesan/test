@@ -23,19 +23,19 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.dharbor.set.fusion.dynamicentityservice.model._56a3b6581cc14aacbb123a4fb3d86924;
+import com.dharbor.set.fusion.dynamicentityservice.model._93ae45aedf2e4120aab29e9b0b0a78b7_program_participation_table;
 import com.dharbor.set.fusion.dynamicentityservice.enums.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
-@Api(tags = "_56a3b6581cc14aacbb123a4fb3d86924:")
-@RepositoryRestResource(path="56a3b658-1cc1-4aac-bb12-3a4fb3d86924")
-public interface _56a3b6581cc14aacbb123a4fb3d86924Repository extends JpaRepository<_56a3b6581cc14aacbb123a4fb3d86924, String>{
+@Api(tags = "_93ae45aedf2e4120aab29e9b0b0a78b7_program_participation_table:")
+@RepositoryRestResource(path="93ae45ae-df2e-4120-aab2-9e9b0b0a78b7_program_participation_table")
+public interface _93ae45aedf2e4120aab29e9b0b0a78b7_program_participation_tableRepository extends JpaRepository<_93ae45aedf2e4120aab29e9b0b0a78b7_program_participation_table, String>{
     @RestResource(path="findByApplication_resource_id")
     @Transactional
-    List<_56a3b6581cc14aacbb123a4fb3d86924> findByApplicationResourceId(
+    List<_93ae45aedf2e4120aab29e9b0b0a78b7_program_participation_table> findByApplicationResourceId(
              @Param("application_resource_id") @RequestParam("application_resource_id") String application_resource_id,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );

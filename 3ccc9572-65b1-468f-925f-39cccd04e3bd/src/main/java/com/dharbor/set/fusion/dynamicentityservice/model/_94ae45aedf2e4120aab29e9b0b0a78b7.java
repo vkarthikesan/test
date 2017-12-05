@@ -56,13 +56,13 @@ public @Data class _94ae45aedf2e4120aab29e9b0b0a78b7 implements BaseEntity {
  	private String has_settlement_radio;
 
     @Length(max = 255)
+ 	private String has_been_suspended;
+
+    @Length(max = 255)
  	private String has_conviction_radio;
 
     @Length(max = 255)
  	private String has_liable_radio;
-
-    @Length(max = 255)
- 	private String has_been_suspended_radio_id;
 
     @NotBlank(message = "applicationResourceId is required")
     @Length(max = 255)

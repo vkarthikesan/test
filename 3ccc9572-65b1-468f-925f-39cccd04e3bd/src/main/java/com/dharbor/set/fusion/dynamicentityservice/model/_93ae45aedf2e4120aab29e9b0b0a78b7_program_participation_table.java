@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
         }
 )
 @Entity
-public @Data class _3377aa29172543d1ab8faaf647fdb867 implements BaseEntity {
+public @Data class _93ae45aedf2e4120aab29e9b0b0a78b7_program_participation_table implements BaseEntity {
 
 
     @Id
@@ -53,30 +53,19 @@ public @Data class _3377aa29172543d1ab8faaf647fdb867 implements BaseEntity {
     }
 
     @Length(max = 255)
- 	private String email_address;
+ 	private String other_medicaid_state_field;
 
     @Length(max = 255)
- 	private String gender;
+ 	private String other_npie_field;
 
     @Length(max = 255)
- 	private String prefix;
-
- 	private Date date_of_birth;
+ 	private String use_ssn;
 
     @Length(max = 255)
- 	private String last_name;
+ 	private String other_medicaid_legal_provider_name_field;
 
     @Length(max = 255)
- 	private String middle_name;
-
-    @Length(max = 255)
- 	private String suffix;
-
-    @Length(max = 255)
- 	private String first_name;
-
-    @Length(max = 255)
- 	private String professional_title;
+ 	private String other_medicaid_fictitious_business_name_field;
 
     @NotBlank(message = "applicationResourceId is required")
     @Length(max = 255)

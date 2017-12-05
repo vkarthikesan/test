@@ -56,9 +56,6 @@ public @Data class _93ae45aedf2e4120aab29e9b0b0a78b7_legal_name_table implements
  	private String provider_legal_name_field;
 
     @Length(max = 255)
- 	private String service_address_street;
-
-    @Length(max = 255)
  	private String service_address_city;
 
  	private Integer service_zipcode = 0;
@@ -69,6 +66,9 @@ public @Data class _93ae45aedf2e4120aab29e9b0b0a78b7_legal_name_table implements
     @NotBlank(message = "applicationResourceId is required")
     @Length(max = 255)
  	private String applicationResourceId;
+
+    @Length(max = 255)
+ 	private String provider_street_address;
 
 }
 

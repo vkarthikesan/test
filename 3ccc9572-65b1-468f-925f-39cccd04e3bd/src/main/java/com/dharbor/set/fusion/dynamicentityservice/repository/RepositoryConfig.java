@@ -27,13 +27,12 @@ public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-         	config.exposeIdsFor(_93ae45aedf2e4120aab29e9b0b0a78b7_legal_name_table.class);
          	config.exposeIdsFor(_98ae45aedf2e4120aab29e9b0b0a78b7.class);
          	config.exposeIdsFor(_90ae45aedf2e4120aab29e9b0b0a78b7.class);
          	config.exposeIdsFor(_bfeafbc057b64f91ab612b84696670a3.class);
-         	config.exposeIdsFor(_14f2eccfa37f43dbb86128aa7548f5f9.class);
          	config.exposeIdsFor(_94ae45aedf2e4120aab29e9b0b0a78b7_conviction_table.class);
          	config.exposeIdsFor(_89ae45aedf2e4120aab29e9b0b0a78b7.class);
+         	config.exposeIdsFor(_14f2eccfa37f43dbb86128aa7548f5f9.class);
          	config.exposeIdsFor(_94ae45aedf2e4120aab29e9b0b0a78b7_settlement_table.class);
          	config.exposeIdsFor(_93ae45aedf2e4120aab29e9b0b0a78b7.class);
          	config.exposeIdsFor(_bfeafaa457c44f91ac612b84696670a3.class);
@@ -41,21 +40,22 @@ public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
          	config.exposeIdsFor(_91ae45aedf2e4120aab29e9b0b0a78b7.class);
          	config.exposeIdsFor(_2f173212df2e4120aab29e9b0b0a78b7.class);
          	config.exposeIdsFor(_94ae45aedf2e4120aab29e9b0b0a78b7_liable_table.class);
-         	config.exposeIdsFor(_3377aa29172543d1ab8faaf647fdb867.class);
+         	config.exposeIdsFor(_93ae45aedf2e4120aab29e9b0b0a78b7_program_participation_table.class);
          	config.exposeIdsFor(_94ae45aedf2e4120aab29e9b0b0a78b7_program_suspension_table.class);
          	config.exposeIdsFor(_f13e7e73496f4cfcab511da8736da88d.class);
          	config.exposeIdsFor(_8b59a20914e64a48a7f84eabcfc118cb.class);
+         	config.exposeIdsFor(_3377aa29172543d1ab8faaf647fdb867.class);
          	config.exposeIdsFor(_f12e7e73496f4cfcab511d4403fda88d.class);
+         	config.exposeIdsFor(_94ae45aedf2e4120aab29e9b0b0a78b7.class);
          	config.exposeIdsFor(_2f173291df1e4320aab29e9b0b0a78b7.class);
          	config.exposeIdsFor(_92ae45aedf2e4120aab29e9b0b0a78b7_prof_cert_table_name_1.class);
-         	config.exposeIdsFor(_94ae45aedf2e4120aab29e9b0b0a78b7.class);
-         	config.exposeIdsFor(_93ae45aedf2e4120aab29e9b0b0a78b7_other_medicaid_table_id.class);
          	config.exposeIdsFor(_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name.class);
          	config.exposeIdsFor(_ca98529941b3449daa514284866eb762.class);
-         	config.exposeIdsFor(_bfeafcc157c64f91ac612b84696670a3.class);
          	config.exposeIdsFor(_56a3b6581cc14aacbb123a4fb3d86924.class);
+         	config.exposeIdsFor(_bfeafcc157c64f91ac612b84696670a3.class);
          	config.exposeIdsFor(_56a3b6581cc14aacbb123a4fb3d86924_prof_cert_table_name_2.class);
          	config.exposeIdsFor(_f13e7e73496f4cfcab511d4403fda88d.class);
+         	config.exposeIdsFor(_93ae45aedf2e4120aab29e9b0b0a78b7_legal_name_table.class);
          	config.exposeIdsFor(_c0169ec77b2e4eee863335177093786e.class);
          	config.exposeIdsFor(_95ae45aedf2e4120aab29e9b0b0a78b7.class);
          	config.exposeIdsFor(_2f173291df1e433282349e9b0b0a78b7.class);
