@@ -24,19 +24,19 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.dharbor.set.fusion.dynamicentityservice.model._f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name;
+import com.dharbor.set.fusion.dynamicentityservice.model._7fa1c454bc8140e5948a71e10fefe79a;
 import com.dharbor.set.fusion.dynamicentityservice.enums.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
-@Api(tags = "_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name:")
-@RepositoryRestResource(path="f13e7e73-496f-4cfc-ab51-1da8736da88d_prof_cert_table_name")
-public interface _f13e7e73496f4cfcab511da8736da88d_prof_cert_table_nameRepository extends JpaRepository<_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name, String>{
+@Api(tags = "_7fa1c454bc8140e5948a71e10fefe79a:")
+@RepositoryRestResource(path="7fa1c454-bc81-40e5-948a-71e10fefe79a")
+public interface _7fa1c454bc8140e5948a71e10fefe79aRepository extends JpaRepository<_7fa1c454bc8140e5948a71e10fefe79a, String>{
     @RestResource(path="findByApplication_resource_id")
     @Transactional
-    Page<_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name> findByApplicationResourceId(
+    Page<_7fa1c454bc8140e5948a71e10fefe79a> findByApplicationResourceId(
              @Param("application_resource_id") @RequestParam("application_resource_id") String application_resource_id,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );

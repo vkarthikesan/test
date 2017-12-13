@@ -13,32 +13,54 @@ Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of thi
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
 
-package com.dharbor.set.fusion.dynamicentityservice.repository;
+package com.dharbor.set.fusion.dynamicentityservice.model;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.dharbor.set.fusion.dynamicentityservice.model._f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name;
+import java.io.Serializable;
 import com.dharbor.set.fusion.dynamicentityservice.enums.*;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Date;
+import java.util.UUID;
+import java.util.List;
+import java.util.Map;
+import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
-import java.util.*;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
+import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Api(tags = "_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name:")
-@RepositoryRestResource(path="f13e7e73-496f-4cfc-ab51-1da8736da88d_prof_cert_table_name")
-public interface _f13e7e73496f4cfcab511da8736da88d_prof_cert_table_nameRepository extends JpaRepository<_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name, String>{
-    @RestResource(path="findByApplication_resource_id")
-    @Transactional
-    Page<_f13e7e73496f4cfcab511da8736da88d_prof_cert_table_name> findByApplicationResourceId(
-             @Param("application_resource_id") @RequestParam("application_resource_id") String application_resource_id,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
+@Table(
+        indexes = {
+            @Index(
+                name = "findByApplicationResourceId",
+                columnList = "applicationResourceId"
+            )
+        }
+)
+@Entity
+public @Data class _7fa1c454bc8140e5948a71e10fefe79a implements BaseEntity {
+
+
+    @Id
+    @NotNull(message = "Primary key id is mandatory")
+    @Length(max = 36)
+    private String id;
+    public void setId(UUID uuidValue) {
+        this.id = (uuidValue != null) ? uuidValue.toString() : null;
+    }
+
+    @Length(max = 255)
+ 	private String medical_provider_agreement;
+
+    @NotBlank(message = "applicationResourceId is required")
+    @Length(max = 255)
+ 	private String applicationResourceId;
+
+    @Length(max = 255)
+ 	private String user_verified;
 
 }
+

@@ -53,8 +53,17 @@ public @Data class _ca98529941b3449daa514284866eb762 implements BaseEntity {
     @Length(max = 255)
  	private String Status;
 
+ 	private Boolean submitted = false;
+
+ 	private Date createdDate;
+
+ 	private Date lastModifiedDate;
+
     @Length(max = 255)
  	private String Priority;
+
+    @Length(max = 255)
+ 	private String lastModifiedBy;
 
     @Length(max = 255)
  	private String userId;
