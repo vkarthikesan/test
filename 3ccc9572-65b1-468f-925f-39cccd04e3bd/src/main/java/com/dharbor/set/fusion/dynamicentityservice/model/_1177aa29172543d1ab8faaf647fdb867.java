@@ -13,31 +13,51 @@ Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of thi
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
 
-package com.dharbor.set.fusion.dynamicentityservice.repository;
+package com.dharbor.set.fusion.dynamicentityservice.model;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.dharbor.set.fusion.dynamicentityservice.model._bfeafaa457c44f91ac612b84696670a3;
+import java.io.Serializable;
 import com.dharbor.set.fusion.dynamicentityservice.enums.*;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Date;
+import java.util.UUID;
+import java.util.List;
+import java.util.Map;
+import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
-import java.util.*;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
+import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Api(tags = "_bfeafaa457c44f91ac612b84696670a3:")
-@RepositoryRestResource(path="bfeafaa4-57c4-4f91-ac61-2b84696670a3")
-public interface _bfeafaa457c44f91ac612b84696670a3Repository extends JpaRepository<_bfeafaa457c44f91ac612b84696670a3, String>{
-    @RestResource(path="findByApplication_resource_id")
-    @Transactional
-    List<_bfeafaa457c44f91ac612b84696670a3> findByApplicationResourceId(
-             @Param("application_resource_id") @RequestParam("application_resource_id") String application_resource_id,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
+@Table(
+        indexes = {
+            @Index(
+                name = "findByApplicationResourceId",
+                columnList = "applicationResourceId"
+            )
+        }
+)
+@Entity
+public @Data class _1177aa29172543d1ab8faaf647fdb867 implements BaseEntity {
+
+
+    @Id
+    @NotNull(message = "Primary key id is mandatory")
+    @Length(max = 36)
+    private String id;
+    public void setId(UUID uuidValue) {
+        this.id = (uuidValue != null) ? uuidValue.toString() : null;
+    }
+
+    @Length(max = 255)
+ 	private String start_app;
+
+    @NotBlank(message = "applicationResourceId is required")
+    @Length(max = 255)
+ 	private String applicationResourceId;
 
 }
+
