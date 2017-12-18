@@ -71,9 +71,6 @@ public @Data class Employee implements BaseEntity {
     @Length(max = 10)
  	private String lengthString;
 
-    @NotNull(message = "department is required")
- 	private Department department;
-
     @Length(max = 10000)
  	private String largeString;
 
