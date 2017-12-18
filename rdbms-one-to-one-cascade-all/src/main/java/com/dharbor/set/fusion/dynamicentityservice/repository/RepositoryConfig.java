@@ -13,8 +13,8 @@ public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
          	config.exposeIdsFor(ProfilePicture.class);
-         	config.exposeIdsFor(Employee.class);
          	config.exposeIdsFor(Salary.class);
+         	config.exposeIdsFor(Employee.class);
          	config.exposeIdsFor(Address.class);
     }
 }
