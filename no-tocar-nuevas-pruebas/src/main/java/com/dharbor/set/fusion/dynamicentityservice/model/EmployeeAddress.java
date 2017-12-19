@@ -41,50 +41,17 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-@CompoundIndexes(
-        value = {
-            @CompoundIndex(
-                name = "findByConversationId",
-                def = "{'conversationId':1 ,'deleted':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc",
-                def = "{'createdDate':-1 ,'deleted':1 ,'conversationId':1 }"
-            )
-        }
-)
-@Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class Message implements BaseEntity {
-
-    @Id
-    private String id;
-
- 	private Map<String, String> registry;
+public @Data class EmployeeAddress implements BaseEntity {
 
  	private Boolean deleted = false;
 
- 	private Date createdDate;
-
-    @NotNull(message = "messageType is required")
- 	private MessageType messageType;
-
-    @DBRef
-    @RestResource(exported = false)
- 	private Participant sender;
-
-    @NotBlank(message = "conversationId is required")
     @Length(max = 255)
- 	private String conversationId;
+ 	private String city;
 
-    @NotNull(message = "contentType is required")
- 	private ContentType contentType;
+    @Length(max = 255)
+ 	private String street;
 
-
-    public void onBeforeCreate() {
-        Date sysDate = new Date();
-        createdDate=sysDate;
-    }
 
 
 }

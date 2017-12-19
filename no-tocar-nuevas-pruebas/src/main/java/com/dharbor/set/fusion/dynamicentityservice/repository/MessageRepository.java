@@ -53,33 +53,6 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @ApiOperation(
-        value = "findByParentMessageId"
-    )
-    Page<Message> findByParentMessageIdAndDeleted(
-             @Param("parentMessageId") @RequestParam("parentMessageId") String parentMessageId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
-    @ApiOperation(
-        value = "findByContentType"
-    )
-    Page<Message> findByContentTypeAndDeleted(
-             @Param("contentType") @RequestParam("contentType") ContentType contentType,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
-    @ApiOperation(
-        value = "findByMessageType"
-    )
-    Page<Message> findByMessageTypeAndDeleted(
-             @Param("messageType") @RequestParam("messageType") MessageType messageType,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
     @Override
     @RestResource(exported = false)
     public void delete(Message entity);

@@ -68,6 +68,8 @@ public @Data class Participant implements BaseEntity {
     @Length(max = 255)
  	private String userId;
 
+ 	private List<String> tags;
+
 
 
 }
