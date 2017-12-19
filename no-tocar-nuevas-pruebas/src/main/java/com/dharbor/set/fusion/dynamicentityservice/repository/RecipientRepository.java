@@ -52,9 +52,9 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
     );
 
     @ApiOperation(
-        value = "findByRecipientState"
+        value = "existsByRecipientState"
     )
-    Boolean findByRecipientState(
+    Boolean existsByRecipientState(
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
@@ -63,6 +63,20 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
     )
     Recipient findOneByRecipientState(
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
+    );
+
+    @ApiOperation(
+        value = "findByRecipientStateContaining"
+    )
+    List<Recipient> findByRecipientStateContaining(
+             @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
+    );
+
+    @ApiOperation(
+        value = "findByRecipientStateIn"
+    )
+    List<Recipient> findByRecipientStateIn(
+             @Param("recipientState") @RequestParam("recipientState") Collection<RecipientState> recipientState
     );
 
 }
