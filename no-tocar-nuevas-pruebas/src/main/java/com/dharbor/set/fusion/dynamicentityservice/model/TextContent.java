@@ -44,7 +44,7 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findByMessageId",
+                name = "deleteByMessageId",
                 def = "{'messageId':1 ,'deleted':1 }"
             )
         }

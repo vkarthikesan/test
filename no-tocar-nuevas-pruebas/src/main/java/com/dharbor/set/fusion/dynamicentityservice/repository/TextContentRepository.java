@@ -35,12 +35,11 @@ import java.util.*;
 @RepositoryRestResource
 public interface TextContentRepository extends MongoRepository<TextContent, String>{
     @ApiOperation(
-        value = "findByMessageId"
+        value = "deleteByMessageId"
     )
-    Page<TextContent> findByMessageIdAndDeleted(
+    Long deleteByMessageIdAndDeleted(
              @Param("messageId") @RequestParam("messageId") String messageId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
     @Override

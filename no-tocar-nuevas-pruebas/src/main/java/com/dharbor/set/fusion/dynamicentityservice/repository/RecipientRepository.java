@@ -35,12 +35,11 @@ import java.util.*;
 @RepositoryRestResource
 public interface RecipientRepository extends MongoRepository<Recipient, String>{
     @ApiOperation(
-        value = "findByParticipantIdOrMessageId"
+        value = "countByParticipantIdOrMessageId"
     )
-    Page<Recipient> findByParticipantIdOrMessageId(
+    Long countByParticipantIdOrMessageId(
              @Param("participantId") @RequestParam("participantId") String participantId,
-             @Param("messageId") @RequestParam("messageId") String messageId,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
+             @Param("messageId") @RequestParam("messageId") String messageId
     );
 
     @ApiOperation(
