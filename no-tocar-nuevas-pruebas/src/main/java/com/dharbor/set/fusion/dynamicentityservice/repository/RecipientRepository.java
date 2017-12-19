@@ -51,4 +51,18 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
+    @ApiOperation(
+        value = "findByRecipientState"
+    )
+    Boolean findByRecipientState(
+             @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
+    );
+
+    @ApiOperation(
+        value = "findOneByRecipientState"
+    )
+    Recipient findOneByRecipientState(
+             @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
+    );
+
 }

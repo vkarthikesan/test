@@ -44,12 +44,16 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "countByParticipantIdOrMessageId",
-                def = "{'participantId':1 ,'messageId':1 }"
-            ),
-            @CompoundIndex(
                 name = "countByMessageIdOrParticipantIdOrRecipientState",
                 def = "{'participantId':1 ,'messageId':1 ,'recipientState':1 }"
+            ),
+            @CompoundIndex(
+                name = "findByRecipientState",
+                def = "{'recipientState':1 }"
+            ),
+            @CompoundIndex(
+                name = "countByParticipantIdOrMessageId",
+                def = "{'participantId':1 ,'messageId':1 }"
             )
         }
 )
