@@ -45,7 +45,7 @@ import lombok.Data;
         value = {
             @CompoundIndex(
                 name = "findByMessageId",
-                def = "{'messageId':1 }"
+                def = "{'messageId':1 ,'deleted':1 }"
             )
         }
 )
@@ -55,6 +55,10 @@ public @Data class TextContent implements BaseEntity {
 
     @Id
     private String id;
+
+ 	private Double valorDecimal = 0.0d;
+
+ 	private Boolean deleted = false;
 
     @NotBlank(message = "messageId is required")
     @Length(max = 255)

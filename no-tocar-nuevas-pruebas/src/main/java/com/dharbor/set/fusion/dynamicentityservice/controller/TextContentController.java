@@ -12,38 +12,34 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
+package com.dharbor.set.fusion.dynamicentityservice.controller;
 
-package com.dharbor.set.fusion.dynamicentityservice.repository;
+import com.dharbor.set.fusion.dynamicentityservice.repository.*;
+import com.dharbor.set.fusion.dynamicentityservice.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Page;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.dharbor.set.fusion.dynamicentityservice.model.TextContent;
-import com.dharbor.set.fusion.dynamicentityservice.enums.*;
-import org.springframework.web.bind.annotation.RequestParam;
+@RepositoryRestController
+public class TextContentController {
+    private final TextContentRepository repository;
 
-import java.util.*;
+    @Autowired
+    public TextContentController(TextContentRepository repository){
+        this.repository = repository;
+    }
 
-@Api(tags = "TextContent:")
-@RepositoryRestResource
-public interface TextContentRepository extends MongoRepository<TextContent, String>{
-    @ApiOperation(
-        value = "findByMessageId"
-    )
-    Page<TextContent> findByMessageIdAndDeleted(
-             @Param("messageId") @RequestParam("messageId") String messageId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
-    @Override
-    @RestResource(exported = false)
-    public void delete(TextContent entity);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/textContents/{id}")
+    public ResponseEntity<Object> delete(@PathVariable(required = true) String id){
+        TextContent entity = repository.findOne(id);
+        if(entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        entity.setDeleted(true);
+        repository.save(entity);
+        return ResponseEntity.noContent().build();
+    }
 }
