@@ -56,33 +56,13 @@ public @Data class JoinRequest implements BaseEntity {
     @Id
     private String id;
 
-    @NotNull(message = "joinRequestType is required")
- 	private JoinRequestType joinRequestType;
-
- 	private Date createdDate;
-
     @NotNull(message = "joinState is required")
  	private JoinState joinState;
-
-    @NotBlank(message = "targetParticipant is required")
-    @Length(max = 255)
- 	private String targetParticipant;
 
     @NotBlank(message = "conversationId is required")
     @Length(max = 255)
  	private String conversationId;
 
-    @NotBlank(message = "sourceParticipant is required")
-    @Length(max = 255)
- 	private String sourceParticipant;
-
- 	private Date responseDate;
-
-
-    public void onBeforeCreate() {
-        Date sysDate = new Date();
-        createdDate=sysDate;
-    }
 
 
 }

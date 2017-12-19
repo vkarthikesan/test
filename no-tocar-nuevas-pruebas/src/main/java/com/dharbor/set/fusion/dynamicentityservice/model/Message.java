@@ -58,10 +58,6 @@ import lombok.Data;
             @CompoundIndex(
                 name = "findByMessageType",
                 def = "{'messageType':1 ,'deleted':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByParentMessageId",
-                def = "{'parentMessageId':1 ,'deleted':1 }"
             )
         }
 )
@@ -72,18 +68,12 @@ public @Data class Message implements BaseEntity {
     @Id
     private String id;
 
-    @NotBlank(message = "joinRequestId is required")
-    @Length(max = 255)
- 	private String joinRequestId;
-
  	private Boolean deleted = false;
 
  	private Date createdDate;
 
     @NotNull(message = "messageType is required")
  	private MessageType messageType;
-
- 	private Boolean edited = false;
 
     @DBRef
     @RestResource(exported = false)
@@ -93,13 +83,8 @@ public @Data class Message implements BaseEntity {
     @Length(max = 255)
  	private String conversationId;
 
-    @Length(max = 255)
- 	private String parentMessageId;
-
     @NotNull(message = "contentType is required")
  	private ContentType contentType;
-
- 	private Boolean seen = false;
 
 
     public void onBeforeCreate() {

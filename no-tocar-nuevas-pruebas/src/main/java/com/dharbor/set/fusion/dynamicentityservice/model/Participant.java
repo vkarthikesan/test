@@ -56,8 +56,6 @@ public @Data class Participant implements BaseEntity {
     @Id
     private String id;
 
- 	private Date createdDate;
-
  	private Boolean removed = false;
 
     @NotBlank(message = "conversationId is required")
@@ -70,11 +68,6 @@ public @Data class Participant implements BaseEntity {
     @Length(max = 255)
  	private String userId;
 
-
-    public void onBeforeCreate() {
-        Date sysDate = new Date();
-        createdDate=sysDate;
-    }
 
 
 }
