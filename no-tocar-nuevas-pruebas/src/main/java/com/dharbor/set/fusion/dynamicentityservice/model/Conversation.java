@@ -46,10 +46,6 @@ import lombok.Data;
             @CompoundIndex(
                 name = "findByResourceIdAndLabel",
                 def = "{'resourceId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByResourceIdOrConversationType",
-                def = "{'conversationType':1 ,'resourceId':1 }"
             )
         }
 )

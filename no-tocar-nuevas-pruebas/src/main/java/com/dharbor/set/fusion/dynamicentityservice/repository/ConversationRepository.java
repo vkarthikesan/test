@@ -35,17 +35,16 @@ import java.util.*;
 @RepositoryRestResource
 public interface ConversationRepository extends MongoRepository<Conversation, String>{
     @ApiOperation(
-        value = "findByResourceIdOrConversationType"
+        value = "findByResourceId"
     )
-    Page<Conversation> findByResourceIdOrConversationType(
+    Page<Conversation> findByResourceId(
              @Param("resourceId") @RequestParam("resourceId") String resourceId,
-             @Param("conversationType") @RequestParam("conversationType") ConversationType conversationType,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
     @RestResource(path="ResourceLabel")
     @ApiOperation(
-        value = "consulta para contar", notes = "Consulta de conteo buscando mediante ResourceId y Label\n\rQuery: queryResourceTitle"
+        value = "consulta para contar", notes = "Consulta de conteo buscando mediante ResourceId y Label\n\rQuery: SELECT c FROM Conversation c WHERE c.resourceId=:resource AND c.label=:title"
     )
     List<Conversation> findByResourceIdAndLabel(
              @Param("resourceId") @RequestParam("resourceId") String resourceId,
