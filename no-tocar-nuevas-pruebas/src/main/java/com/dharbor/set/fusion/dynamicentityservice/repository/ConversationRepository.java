@@ -44,7 +44,7 @@ public interface ConversationRepository extends MongoRepository<Conversation, St
 
     @RestResource(path="ResourceLabel")
     @ApiOperation(
-        value = "consulta para contar", notes = "Consulta de conteo buscando mediante ResourceId y Label\n\rQuery: SELECT c FROM Conversation c WHERE c.resourceId=:resource AND c.label=:title"
+        value = "consulta para contar", notes = "Consulta de conteo buscando mediante ResourceId y Label\n\rQuery: {'resourceId':'?0', 'label':'?1'}"
     )
     List<Conversation> findByResourceIdAndLabel(
              @Param("resourceId") @RequestParam("resourceId") String resourceId,
