@@ -86,11 +86,10 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
 
     @RestResource(path="findByConversatioDeletedJoinedOn")
     @ApiOperation(
-        value = "findByConversationIdAndDeletedAndJoinedOnGreaterThanOrderByJoinedOnAsc"
+        value = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
-    Page<Participant> findByConversationIdAndDeletedAndJoinedOnGreaterThanAndDeletedOrderByJoinedOnAsc(
+    Page<Participant> findByConversationIdAndJoinedOnGreaterThanAndDeletedOrderByJoinedOnAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("joinedOn") @RequestParam("joinedOn") Long joinedOn,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
@@ -98,12 +97,11 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
 
     @RestResource(path="findByIdConversatioDeletedJoinedOn")
     @ApiOperation(
-        value = "findByIdNotAndConversationIdAndDeletedAndJoinedOnGreaterThanOrderByJoinedOnAsc"
+        value = "findByIdNotAndConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
-    Page<Participant> findByIdNotAndConversationIdAndDeletedAndJoinedOnGreaterThanAndDeletedOrderByJoinedOnAsc(
+    Page<Participant> findByIdNotAndConversationIdAndJoinedOnGreaterThanAndDeletedOrderByJoinedOnAsc(
              @Param("id") @RequestParam("id") String id,
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("joinedOn") @RequestParam("joinedOn") Long joinedOn,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
@@ -111,12 +109,11 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
 
     @RestResource(path="findByIdConversatioDeleted")
     @ApiOperation(
-        value = "findByIdNotAndConversationIdAndDeletedOrderByJoinedOnAsc"
+        value = "findByIdNotAndConversationIdOrderByJoinedOnAsc"
     )
-    Page<Participant> findByIdNotAndConversationIdAndDeletedAndDeletedOrderByJoinedOnAsc(
+    Page<Participant> findByIdNotAndConversationIdAndDeletedOrderByJoinedOnAsc(
              @Param("id") @RequestParam("id") String id,
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );

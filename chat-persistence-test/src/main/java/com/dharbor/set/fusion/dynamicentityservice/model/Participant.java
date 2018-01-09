@@ -44,7 +44,7 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findByIdNotAndConversationIdAndDeletedOrderByJoinedOnAsc",
+                name = "findByIdNotAndConversationIdOrderByJoinedOnAsc",
                 def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
@@ -64,7 +64,7 @@ import lombok.Data;
                 def = "{'conversationId':1 ,'deleted':1 }"
             ),
             @CompoundIndex(
-                name = "findByConversationIdAndDeletedAndJoinedOnGreaterThanOrderByJoinedOnAsc",
+                name = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
                 def = "{'joinedOn':1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
