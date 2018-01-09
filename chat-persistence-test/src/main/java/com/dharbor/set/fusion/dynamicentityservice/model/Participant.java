@@ -44,16 +44,16 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
+                name = "findByIdNotAndConversationIdAndDeletedOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'conversationId':1 }"
+            ),
+            @CompoundIndex(
                 name = "findByConversationIdAndParticipantType",
                 def = "{'participantType':1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByConversationIdAndUserId",
                 def = "{'deleted':1 ,'userId':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByIdNotAndConversationIdAndRemovedOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'removed':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByIdAndConversationId",
@@ -64,11 +64,7 @@ import lombok.Data;
                 def = "{'conversationId':1 ,'deleted':1 }"
             ),
             @CompoundIndex(
-                name = "findByConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'deleted':1 ,'removed':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdOrderByJoinedOnAsc",
+                name = "findByConversationIdAndDeletedAndJoinedOnGreaterThanOrderByJoinedOnAsc",
                 def = "{'joinedOn':1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
@@ -90,8 +86,6 @@ public @Data class Participant implements BaseEntity {
 
  	private Boolean deleted = false;
 
- 	private Boolean removed = false;
-
     @NotBlank(message = "conversationId is required")
     @Length(max = 255)
  	private String conversationId;
@@ -99,6 +93,8 @@ public @Data class Participant implements BaseEntity {
  	private Date lastUpdateDate;
 
  	private ParticipantType participantType = ParticipantType.DEFAULT;
+
+ 	private Boolean Deleted = false;
 
     @NotBlank(message = "userId is required")
     @Length(max = 255)
