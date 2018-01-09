@@ -94,8 +94,6 @@ public @Data class Participant implements BaseEntity {
 
  	private ParticipantType participantType = ParticipantType.DEFAULT;
 
- 	private Boolean Deleted = false;
-
     @NotBlank(message = "userId is required")
     @Length(max = 255)
  	private String userId;
