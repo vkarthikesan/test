@@ -34,50 +34,63 @@ import java.util.*;
 @Api(tags = "Message:")
 @RepositoryRestResource
 public interface MessageRepository extends MongoRepository<Message, String>{
+    @RestResource(path="ConversationCreatedDateLess")
     @ApiOperation(
         value = "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc"
     )
-    Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
+    Page<Message> findByConversationIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @RestResource(path="ConversationCreatedDateGreater")
     @ApiOperation(
         value = "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc"
     )
-    Page<Message> findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc(
+    Page<Message> findByConversationIdAndCreatedDateGreaterThanAndDeletedOrderByCreatedDateAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @RestResource(path="ConversationDateGreater")
     @ApiOperation(
         value = "findByConversationIdAndCreatedDateGreaterThan"
     )
-    List<Message> findByConversationIdAndCreatedDateGreaterThan(
+    List<Message> findByConversationIdAndCreatedDateGreaterThanAndDeleted(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @RestResource(path="ConversationSeenTypeDateLess")
     @ApiOperation(
         value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc"
     )
-    Page<Message> findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc(
+    Page<Message> findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("seen") @RequestParam("seen") Boolean seen,
              @Param("messageType") @RequestParam("messageType") MessageType messageType,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @RestResource(path="ConversationSeenType")
     @ApiOperation(
         value = "findTop1ByConversationIdAndSeenAndMessageType"
     )
-    Message findTop1ByConversationIdAndSeenAndMessageType(
+    Message findTop1ByConversationIdAndSeenAndMessageTypeAndDeleted(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("seen") @RequestParam("seen") Boolean seen,
-             @Param("messageType") @RequestParam("messageType") MessageType messageType
+             @Param("messageType") @RequestParam("messageType") MessageType messageType,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @Override
+    @RestResource(exported = false)
+    public void delete(Message entity);
 }

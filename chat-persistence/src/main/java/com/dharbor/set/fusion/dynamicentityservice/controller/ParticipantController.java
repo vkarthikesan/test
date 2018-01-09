@@ -12,42 +12,34 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
+package com.dharbor.set.fusion.dynamicentityservice.controller;
 
-package com.dharbor.set.fusion.dynamicentityservice.repository;
+import com.dharbor.set.fusion.dynamicentityservice.repository.*;
+import com.dharbor.set.fusion.dynamicentityservice.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Page;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.dharbor.set.fusion.dynamicentityservice.model.Conversation;
-import com.dharbor.set.fusion.dynamicentityservice.enums.*;
-import org.springframework.web.bind.annotation.RequestParam;
+@RepositoryRestController
+public class ParticipantController {
+    private final ParticipantRepository repository;
 
-import java.util.*;
+    @Autowired
+    public ParticipantController(ParticipantRepository repository){
+        this.repository = repository;
+    }
 
-@Api(tags = "Conversation:")
-@RepositoryRestResource
-public interface ConversationRepository extends MongoRepository<Conversation, String>{
-    @RestResource(path="ResourceLabel")
-    @ApiOperation(
-        value = "ResourceIdLabel"
-    )
-    List<Conversation> findByResourceIdAndLabelContaining(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId,
-             @Param("label") @RequestParam("label") String label
-    );
-
-    @ApiOperation(
-        value = "findByResourceId"
-    )
-    List<Conversation> findByResourceId(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId
-    );
-
+    @RequestMapping(method = RequestMethod.DELETE, value = "/participants/{id}")
+    public ResponseEntity<Object> delete(@PathVariable(required = true) String id){
+        Participant entity = repository.findOne(id);
+        if(entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        entity.setDeleted(true);
+        repository.save(entity);
+        return ResponseEntity.noContent().build();
+    }
 }

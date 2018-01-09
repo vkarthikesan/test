@@ -34,6 +34,7 @@ import java.util.*;
 @Api(tags = "Recipient:")
 @RepositoryRestResource
 public interface RecipientRepository extends MongoRepository<Recipient, String>{
+    @RestResource(path="ParticipantMessage")
     @ApiOperation(
         value = "findByParticipantIdAndMessageId"
     )
@@ -42,6 +43,7 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("messageId") @RequestParam("messageId") String messageId
     );
 
+    @RestResource(path="MessageParticipantState")
     @ApiOperation(
         value = "findByMessageIdAndParticipantIdAndRecipientState"
     )
@@ -51,6 +53,7 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
+    @RestResource(path="ParticipantState")
     @ApiOperation(
         value = "findByParticipantIdAndRecipientState"
     )
@@ -59,6 +62,7 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
+    @RestResource(path="AllParticipant")
     @ApiOperation(
         value = "findByParticipantId"
     )
@@ -66,6 +70,7 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("participantId") @RequestParam("participantId") String participantId
     );
 
+    @RestResource(path="CountMessageParticipantState")
     @ApiOperation(
         value = "countByMessageIdAndParticipantIdAndRecipientState"
     )
@@ -75,6 +80,7 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
+    @RestResource(path="CountParticipantState")
     @ApiOperation(
         value = "countByParticipantIdAndRecipientState"
     )
@@ -83,6 +89,7 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
+    @RestResource(path="CountMessageState")
     @ApiOperation(
         value = "countByMessageIdAndRecipientState"
     )

@@ -45,35 +45,35 @@ import lombok.Data;
         value = {
             @CompoundIndex(
                 name = "findByConversationIdAndParticipantType",
-                def = "{'participantType':1 ,'conversationId':1 }"
+                def = "{'participantType':1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByConversationIdAndUserId",
-                def = "{'userId':1 ,'conversationId':1 }"
+                def = "{'deleted':1 ,'userId':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByIdNotAndConversationIdAndRemovedOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'id':1 ,'removed':1 ,'conversationId':1 }"
+                def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'removed':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByIdAndConversationId",
-                def = "{'conversationId':1 ,'id':1 }"
+                def = "{'deleted':1 ,'id':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByConversationId",
-                def = "{'conversationId':1 }"
+                def = "{'conversationId':1 ,'deleted':1 }"
             ),
             @CompoundIndex(
                 name = "findByConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'removed':1 ,'conversationId':1 }"
+                def = "{'joinedOn':1 ,'deleted':1 ,'removed':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByConversationIdOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'conversationId':1 }"
+                def = "{'joinedOn':1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByConversationIdAndUserIdAndParticipantType",
-                def = "{'participantType':1 ,'userId':1 ,'conversationId':1 }"
+                def = "{'participantType':1 ,'deleted':1 ,'userId':1 ,'conversationId':1 }"
             )
         }
 )
@@ -87,6 +87,8 @@ public @Data class Participant implements BaseEntity {
  	private Long joinedOn = 0L;
 
  	private Date createdDate;
+
+ 	private Boolean deleted = false;
 
  	private Boolean removed = false;
 

@@ -45,19 +45,19 @@ import lombok.Data;
         value = {
             @CompoundIndex(
                 name = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc",
-                def = "{'createdDate':-1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
+                def = "{'createdDate':-1 ,'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
             ),
             @CompoundIndex(
                 name = "findTop1ByConversationIdAndSeenAndMessageType",
-                def = "{'messageType':1 ,'conversationId':1 ,'seen':1 }"
+                def = "{'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
             ),
             @CompoundIndex(
                 name = "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc",
-                def = "{'conversationId':1 ,'createdDate':-1 }"
+                def = "{'createdDate':-1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
                 name = "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc",
-                def = "{'conversationId':1 ,'createdDate':1 }"
+                def = "{'createdDate':1 ,'deleted':1 ,'conversationId':1 }"
             )
         }
 )

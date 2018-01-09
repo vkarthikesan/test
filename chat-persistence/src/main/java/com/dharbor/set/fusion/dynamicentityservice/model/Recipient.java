@@ -80,8 +80,7 @@ public @Data class Recipient implements BaseEntity {
     @Length(max = 255)
  	private String messageId;
 
-    @NotNull(message = "recipientState is required")
- 	private RecipientState recipientState;
+ 	private RecipientState recipientState = RecipientState.UNREAD;
 
 
 

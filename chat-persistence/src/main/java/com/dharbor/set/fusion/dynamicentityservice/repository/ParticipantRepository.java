@@ -34,43 +34,53 @@ import java.util.*;
 @Api(tags = "Participant:")
 @RepositoryRestResource
 public interface ParticipantRepository extends MongoRepository<Participant, String>{
+    @RestResource(path="AllConversationId")
     @ApiOperation(
         value = "findByConversationId"
     )
-    List<Participant> findByConversationId(
-             @Param("conversationId") @RequestParam("conversationId") String conversationId
+    List<Participant> findByConversationIdAndDeleted(
+             @Param("conversationId") @RequestParam("conversationId") String conversationId,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @RestResource(path="ConversationType")
     @ApiOperation(
         value = "findByConversationIdAndParticipantType"
     )
-    List<Participant> findByConversationIdAndParticipantType(
+    List<Participant> findByConversationIdAndParticipantTypeAndDeleted(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("participantType") @RequestParam("participantType") ParticipantType participantType
+             @Param("participantType") @RequestParam("participantType") ParticipantType participantType,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @RestResource(path="ConversationUser")
     @ApiOperation(
         value = "findByConversationIdAndUserId"
     )
-    List<Participant> findByConversationIdAndUserId(
+    List<Participant> findByConversationIdAndUserIdAndDeleted(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("userId") @RequestParam("userId") String userId
+             @Param("userId") @RequestParam("userId") String userId,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @RestResource(path="ConversationUserType")
     @ApiOperation(
         value = "findByConversationIdAndUserIdAndParticipantType"
     )
-    List<Participant> findByConversationIdAndUserIdAndParticipantType(
+    List<Participant> findByConversationIdAndUserIdAndParticipantTypeAndDeleted(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("userId") @RequestParam("userId") String userId,
-             @Param("participantType") @RequestParam("participantType") ParticipantType participantType
+             @Param("participantType") @RequestParam("participantType") ParticipantType participantType,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @RestResource(path="ConversationJoinedOn")
     @ApiOperation(
         value = "findByConversationIdOrderByJoinedOnAsc"
     )
-    Page<Participant> findByConversationIdOrderByJoinedOnAsc(
+    Page<Participant> findByConversationIdAndDeletedOrderByJoinedOnAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
@@ -78,10 +88,11 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
     @ApiOperation(
         value = "findByConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
-    Page<Participant> findByConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc(
+    Page<Participant> findByConversationIdAndRemovedAndJoinedOnGreaterThanAndDeletedOrderByJoinedOnAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("removed") @RequestParam("removed") Boolean removed,
              @Param("joinedOn") @RequestParam("joinedOn") Long joinedOn,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
@@ -89,11 +100,12 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
     @ApiOperation(
         value = "findByIdNotAndConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
-    Page<Participant> findByIdNotAndConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc(
+    Page<Participant> findByIdNotAndConversationIdAndRemovedAndJoinedOnGreaterThanAndDeletedOrderByJoinedOnAsc(
              @Param("id") @RequestParam("id") String id,
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("removed") @RequestParam("removed") Boolean removed,
              @Param("joinedOn") @RequestParam("joinedOn") Long joinedOn,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
@@ -101,19 +113,25 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
     @ApiOperation(
         value = "findByIdNotAndConversationIdAndRemovedOrderByJoinedOnAsc"
     )
-    Page<Participant> findByIdNotAndConversationIdAndRemovedOrderByJoinedOnAsc(
+    Page<Participant> findByIdNotAndConversationIdAndRemovedAndDeletedOrderByJoinedOnAsc(
              @Param("id") @RequestParam("id") String id,
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("removed") @RequestParam("removed") Boolean removed,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @RestResource(path="IdConversation")
     @ApiOperation(
         value = "findByIdAndConversationId"
     )
-    List<Participant> findByIdAndConversationId(
+    List<Participant> findByIdAndConversationIdAndDeleted(
              @Param("id") @RequestParam("id") String id,
-             @Param("conversationId") @RequestParam("conversationId") String conversationId
+             @Param("conversationId") @RequestParam("conversationId") String conversationId,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @Override
+    @RestResource(exported = false)
+    public void delete(Participant entity);
 }
