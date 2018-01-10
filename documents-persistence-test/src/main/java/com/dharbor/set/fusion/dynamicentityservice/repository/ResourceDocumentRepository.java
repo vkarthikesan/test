@@ -77,17 +77,6 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByResourceIdAndDeleted")
-    @ApiOperation(
-        value = "findByResourceIdOrderByCreatedDateDesc"
-    )
-    @Transactional
-    Page<ResourceDocument> findByResourceIdAndDeletedOrderByCreatedDateDesc(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
     @RestResource(path="findByUserIdAndBeforeDateAndDeleted")
     @ApiOperation(
         value = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc"
