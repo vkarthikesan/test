@@ -66,7 +66,7 @@ public @Data class Message implements BaseEntity {
             cascade = {CascadeType.ALL},
             fetch = FetchType.EAGER
     )
-    @RestResource(exported = true)
+    @RestResource(exported = false)
  	private Explanation explanation;
 
     @NotBlank(message = "userId is required")

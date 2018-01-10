@@ -47,7 +47,7 @@ public @Data class TextContent implements BaseEntity {
             fetch = FetchType.EAGER
     )
     @JoinColumn(unique = true)
-    @RestResource(exported = true)
+    @RestResource(exported = false)
  	private Message message;
 
     @NotBlank(message = "value is required")
