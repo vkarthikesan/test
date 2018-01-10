@@ -56,12 +56,11 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
 
     @RestResource(path="findByUserIdAndDeleted")
     @ApiOperation(
-        value = "findByDocumentUserIdAndDocumentDeletedOrderByCreatedDateDesc"
+        value = "findByDocumentUserIdOrderByCreatedDateDesc"
     )
     @Transactional
-    Page<ResourceDocument> findByDocumentUserIdAndDocumentDeletedAndDeletedOrderByCreatedDateDesc(
+    Page<ResourceDocument> findByDocumentUserIdAndDeletedOrderByCreatedDateDesc(
              @Param("userId") @RequestParam("userId") String userId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
@@ -91,12 +90,11 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
 
     @RestResource(path="findByUserIdAndBeforeDateAndDeleted")
     @ApiOperation(
-        value = "findByDocumentUserIdAndDocumentDeletedAndDocumentCreatedDateLessThanOrderByCreatedDateDesc"
+        value = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc"
     )
     @Transactional
-    Page<ResourceDocument> findByDocumentUserIdAndDocumentDeletedAndDocumentCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
+    Page<ResourceDocument> findByDocumentUserIdAndDocumentCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
              @Param("userId") @RequestParam("userId") String userId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable

@@ -35,16 +35,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(
         indexes = {
             @Index(
-                name = "findByUserId",
-                columnList = "userId,deleted"
-            ),
-            @Index(
-                name = "findByDocumentUserIdAndDocumentDeletedAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
-                columnList = "deleted,createdDate,userId"
+                name = "findByDocumentUserIdOrderByCreatedDateDesc",
+                columnList = "userId"
             ),
             @Index(
                 name = "findByUserIdAndDocumentCreatedDateLessThanAndDocumentIsVisibleOrderByDocumentCreatedDateDesc",
                 columnList = "createdDate,isVisible"
+            ),
+            @Index(
+                name = "findByUserIdAndCreatedDateLessThanOrderByCreatedDateDesc",
+                columnList = "createdDate,deleted,userId"
             ),
             @Index(
                 name = "findByDmsId",
@@ -53,6 +53,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
             @Index(
                 name = "findByUserIdAndCreatedDateLessThanAndIsVisibleOrderByCreatedDateDesc",
                 columnList = "createdDate,deleted,isVisible,userId"
+            ),
+            @Index(
+                name = "findByUserId",
+                columnList = "userId,deleted"
+            ),
+            @Index(
+                name = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
+                columnList = "userId,createdDate"
             )
         }
 )
