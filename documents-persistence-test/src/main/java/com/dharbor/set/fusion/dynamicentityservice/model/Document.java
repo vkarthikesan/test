@@ -78,7 +78,7 @@ public @Data class Document implements BaseEntity {
  	private String dmsId;
 
     @OneToOne(
-            optional = false,
+            optional = true,
             cascade = {CascadeType.ALL},
             fetch = FetchType.EAGER
     )
