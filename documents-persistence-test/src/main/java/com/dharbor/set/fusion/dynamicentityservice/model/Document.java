@@ -80,7 +80,8 @@ public @Data class Document implements BaseEntity {
     @OneToOne(
             optional = true,
             cascade = {CascadeType.ALL},
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER,
+            orphanRemoval = true
     )
     @JoinColumn(unique = true)
     @RestResource(exported = false)
