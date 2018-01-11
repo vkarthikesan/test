@@ -75,7 +75,7 @@ public @Data class EmailNotification implements BaseEntity {
  	private String senderUserId;
 
     @DBRef
-    @RestResource(exported = true)
+    @RestResource(exported = false)
  	private NotificationPayload payload;
 
     @Length(max = 255)
