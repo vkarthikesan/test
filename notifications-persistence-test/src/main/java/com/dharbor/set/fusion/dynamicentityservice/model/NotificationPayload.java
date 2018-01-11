@@ -48,7 +48,7 @@ public @Data class NotificationPayload implements BaseEntity {
     @Id
     private String id;
 
- 	private Map<String, String> data;
+ 	private List<String> data;
 
 
 
