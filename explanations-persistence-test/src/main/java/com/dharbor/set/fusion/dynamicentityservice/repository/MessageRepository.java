@@ -69,7 +69,7 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
     @Transactional
     Page<Message> findByExplanationIdAndCreatedDate(
              @Param("id") @RequestParam("id") Long id,
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param(" date") @RequestParam(" date") Date  date,
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("date") @RequestParam("date") Date date,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
