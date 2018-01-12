@@ -35,7 +35,7 @@ import java.util.*;
 @RepositoryRestResource
 public interface TextContentRepository extends MongoRepository<TextContent, String>{
     @ApiOperation(
-        value = "findOneMessageId", notes = "Query: {'messageId': '?0'}"
+        value = "consulta-para-Uno", notes = "Query: {'messageId': '?0'}"
     )
     @Query(
         value = "{'messageId': '?0'}"
@@ -45,17 +45,7 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     );
 
     @ApiOperation(
-        value = "deleteTextContentByMessageId", notes = "Query: {'messageId': ?0}"
-    )
-    @Query(
-        value = "{'messageId': ?0}", delete = true
-    )
-    Integer deleteTextContentByMessageId(
-             @Param("messageId") @RequestParam("messageId") String messageId
-    );
-
-    @ApiOperation(
-        value = "findByValorDecimal", notes = "Query: {'valorDecimal': {'$gt': ?0}}"
+        value = "consulta-para-todos-mayores-que", notes = "Query: {'valorDecimal': {'$gt': ?0}}"
     )
     @Query(
         value = "{'valorDecimal': {'$gt': ?0}}"
@@ -66,12 +56,45 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     );
 
     @ApiOperation(
-        value = "TextContentExist", notes = "Query: {'messageId': '?0'}"
+        value = "consulta-Existente", notes = "Query: {'messageId': '?0'}"
     )
     @Query(
         value = "{'messageId': '?0'}", exists = true
     )
     Boolean TextContentExist(
+             @Param("messageId") @RequestParam("messageId") String messageId
+    );
+
+    @RestResource(path="MessageValorGt")
+    @ApiOperation(
+        value = "findByMessageIdAndValorDecimalGreaterThanOrderByValorDecimalAsc"
+    )
+    Page<TextContent> findByMessageIdAndValorDecimalGreaterThanAndDeletedOrderByValorDecimalAsc(
+             @Param("messageId") @RequestParam("messageId") String messageId,
+             @Param("valorDecimal") @RequestParam("valorDecimal") Double valorDecimal,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
+    @ApiOperation(
+        value = "consulta-sort-manual", notes = "Query: {'messageId': '?0', 'valorDecimal': {'$gt': ?1}}"
+    )
+    @Query(
+        value = "{'messageId': '?0', 'valorDecimal': {'$gt': ?1}}"
+    )
+    Page<TextContent> findByMessageIdAndValorDecimal(
+             @Param("messageId") @RequestParam("messageId") String messageId,
+             @Param("valorDecimal") @RequestParam("valorDecimal") Double valorDecimal,
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
+    @ApiOperation(
+        value = "consulta-sort-manual", notes = "Query: {'messageId':'?0'}"
+    )
+    @Query(
+        value = "{'messageId':'?0'}", count = true
+    )
+    Long countTextContentByMessageId(
              @Param("messageId") @RequestParam("messageId") String messageId
     );
 
@@ -84,12 +107,22 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     );
 
     @ApiOperation(
-        value = "TextContentTwoExist", notes = "Query: {'messageId': {'$regex': '?0'}}"
+        value = "consulta-LikeContaining", notes = "Query: {'messageId': {'$regex': '?0'}}"
     )
     @Query(
         value = "{'messageId': {'$regex': '?0'}}", exists = true
     )
     Boolean TextContentTwoExist(
+             @Param("messageId") @RequestParam("messageId") String messageId
+    );
+
+    @ApiOperation(
+        value = "consulta-EliminarAllDB", notes = "Query: {'messageId': ?0}"
+    )
+    @Query(
+        value = "{'messageId': ?0}", delete = true
+    )
+    Integer deleteTextContentByMessageId(
              @Param("messageId") @RequestParam("messageId") String messageId
     );
 

@@ -44,6 +44,10 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
+                name = "findByMessageIdAndValorDecimalGreaterThanOrderByValorDecimalAsc",
+                def = "{'valorDecimal':1 ,'messageId':1 ,'deleted':1 }"
+            ),
+            @CompoundIndex(
                 name = "countByMessageId",
                 def = "{'messageId':1 ,'deleted':1 }"
             )
