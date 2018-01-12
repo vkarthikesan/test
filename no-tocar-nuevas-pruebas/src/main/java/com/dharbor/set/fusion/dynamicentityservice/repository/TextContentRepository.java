@@ -35,10 +35,10 @@ import java.util.*;
 @RepositoryRestResource
 public interface TextContentRepository extends MongoRepository<TextContent, String>{
     @ApiOperation(
-        value = "findOneMessageId", notes = "Query: {'messageId': {'$first': '?0'}}"
+        value = "findOneMessageId", notes = "Query: {'messageId': '?0'}"
     )
     @Query(
-        value = "{'messageId': {'$first': '?0'}}"
+        value = "{'messageId': '?0'}"
     )
     TextContent findOneMessageId(
              @Param("messageId") @RequestParam("messageId") String messageId
