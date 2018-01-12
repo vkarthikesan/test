@@ -61,7 +61,7 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
     );
 
     @ApiOperation(
-        value = "consulta-sort-manual", notes = "Query: SELECT m FROM Message m JOIN m.explanation e WHERE e.id = :id AND m.createdDate < :date"
+        value = "query-idAndbeforeDate", notes = "Query: SELECT m FROM Message m JOIN m.explanation e WHERE e.id = :id AND m.createdDate < :date"
     )
     @Query(
         value = "SELECT m FROM Message m JOIN m.explanation e WHERE e.id = :id AND m.createdDate < :date"
