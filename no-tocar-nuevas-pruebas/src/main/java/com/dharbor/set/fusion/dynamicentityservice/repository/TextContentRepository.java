@@ -89,10 +89,10 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     );
 
     @ApiOperation(
-        value = "consulta-sort", notes = "Query: {'messageId': '?0', 'valorDecimal': {'$sort': '?1'}}"
+        value = "consulta-sort", notes = "Query: {'messageId': '?0', 'valorDecimal': {'$sort': {'$gt': ?1}}}"
     )
     @Query(
-        value = "{'messageId': '?0', 'valorDecimal': {'$sort': '?1'}}"
+        value = "{'messageId': '?0', 'valorDecimal': {'$sort': {'$gt': ?1}}}"
     )
     Page<TextContent> findByMessageIdAndValorDecimalOrderByValorDecimalAsc(
              @Param("messageId") @RequestParam("messageId") String messageId,
