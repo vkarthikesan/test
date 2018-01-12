@@ -56,10 +56,10 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     );
 
     @ApiOperation(
-        value = "TextContentExist", notes = "Query: {'messageId': ?0}"
+        value = "TextContentExist", notes = "Query: {'messageId': /?0/}"
     )
     @Query(
-        value = "{'messageId': ?0}", exists = true
+        value = "{'messageId': /?0/}", exists = true
     )
     Boolean TextContentExist(
              @Param("messageId") @RequestParam("messageId") String messageId
@@ -71,6 +71,16 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     Long countByMessageIdAndDeleted(
              @Param("messageId") @RequestParam("messageId") String messageId,
              @Param("deleted") @RequestParam("deleted") Boolean deleted
+    );
+
+    @ApiOperation(
+        value = "TextContentTwoExist", notes = "Query: {'messageId': {'$regex': '?0'}}"
+    )
+    @Query(
+        value = "{'messageId': {'$regex': '?0'}}", exists = true
+    )
+    Boolean TextContentTwoExist(
+             @Param("messageId") @RequestParam("messageId") String messageId
     );
 
     @Override
