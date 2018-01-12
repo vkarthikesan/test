@@ -37,8 +37,27 @@ public interface ConversationRepository extends MongoRepository<Conversation, St
     @ApiOperation(
         value = "findByResourceId"
     )
-    Page<Conversation> findByResourceId(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId,
+    List<Conversation> findByResourceId(
+             @Param("resourceId") @RequestParam("resourceId") String resourceId
+    );
+
+    @ApiOperation(
+        value = "findAllConversation", notes = "Query: {}"
+    )
+    @Query(
+        value = "{}"
+    )
+    List<Conversation> findAllConversation(
+    );
+
+    @ApiOperation(
+        value = "findByCreatedDate", notes = "Query: {'createdDate': {'$gt': ?0}}"
+    )
+    @Query(
+        value = "{'createdDate': {'$gt': ?0}}"
+    )
+    Page<Conversation> findByCreatedDate(
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
