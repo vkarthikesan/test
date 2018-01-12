@@ -35,6 +35,16 @@ import java.util.*;
 @RepositoryRestResource
 public interface TextContentRepository extends MongoRepository<TextContent, String>{
     @ApiOperation(
+        value = "findOneMessageId", notes = "Query: {'messageId': {'$first': '?0'}}"
+    )
+    @Query(
+        value = "{'messageId': {'$first': '?0'}}"
+    )
+    TextContent findOneMessageId(
+             @Param("messageId") @RequestParam("messageId") String messageId
+    );
+
+    @ApiOperation(
         value = "deleteTextContentByMessageId", notes = "Query: {'messageId': ?0}"
     )
     @Query(
@@ -56,10 +66,10 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     );
 
     @ApiOperation(
-        value = "TextContentExist", notes = "Query: {'messageId': {'$toUpper': '?0'}}"
+        value = "TextContentExist", notes = "Query: {'messageId': '?0'}"
     )
     @Query(
-        value = "{'messageId': {'$toUpper': '?0'}}", exists = true
+        value = "{'messageId': '?0'}", exists = true
     )
     Boolean TextContentExist(
              @Param("messageId") @RequestParam("messageId") String messageId
