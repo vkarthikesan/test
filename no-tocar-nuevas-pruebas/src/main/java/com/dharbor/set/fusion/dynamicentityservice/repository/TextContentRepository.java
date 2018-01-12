@@ -35,11 +35,24 @@ import java.util.*;
 @RepositoryRestResource
 public interface TextContentRepository extends MongoRepository<TextContent, String>{
     @ApiOperation(
-        value = "deleteByMessageId"
+        value = "deleteTextContentByMessageId", notes = "Query: {'messageId': ?0}"
     )
-    Long deleteByMessageIdAndDeleted(
-             @Param("messageId") @RequestParam("messageId") String messageId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
+    @Query(
+        value = "{'messageId': ?0}", delete = true
+    )
+    Integer deleteTextContentByMessageId(
+             @Param("messageId") @RequestParam("messageId") String messageId
+    );
+
+    @ApiOperation(
+        value = "findByValorDecimal", notes = "Query: {'valorDecimal': {'$gt': ?0}}"
+    )
+    @Query(
+        value = "{'valorDecimal': {'$gt': ?0}}"
+    )
+    Page<TextContent> findByValorDecimal(
+             @Param("valorDecimal") @RequestParam("valorDecimal") Double valorDecimal,
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
     @Override
