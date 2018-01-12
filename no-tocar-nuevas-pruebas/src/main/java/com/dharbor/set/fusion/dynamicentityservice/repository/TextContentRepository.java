@@ -89,6 +89,18 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     );
 
     @ApiOperation(
+        value = "consulta-sort", notes = "Query: {'messageId': '?0', '$sort': {'valorDecimal': '?1'}}"
+    )
+    @Query(
+        value = "{'messageId': '?0', '$sort': {'valorDecimal': '?1'}}"
+    )
+    Page<TextContent> findByMessageIdAndValorDecimalOrderByValorDecimalAsc(
+             @Param("messageId") @RequestParam("messageId") String messageId,
+             @Param("valorDecimal") @RequestParam("valorDecimal") Double valorDecimal,
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
+    @ApiOperation(
         value = "consulta-sort-manual", notes = "Query: {'messageId':'?0'}"
     )
     @Query(
