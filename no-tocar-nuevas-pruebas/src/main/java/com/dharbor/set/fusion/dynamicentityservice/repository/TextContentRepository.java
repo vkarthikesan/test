@@ -56,10 +56,10 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
     );
 
     @ApiOperation(
-        value = "TextContentExist", notes = "Query: {'messageId': '?0'}"
+        value = "TextContentExist", notes = "Query: {'messageId': {'$toUpper': '?0'}}"
     )
     @Query(
-        value = "{'messageId': '?0'}", exists = true
+        value = "{'messageId': {'$toUpper': '?0'}}", exists = true
     )
     Boolean TextContentExist(
              @Param("messageId") @RequestParam("messageId") String messageId
