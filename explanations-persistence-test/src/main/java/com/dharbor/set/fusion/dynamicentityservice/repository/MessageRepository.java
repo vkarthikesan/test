@@ -61,6 +61,19 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
     );
 
     @ApiOperation(
+        value = "consulta-sort-manual", notes = "Query: SELECT m FROM Message m JOIN m.explanation e WHERE e.id = :id AND m.createdDate < :date"
+    )
+    @Query(
+        value = "SELECT m FROM Message m JOIN m.explanation e WHERE e.id = :id AND m.createdDate < :date"
+    )
+    @Transactional
+    Page<Message> findByExplanationIdAndCreatedDate(
+             @Param("id") @RequestParam("id") Long id,
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param(" date") @RequestParam(" date") Date  date,
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
+    @ApiOperation(
         value = "findByExplanationId"
     )
     @Transactional
@@ -68,6 +81,18 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
              @Param("id") @RequestParam("id") Long id,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
+    @ApiOperation(
+        value = "query-deleteAllDB", notes = "Query: DELETE Message m WHERE m.id = :id"
+    )
+    @Query(
+        value = "DELETE Message m WHERE m.id = :id"
+    )
+    @Modifying
+    @Transactional
+    Integer deleteMessageById(
+             @Param("id") @RequestParam("id") Long id
     );
 
     @Override
