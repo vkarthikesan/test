@@ -41,6 +41,14 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
+@CompoundIndexes(
+        value = {
+            @CompoundIndex(
+                name = "countByMessageId",
+                def = "{'messageId':1 ,'deleted':1 }"
+            )
+        }
+)
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public @Data class TextContent implements BaseEntity {

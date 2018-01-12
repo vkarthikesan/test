@@ -55,6 +55,14 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @ApiOperation(
+        value = "countByMessageId"
+    )
+    Long countByMessageIdAndDeleted(
+             @Param("messageId") @RequestParam("messageId") String messageId,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
+    );
+
     @Override
     @RestResource(exported = false)
     public void delete(TextContent entity);
