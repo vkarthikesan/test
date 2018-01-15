@@ -43,7 +43,7 @@ public @Data class TextContent implements BaseEntity {
 
     @OneToOne(
             optional = true,
-            cascade = {CascadeType.MERGE},
+            cascade = {CascadeType.MERGE,CascadeType.REFRESH},
             fetch = FetchType.EAGER
     )
     @JoinColumn(unique = true)
