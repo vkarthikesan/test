@@ -63,7 +63,7 @@ public @Data class Message implements BaseEntity {
 
     @ManyToOne(
             optional = true,
-            cascade = {CascadeType.MERGE,CascadeType.REMOVE},
+            cascade = {CascadeType.REMOVE},
             fetch = FetchType.EAGER
     )
     @RestResource(exported = false)
