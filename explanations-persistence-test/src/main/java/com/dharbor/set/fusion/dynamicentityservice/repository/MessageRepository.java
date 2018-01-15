@@ -48,18 +48,6 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="ExplanationDate")
-    @ApiOperation(
-        value = "findByExplanationIdAndCreatedDateOrderByCreatedDateDesc"
-    )
-    @Transactional
-    Page<Message> findByExplanationIdAndCreatedDateAndDeletedOrderByCreatedDateDesc(
-             @Param("id") @RequestParam("id") Long id,
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
     @ApiOperation(
         value = "query-idAndbeforeDate", notes = "Query: SELECT m FROM Message m JOIN m.explanation e WHERE e.id = :id AND m.createdDate < :date"
     )
@@ -93,6 +81,16 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
     @Transactional
     Integer deleteMessageById(
              @Param("id") @RequestParam("id") Long id
+    );
+
+    @ApiOperation(
+        value = "findAllMessages", notes = "Query: SELECT m FROM Message m"
+    )
+    @Query(
+        value = "SELECT m FROM Message m"
+    )
+    @Transactional
+    List<Message> findAllMessages(
     );
 
     @Override

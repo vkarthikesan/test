@@ -44,4 +44,26 @@ public interface TextContentRepository extends JpaRepository<TextContent, Long>{
              @Param("id") @RequestParam("id") Long id
     );
 
+    @ApiOperation(
+        value = "query-deleteAllDB", notes = "Query: DELETE TextContent t WHERE t.id = :id"
+    )
+    @Query(
+        value = "DELETE TextContent t WHERE t.id = :id"
+    )
+    @Modifying
+    @Transactional
+    Integer deleteTextContentById(
+             @Param("id") @RequestParam("id") Long id
+    );
+
+    @ApiOperation(
+        value = "findAllTextContent", notes = "Query: SELECT t FROM TextContent t"
+    )
+    @Query(
+        value = "SELECT t FROM TextContent t"
+    )
+    @Transactional
+    List<TextContent> findAllTextContent(
+    );
+
 }
