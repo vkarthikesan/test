@@ -44,8 +44,6 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public @Data class EmployeeAddress implements BaseEntity {
 
- 	private Boolean deleted = false;
-
     @Length(max = 255)
  	private String city;
 

@@ -63,6 +63,9 @@ public @Data class JoinRequest implements BaseEntity {
     @Length(max = 255)
  	private String conversationId;
 
+    @Valid
+ 	private EmployeeAddress employee;
+
 
 
 }
