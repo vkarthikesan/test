@@ -34,36 +34,30 @@ import java.util.*;
 @Api(tags = "Message:")
 @RepositoryRestResource
 public interface MessageRepository extends MongoRepository<Message, String>{
-    @RestResource(path="ConversationCreatedDateLess")
+    @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
-        value = "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc"
+        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': '?1'}"
     )
-    Page<Message> findByConversationIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
+    @Query(
+        value = "{'conversationId':'?0', 'createdDate': {'$lt': '?1'}"
+    )
+    Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="ConversationCreatedDateGreater")
+    @RestResource(path="findByConversationIdCreatedDateGt")
     @ApiOperation(
-        value = "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc"
+        value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': '?1'}"
     )
-    Page<Message> findByConversationIdAndCreatedDateGreaterThanAndDeletedOrderByCreatedDateAsc(
+    @Query(
+        value = "{'conversationId':'?0', 'createdDate': {'$gt': '?1'}"
+    )
+    Page<Message> findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
-    @RestResource(path="ConversationDateGreater")
-    @ApiOperation(
-        value = "findByConversationIdAndCreatedDateGreaterThan"
-    )
-    List<Message> findByConversationIdAndCreatedDateGreaterThanAndDeleted(
-             @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
     @RestResource(path="ConversationSeenTypeDateLess")
@@ -81,13 +75,32 @@ public interface MessageRepository extends MongoRepository<Message, String>{
 
     @RestResource(path="ConversationSeenType")
     @ApiOperation(
-        value = "findTop1ByConversationIdAndSeenAndMessageType"
+        value = "findTop1ByConversationIdAndMessageTypeAndSeen"
     )
-    Message findTop1ByConversationIdAndSeenAndMessageTypeAndDeleted(
+    Message findTop1ByConversationIdAndMessageTypeAndSeenAndDeleted(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("seen") @RequestParam("seen") Boolean seen,
              @Param("messageType") @RequestParam("messageType") MessageType messageType,
+             @Param("seen") @RequestParam("seen") Boolean seen,
              @Param("deleted") @RequestParam("deleted") Boolean deleted
+    );
+
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {}"
+    )
+    @Query(
+        value = "{}"
+    )
+    List<Message> findAllMessages(
+    );
+
+    @ApiOperation(
+        value = "query-DeleteAllDB", notes = "Query: {'id': ?0}"
+    )
+    @Query(
+        value = "{'id': ?0}", delete = true
+    )
+    Integer deleteMessageById(
+             @Param("id") @RequestParam("id") String id
     );
 
     @Override

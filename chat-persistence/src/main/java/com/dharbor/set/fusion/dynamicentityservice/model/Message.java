@@ -48,16 +48,8 @@ import lombok.Data;
                 def = "{'createdDate':-1 ,'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
             ),
             @CompoundIndex(
-                name = "findTop1ByConversationIdAndSeenAndMessageType",
+                name = "findTop1ByConversationIdAndMessageTypeAndSeen",
                 def = "{'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc",
-                def = "{'createdDate':-1 ,'deleted':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc",
-                def = "{'createdDate':1 ,'deleted':1 ,'conversationId':1 }"
             )
         }
 )
@@ -67,6 +59,7 @@ public @Data class Message implements BaseEntity {
 
     @Id
     private String id;
+    public void setId(String value) {}
 
     @Length(max = 255)
  	private String joinRequestId;
