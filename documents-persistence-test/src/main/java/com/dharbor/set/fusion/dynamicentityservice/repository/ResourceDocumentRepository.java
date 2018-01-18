@@ -38,13 +38,13 @@ import java.util.*;
 public interface ResourceDocumentRepository extends JpaRepository<ResourceDocument, Long>{
     @RestResource(path="findOneByDocumentId")
     @ApiOperation(
-        value = "query-documentId", notes = "Query: {SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
+        value = "query-documentId", notes = "Query: SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id"
     )
     @Query(
-        value = "{SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
+        value = "SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id"
     )
     @Transactional
-    ResourceDocument findTop1ByDocumentId(
+    ResourceDocument findOneByDocumentId(
              @Param("id") @RequestParam("id") Long id
     );
 
@@ -73,10 +73,10 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
     );
 
     @ApiOperation(
-        value = "query-selectAll", notes = "Query: {SELECT rd FROM ResourceDocument rd}"
+        value = "query-selectAll", notes = "Query: SELECT rd FROM ResourceDocument rd"
     )
     @Query(
-        value = "{SELECT rd FROM ResourceDocument rd}"
+        value = "SELECT rd FROM ResourceDocument rd"
     )
     @Transactional
     List<ResourceDocument> findAllResourceDocument(
