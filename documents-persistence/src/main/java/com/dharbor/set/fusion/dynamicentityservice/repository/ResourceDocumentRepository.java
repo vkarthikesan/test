@@ -44,7 +44,7 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
         value = "{SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
     )
     @Transactional
-    ResourceDocument findTop1ByDocumentId(
+    ResourceDocument findOneByDocumentId(
              @Param("id") @RequestParam("id") Long id
     );
 
