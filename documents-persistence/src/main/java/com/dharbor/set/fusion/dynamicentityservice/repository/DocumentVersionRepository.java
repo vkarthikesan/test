@@ -9,7 +9,7 @@ Inc. reserves the right to make changes to any and all parts of Digital Harbor s
 notify any person or entity of such changes. Digital Harbor, Inc. shall not be liable for any loss of profit or any other commercial
 damages, including but not limited to special, incidental, consequential, or other damages.
 
-Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
+Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
 
@@ -40,12 +40,17 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
         value = "findByVersionMetadataId"
     )
     @Transactional
-    List<DocumentVersion> findByVersionMetadataId(
-             @Param("id") @RequestParam("id") Long id
+    List<DocumentVersion> findByVersionMetadataIdAndDeleted(
+             @Param("id") @RequestParam("id") Long id,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @RestResource(path="findByDocumentDmsVersion")
     @ApiOperation(
-        value = "findOneByDocumentIdAndDmsIdAndVersionId"
+        value = "query-documentDmsVersion", notes = "Query: {SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId}"
+    )
+    @Query(
+        value = "{SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId}"
     )
     @Transactional
     DocumentVersion findOneByDocumentIdAndDmsIdAndVersionId(
@@ -54,19 +59,9 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
              @Param("versionId") @RequestParam("versionId") String versionId
     );
 
-    @ApiOperation(
-        value = "findTop1ByDocumentIdAndDmsIdAndDeleted"
-    )
-    @Transactional
-    DocumentVersion findTop1ByDocumentIdAndDmsIdAndDeleted(
-             @Param("documentId") @RequestParam("documentId") Long documentId,
-             @Param("dmsId") @RequestParam("dmsId") String dmsId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
     @RestResource(path="findByDocxIdAndDateAndDeleted")
     @ApiOperation(
-        value = "findByDocumentIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc"
+        value = "findByDocumentIdAndCreatedDateLessThanOrderByCreatedDateDesc"
     )
     @Transactional
     Page<DocumentVersion> findByDocumentIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
@@ -80,10 +75,36 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
         value = "findByDocumentIdOrDmsIdOrVersionId"
     )
     @Transactional
-    List<DocumentVersion> findByDocumentIdOrDmsIdOrVersionId(
+    List<DocumentVersion> findByDocumentIdOrDmsIdOrVersionIdAndDeleted(
              @Param("documentId") @RequestParam("documentId") Long documentId,
              @Param("dmsId") @RequestParam("dmsId") String dmsId,
-             @Param("versionId") @RequestParam("versionId") String versionId
+             @Param("versionId") @RequestParam("versionId") String versionId,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {SELECT dv FROM DocumentVersion dv}"
+    )
+    @Query(
+        value = "{SELECT dv FROM DocumentVersion dv}"
+    )
+    @Transactional
+    List<DocumentVersion> findAllDocumentVersion(
+    );
+
+    @ApiOperation(
+        value = "query-deleteAllDB", notes = "Query: DELETE DocumentVersion dv WHERE dv.id = :id"
+    )
+    @Query(
+        value = "DELETE DocumentVersion dv WHERE dv.id = :id"
+    )
+    @Modifying
+    @Transactional
+    Integer deleteDocumentVersionById(
+             @Param("id") @RequestParam("id") Long id
+    );
+
+    @Override
+    @RestResource(exported = false)
+    public void delete(DocumentVersion entity);
 }

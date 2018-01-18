@@ -9,7 +9,7 @@ Inc. reserves the right to make changes to any and all parts of Digital Harbor s
 notify any person or entity of such changes. Digital Harbor, Inc. shall not be liable for any loss of profit or any other commercial
 damages, including but not limited to special, incidental, consequential, or other damages.
 
-Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
+Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
 
@@ -35,16 +35,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(
         indexes = {
             @Index(
-                name = "findByResourceIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc",
+                name = "findByResourceIdAndCreatedDateLessThanOrderByCreatedDateDesc",
                 columnList = "resourceId,createdDate,deleted"
             ),
             @Index(
-                name = "findByDocumentUserIdAndDocumentDeletedAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
-                columnList = "createdDate"
-            ),
-            @Index(
-                name = "findByResourceId",
-                columnList = "resourceId"
+                name = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
+                columnList = "deleted,createdDate"
             )
         }
 )
@@ -75,6 +71,7 @@ public @Data class ResourceDocument implements BaseEntity {
 
     @ManyToOne(
             optional = true,
+            cascade = {CascadeType.MERGE,CascadeType.REMOVE},
             fetch = FetchType.EAGER
     )
     @RestResource(exported = false)

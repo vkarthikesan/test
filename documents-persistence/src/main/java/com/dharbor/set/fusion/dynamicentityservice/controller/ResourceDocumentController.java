@@ -12,21 +12,34 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
+package com.dharbor.set.fusion.dynamicentityservice.controller;
 
-package com.dharbor.set.fusion.dynamicentityservice.exception;
+import com.dharbor.set.fusion.dynamicentityservice.repository.*;
+import com.dharbor.set.fusion.dynamicentityservice.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+@RepositoryRestController
+public class ResourceDocumentController {
+    private final ResourceDocumentRepository repository;
 
-/**
- * Created by vkarthikesan on 3/1/2017.
- *
- * Transfer object for exception response
- */
-@Data
-@AllArgsConstructor
-public class FusionExceptionResponse {
+    @Autowired
+    public ResourceDocumentController(ResourceDocumentRepository repository){
+        this.repository = repository;
+    }
 
-    private int status;
-    private String reason;
+    @RequestMapping(method = RequestMethod.DELETE, value = "/resourceDocuments/{id}")
+    public ResponseEntity<Object> delete(@PathVariable(required = true) Long id){
+        ResourceDocument entity = repository.findOne(id);
+        if(entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        entity.setDeleted(true);
+        repository.save(entity);
+        return ResponseEntity.noContent().build();
+    }
 }

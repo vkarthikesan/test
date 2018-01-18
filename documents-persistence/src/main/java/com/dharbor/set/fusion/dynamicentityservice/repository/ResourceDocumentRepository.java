@@ -9,7 +9,7 @@ Inc. reserves the right to make changes to any and all parts of Digital Harbor s
 notify any person or entity of such changes. Digital Harbor, Inc. shall not be liable for any loss of profit or any other commercial
 damages, including but not limited to special, incidental, consequential, or other damages.
 
-Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
+Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
 
@@ -36,36 +36,21 @@ import java.util.*;
 @Api(tags = "ResourceDocument:")
 @RepositoryRestResource
 public interface ResourceDocumentRepository extends JpaRepository<ResourceDocument, Long>{
+    @RestResource(path="findOneByDocumentId")
     @ApiOperation(
-        value = "findByResourceId"
+        value = "query-documentId", notes = "Query: {SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
     )
-    @Transactional
-    List<ResourceDocument> findByResourceId(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId
-    );
-
-    @ApiOperation(
-        value = "findTop1ByDocumentId"
+    @Query(
+        value = "{SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
     )
     @Transactional
     ResourceDocument findTop1ByDocumentId(
              @Param("id") @RequestParam("id") Long id
     );
 
-    @RestResource(path="findByUserIdAndDeleted")
-    @ApiOperation(
-        value = "findByDocumentUserIdAndDocumentDeletedOrderByCreatedDateDesc"
-    )
-    @Transactional
-    Page<ResourceDocument> findByDocumentUserIdAndDocumentDeletedOrderByCreatedDateDesc(
-             @Param("userId") @RequestParam("userId") String userId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
     @RestResource(path="findByResourceIdAndBeforeDateAndDeleted")
     @ApiOperation(
-        value = "findByResourceIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc"
+        value = "findByResourceIdAndCreatedDateLessThanOrderByCreatedDateDesc"
     )
     @Transactional
     Page<ResourceDocument> findByResourceIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
@@ -75,27 +60,41 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByResourceIdAndDeleted")
-    @ApiOperation(
-        value = "findByResourceIdAndDeletedOrderByCreatedDateDesc"
-    )
-    @Transactional
-    Page<ResourceDocument> findByResourceIdAndDeletedOrderByCreatedDateDesc(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
     @RestResource(path="findByUserIdAndBeforeDateAndDeleted")
     @ApiOperation(
-        value = "findByDocumentUserIdAndDocumentDeletedAndDocumentCreatedDateLessThanOrderByCreatedDateDesc"
+        value = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc"
     )
     @Transactional
-    Page<ResourceDocument> findByDocumentUserIdAndDocumentDeletedAndDocumentCreatedDateLessThanOrderByCreatedDateDesc(
+    Page<ResourceDocument> findByDocumentUserIdAndDocumentCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
              @Param("userId") @RequestParam("userId") String userId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {SELECT rd FROM ResourceDocument rd}"
+    )
+    @Query(
+        value = "{SELECT rd FROM ResourceDocument rd}"
+    )
+    @Transactional
+    List<ResourceDocument> findAllResourceDocument(
+    );
+
+    @ApiOperation(
+        value = "query-deleteAllDB", notes = "Query: DELETE ResourceDocument rd WHERE rd.id = :id"
+    )
+    @Query(
+        value = "DELETE ResourceDocument rd WHERE rd.id = :id"
+    )
+    @Modifying
+    @Transactional
+    Integer deleteResourceDocumentById(
+             @Param("id") @RequestParam("id") Long id
+    );
+
+    @Override
+    @RestResource(exported = false)
+    public void delete(ResourceDocument entity);
 }

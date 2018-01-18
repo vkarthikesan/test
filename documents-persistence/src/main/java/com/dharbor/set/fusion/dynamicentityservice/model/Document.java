@@ -9,7 +9,7 @@ Inc. reserves the right to make changes to any and all parts of Digital Harbor s
 notify any person or entity of such changes. Digital Harbor, Inc. shall not be liable for any loss of profit or any other commercial
 damages, including but not limited to special, incidental, consequential, or other damages.
 
-Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
+Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
 
@@ -35,28 +35,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(
         indexes = {
             @Index(
-                name = "findByDocumentUserIdAndDocumentDeletedAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
-                columnList = "deleted,createdDate,userId"
-            ),
-            @Index(
-                name = "findByUserIdAndDocumentCreatedDateLessThanAndDocumentIsVisibleOrderByDocumentCreatedDateDesc",
+                name = "findByUserIdAndDocumentIsVisibleOrderByDocumentCreatedDateDesc",
                 columnList = "createdDate,isVisible"
             ),
             @Index(
-                name = "findByDmsId",
-                columnList = "dmsId"
+                name = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
+                columnList = "userId,createdDate"
             ),
             @Index(
-                name = "findByUserIdAndCreatedDateLessThanAndIsVisibleOrderByCreatedDateDesc",
-                columnList = "createdDate,isVisible,userId"
-            ),
-            @Index(
-                name = "findByUserId",
-                columnList = "userId"
-            ),
-            @Index(
-                name = "findByDocumentUserIdAndDocumentDeletedOrderByCreatedDateDesc",
-                columnList = "userId,deleted"
+                name = "findByUserIdAndCreatedDateLessThanAndDocumentMetadataTitleContainingOrderByCreatedDateDesc",
+                columnList = "createdDate,deleted,userId"
             )
         }
 )
@@ -75,6 +63,7 @@ public @Data class Document implements BaseEntity {
 
     @OneToOne(
             optional = false,
+            cascade = {CascadeType.ALL},
             fetch = FetchType.EAGER
     )
     @JoinColumn(unique = true)

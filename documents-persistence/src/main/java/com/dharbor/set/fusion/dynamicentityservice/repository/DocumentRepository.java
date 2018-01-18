@@ -9,7 +9,7 @@ Inc. reserves the right to make changes to any and all parts of Digital Harbor s
 notify any person or entity of such changes. Digital Harbor, Inc. shall not be liable for any loss of profit or any other commercial
 damages, including but not limited to special, incidental, consequential, or other damages.
 
-Copyright © 2002-2017, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
+Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
 
@@ -36,48 +36,9 @@ import java.util.*;
 @Api(tags = "Document:")
 @RepositoryRestResource
 public interface DocumentRepository extends JpaRepository<Document, Long>{
-    @ApiOperation(
-        value = "findByUserId"
-    )
-    @Transactional
-    List<Document> findByUserId(
-             @Param("userId") @RequestParam("userId") String userId
-    );
-
-    @ApiOperation(
-        value = "findByDmsId"
-    )
-    @Transactional
-    List<Document> findByDmsId(
-             @Param("dmsId") @RequestParam("dmsId") String dmsId
-    );
-
-    @RestResource(path="findByUserIdAndBeforeDateAndDeleted")
-    @ApiOperation(
-        value = "findByUserIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc"
-    )
-    @Transactional
-    List<Document> findByUserIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
-             @Param("userId") @RequestParam("userId") String userId,
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @RestResource(path="findByUserIdAndBeforeDateAndVisible")
-    @ApiOperation(
-        value = "findByUserIdAndCreatedDateLessThanAndIsVisibleOrderByCreatedDateDesc"
-    )
-    @Transactional
-    Page<Document> findByUserIdAndCreatedDateLessThanAndIsVisibleOrderByCreatedDateDesc(
-             @Param("userId") @RequestParam("userId") String userId,
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("isVisible") @RequestParam("isVisible") Boolean isVisible,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
     @RestResource(path="findByUserIdAndTitleAndDeleted")
     @ApiOperation(
-        value = "findByUserIdAndCreatedDateLessThanAndDocumentMetadataTitleContainingAndDeletedOrderByCreatedDateDesc"
+        value = "findByUserIdAndCreatedDateLessThanAndDocumentMetadataTitleContainingOrderByCreatedDateDesc"
     )
     @Transactional
     Page<Document> findByUserIdAndCreatedDateLessThanAndDocumentMetadataTitleContainingAndDeletedOrderByCreatedDateDesc(
@@ -88,4 +49,29 @@ public interface DocumentRepository extends JpaRepository<Document, Long>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {SELECT d FROM Document d}"
+    )
+    @Query(
+        value = "{SELECT d FROM Document d}"
+    )
+    @Transactional
+    List<Document> findAllDocument(
+    );
+
+    @ApiOperation(
+        value = "query-deleteAllDB", notes = "Query: DELETE Document d WHERE d.id = :id"
+    )
+    @Query(
+        value = "DELETE Document d WHERE d.id = :id"
+    )
+    @Modifying
+    @Transactional
+    Integer deleteDocumentById(
+             @Param("id") @RequestParam("id") Long id
+    );
+
+    @Override
+    @RestResource(exported = false)
+    public void delete(Document entity);
 }
