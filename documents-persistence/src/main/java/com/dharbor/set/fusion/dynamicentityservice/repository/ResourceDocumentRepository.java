@@ -38,10 +38,10 @@ import java.util.*;
 public interface ResourceDocumentRepository extends JpaRepository<ResourceDocument, Long>{
     @RestResource(path="findOneByDocumentId")
     @ApiOperation(
-        value = "query-documentId", notes = "Query: {SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
+        value = "query-documentId", notes = "Query: SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id"
     )
     @Query(
-        value = "{SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
+        value = "SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id"
     )
     @Transactional
     ResourceDocument findOneByDocumentId(
