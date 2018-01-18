@@ -60,10 +60,10 @@ public interface DocumentGroupRepository extends JpaRepository<DocumentGroup, Lo
     );
 
     @ApiOperation(
-        value = "query-selectAll", notes = "Query: {SELECT dg FROM DocumentGroup dg}"
+        value = "query-selectAll", notes = "Query: SELECT dg FROM DocumentGroup dg"
     )
     @Query(
-        value = "{SELECT dg FROM DocumentGroup dg}"
+        value = "SELECT dg FROM DocumentGroup dg"
     )
     @Transactional
     List<DocumentGroup> findAllDocumentGroup(

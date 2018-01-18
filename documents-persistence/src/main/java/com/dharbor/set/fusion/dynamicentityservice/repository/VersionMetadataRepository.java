@@ -45,10 +45,10 @@ public interface VersionMetadataRepository extends JpaRepository<VersionMetadata
     );
 
     @ApiOperation(
-        value = "query-selectAll", notes = "Query: {SELECT vm FROM VersionMetadata vm}"
+        value = "query-selectAll", notes = "Query: SELECT vm FROM VersionMetadata vm"
     )
     @Query(
-        value = "{SELECT vm FROM VersionMetadata vm}"
+        value = "SELECT vm FROM VersionMetadata vm"
     )
     @Transactional
     List<VersionMetadata> findAllVersionMetadata(

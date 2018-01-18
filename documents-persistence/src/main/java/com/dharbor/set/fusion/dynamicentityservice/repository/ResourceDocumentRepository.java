@@ -73,10 +73,10 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
     );
 
     @ApiOperation(
-        value = "query-selectAll", notes = "Query: {SELECT rd FROM ResourceDocument rd}"
+        value = "query-selectAll", notes = "Query: SELECT rd FROM ResourceDocument rd"
     )
     @Query(
-        value = "{SELECT rd FROM ResourceDocument rd}"
+        value = "SELECT rd FROM ResourceDocument rd"
     )
     @Transactional
     List<ResourceDocument> findAllResourceDocument(

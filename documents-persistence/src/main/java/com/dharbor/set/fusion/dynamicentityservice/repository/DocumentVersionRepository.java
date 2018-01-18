@@ -47,10 +47,10 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
 
     @RestResource(path="findByDocumentDmsVersion")
     @ApiOperation(
-        value = "query-documentDmsVersion", notes = "Query: {SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId}"
+        value = "query-documentDmsVersion", notes = "Query: SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId"
     )
     @Query(
-        value = "{SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId}"
+        value = "SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId"
     )
     @Transactional
     DocumentVersion findOneByDocumentIdAndDmsIdAndVersionId(
@@ -83,10 +83,10 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
     );
 
     @ApiOperation(
-        value = "query-selectAll", notes = "Query: {SELECT dv FROM DocumentVersion dv}"
+        value = "query-selectAll", notes = "Query: SELECT dv FROM DocumentVersion dv"
     )
     @Query(
-        value = "{SELECT dv FROM DocumentVersion dv}"
+        value = "SELECT dv FROM DocumentVersion dv"
     )
     @Transactional
     List<DocumentVersion> findAllDocumentVersion(

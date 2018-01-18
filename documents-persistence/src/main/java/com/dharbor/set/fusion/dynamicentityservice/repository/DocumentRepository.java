@@ -50,10 +50,10 @@ public interface DocumentRepository extends JpaRepository<Document, Long>{
     );
 
     @ApiOperation(
-        value = "query-selectAll", notes = "Query: {SELECT d FROM Document d}"
+        value = "query-selectAll", notes = "Query: SELECT d FROM Document d"
     )
     @Query(
-        value = "{SELECT d FROM Document d}"
+        value = "SELECT d FROM Document d"
     )
     @Transactional
     List<Document> findAllDocument(

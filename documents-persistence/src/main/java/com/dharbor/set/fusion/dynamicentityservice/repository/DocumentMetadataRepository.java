@@ -48,10 +48,10 @@ public interface DocumentMetadataRepository extends JpaRepository<DocumentMetada
     );
 
     @ApiOperation(
-        value = "query-selectAll", notes = "Query: {SELECT dm FROM DocumentMetadata dm}"
+        value = "query-selectAll", notes = "Query: SELECT dm FROM DocumentMetadata dm"
     )
     @Query(
-        value = "{SELECT dm FROM DocumentMetadata dm}"
+        value = "SELECT dm FROM DocumentMetadata dm"
     )
     @Transactional
     List<DocumentMetadata> findAllDocumentMetadata(
