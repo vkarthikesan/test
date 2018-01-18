@@ -36,33 +36,16 @@ import java.util.*;
 @Api(tags = "ResourceDocument:")
 @RepositoryRestResource
 public interface ResourceDocumentRepository extends JpaRepository<ResourceDocument, Long>{
+    @RestResource(path="findOneByDocumentId")
     @ApiOperation(
-        value = "findByResourceId"
+        value = "query-documentId", notes = "Query: {SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
+    )
+    @Query(
+        value = "{SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id}"
     )
     @Transactional
-    List<ResourceDocument> findByResourceIdAndDeleted(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @ApiOperation(
-        value = "findTop1ByDocumentId"
-    )
-    @Transactional
-    ResourceDocument findTop1ByDocumentIdAndDeleted(
-             @Param("id") @RequestParam("id") Long id,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @RestResource(path="findByUserIdAndDeleted")
-    @ApiOperation(
-        value = "findByDocumentUserIdOrderByCreatedDateDesc"
-    )
-    @Transactional
-    Page<ResourceDocument> findByDocumentUserIdAndDeletedOrderByCreatedDateDesc(
-             @Param("userId") @RequestParam("userId") String userId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
+    ResourceDocument findTop1ByDocumentId(
+             @Param("id") @RequestParam("id") Long id
     );
 
     @RestResource(path="findByResourceIdAndBeforeDateAndDeleted")
@@ -87,6 +70,28 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {SELECT rd FROM ResourceDocument rd}"
+    )
+    @Query(
+        value = "{SELECT rd FROM ResourceDocument rd}"
+    )
+    @Transactional
+    List<ResourceDocument> findAllResourceDocument(
+    );
+
+    @ApiOperation(
+        value = "query-deleteAllDB", notes = "Query: DELETE ResourceDocument rd WHERE rd.id = :id"
+    )
+    @Query(
+        value = "DELETE ResourceDocument rd WHERE rd.id = :id"
+    )
+    @Modifying
+    @Transactional
+    Integer deleteResourceDocumentById(
+             @Param("id") @RequestParam("id") Long id
     );
 
     @Override

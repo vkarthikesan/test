@@ -53,7 +53,8 @@ public @Data class DocumentGroup implements BaseEntity {
  	private String resourceId;
 
     @OneToOne(
-            optional = true,
+            optional = false,
+            cascade = {CascadeType.MERGE,CascadeType.REFRESH},
             fetch = FetchType.EAGER
     )
     @JoinColumn(unique = true)

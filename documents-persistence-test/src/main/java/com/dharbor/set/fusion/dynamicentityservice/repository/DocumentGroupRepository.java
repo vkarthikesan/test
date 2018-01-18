@@ -59,4 +59,14 @@ public interface DocumentGroupRepository extends JpaRepository<DocumentGroup, Lo
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {SELECT dg FROM DocumentGroup dg}"
+    )
+    @Query(
+        value = "{SELECT dg FROM DocumentGroup dg}"
+    )
+    @Transactional
+    List<DocumentGroup> findAllDocumentGroup(
+    );
+
 }

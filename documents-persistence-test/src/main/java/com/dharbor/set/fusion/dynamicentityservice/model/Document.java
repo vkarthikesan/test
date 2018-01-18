@@ -35,32 +35,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(
         indexes = {
             @Index(
-                name = "findByDocumentUserIdOrderByCreatedDateDesc",
-                columnList = "userId"
-            ),
-            @Index(
-                name = "findByUserIdAndDocumentCreatedDateLessThanAndDocumentIsVisibleOrderByDocumentCreatedDateDesc",
+                name = "findByUserIdAndDocumentIsVisibleOrderByDocumentCreatedDateDesc",
                 columnList = "createdDate,isVisible"
-            ),
-            @Index(
-                name = "findByUserIdAndCreatedDateLessThanOrderByCreatedDateDesc",
-                columnList = "createdDate,deleted,userId"
-            ),
-            @Index(
-                name = "findByDmsId",
-                columnList = "dmsId,deleted"
-            ),
-            @Index(
-                name = "findByUserIdAndCreatedDateLessThanAndIsVisibleOrderByCreatedDateDesc",
-                columnList = "createdDate,deleted,isVisible,userId"
-            ),
-            @Index(
-                name = "findByUserId",
-                columnList = "userId,deleted"
             ),
             @Index(
                 name = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
                 columnList = "userId,createdDate"
+            ),
+            @Index(
+                name = "findByUserIdAndCreatedDateLessThanAndDocumentMetadataTitleContainingOrderByCreatedDateDesc",
+                columnList = "createdDate,deleted,userId"
             )
         }
 )
@@ -78,10 +62,9 @@ public @Data class Document implements BaseEntity {
  	private String dmsId;
 
     @OneToOne(
-            optional = true,
+            optional = false,
             cascade = {CascadeType.ALL},
-            fetch = FetchType.EAGER,
-            orphanRemoval = true
+            fetch = FetchType.EAGER
     )
     @JoinColumn(unique = true)
     @RestResource(exported = false)

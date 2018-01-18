@@ -35,16 +35,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(
         indexes = {
             @Index(
-                name = "findByDocumentIdAndDmsIdAndVersionId",
-                columnList = "dmsId,versionId,documentId,deleted"
-            ),
-            @Index(
-                name = "findTop1ByDocumentIdAndDmsId",
-                columnList = "dmsId,documentId,deleted"
-            ),
-            @Index(
                 name = "findByDocumentIdAndCreatedDateLessThanOrderByCreatedDateDesc",
                 columnList = "documentId,createdDate,deleted"
+            ),
+            @Index(
+                name = "findByDocumentIdOrDmsIdOrVersionId",
+                columnList = "dmsId,versionId,documentId,deleted"
             ),
             @Index(
                 name = "findByVersionMetadataId",

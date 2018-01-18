@@ -44,4 +44,14 @@ public interface VersionMetadataRepository extends JpaRepository<VersionMetadata
              @Param("fileName") @RequestParam("fileName") String fileName
     );
 
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {SELECT vm FROM VersionMetadata vm}"
+    )
+    @Query(
+        value = "{SELECT vm FROM VersionMetadata vm}"
+    )
+    @Transactional
+    List<VersionMetadata> findAllVersionMetadata(
+    );
+
 }

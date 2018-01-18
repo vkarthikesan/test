@@ -45,25 +45,18 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
              @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
+    @RestResource(path="findByDocumentDmsVersion")
     @ApiOperation(
-        value = "findByDocumentIdAndDmsIdAndVersionId"
+        value = "query-documentDmsVersion", notes = "Query: {SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId}"
+    )
+    @Query(
+        value = "{SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId}"
     )
     @Transactional
-    DocumentVersion findByDocumentIdAndDmsIdAndVersionIdAndDeleted(
+    DocumentVersion findOneByDocumentIdAndDmsIdAndVersionId(
              @Param("documentId") @RequestParam("documentId") Long documentId,
              @Param("dmsId") @RequestParam("dmsId") String dmsId,
-             @Param("versionId") @RequestParam("versionId") String versionId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @ApiOperation(
-        value = "findTop1ByDocumentIdAndDmsId"
-    )
-    @Transactional
-    DocumentVersion findTop1ByDocumentIdAndDmsIdAndDeleted(
-             @Param("documentId") @RequestParam("documentId") Long documentId,
-             @Param("dmsId") @RequestParam("dmsId") String dmsId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
+             @Param("versionId") @RequestParam("versionId") String versionId
     );
 
     @RestResource(path="findByDocxIdAndDateAndDeleted")
@@ -87,6 +80,28 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
              @Param("dmsId") @RequestParam("dmsId") String dmsId,
              @Param("versionId") @RequestParam("versionId") String versionId,
              @Param("deleted") @RequestParam("deleted") Boolean deleted
+    );
+
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {SELECT dv FROM DocumentVersion dv}"
+    )
+    @Query(
+        value = "{SELECT dv FROM DocumentVersion dv}"
+    )
+    @Transactional
+    List<DocumentVersion> findAllDocumentVersion(
+    );
+
+    @ApiOperation(
+        value = "query-deleteAllDB", notes = "Query: DELETE DocumentVersion dv WHERE dv.id = :id"
+    )
+    @Query(
+        value = "DELETE DocumentVersion dv WHERE dv.id = :id"
+    )
+    @Modifying
+    @Transactional
+    Integer deleteDocumentVersionById(
+             @Param("id") @RequestParam("id") Long id
     );
 
     @Override

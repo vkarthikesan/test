@@ -39,16 +39,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
                 columnList = "resourceId,createdDate,deleted"
             ),
             @Index(
-                name = "findByDocumentUserIdOrderByCreatedDateDesc",
+                name = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
                 columnList = "deleted,createdDate"
-            ),
-            @Index(
-                name = "findByResourceId",
-                columnList = "resourceId,deleted"
-            ),
-            @Index(
-                name = "findTop1ByDocumentId",
-                columnList = "deleted"
             )
         }
 )
@@ -79,6 +71,7 @@ public @Data class ResourceDocument implements BaseEntity {
 
     @ManyToOne(
             optional = true,
+            cascade = {CascadeType.MERGE,CascadeType.REMOVE},
             fetch = FetchType.EAGER
     )
     @RestResource(exported = false)

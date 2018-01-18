@@ -36,48 +36,6 @@ import java.util.*;
 @Api(tags = "Document:")
 @RepositoryRestResource
 public interface DocumentRepository extends JpaRepository<Document, Long>{
-    @ApiOperation(
-        value = "findByUserId"
-    )
-    @Transactional
-    List<Document> findByUserIdAndDeleted(
-             @Param("userId") @RequestParam("userId") String userId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @ApiOperation(
-        value = "findByDmsId"
-    )
-    @Transactional
-    List<Document> findByDmsIdAndDeleted(
-             @Param("dmsId") @RequestParam("dmsId") String dmsId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @RestResource(path="findByUserIdAndBeforeDateAndDeleted")
-    @ApiOperation(
-        value = "findByUserIdAndCreatedDateLessThanOrderByCreatedDateDesc"
-    )
-    @Transactional
-    List<Document> findByUserIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
-             @Param("userId") @RequestParam("userId") String userId,
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @RestResource(path="findByUserIdAndBeforeDateAndVisible")
-    @ApiOperation(
-        value = "findByUserIdAndCreatedDateLessThanAndIsVisibleOrderByCreatedDateDesc"
-    )
-    @Transactional
-    Page<Document> findByUserIdAndCreatedDateLessThanAndIsVisibleAndDeletedOrderByCreatedDateDesc(
-             @Param("userId") @RequestParam("userId") String userId,
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("isVisible") @RequestParam("isVisible") Boolean isVisible,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
     @RestResource(path="findByUserIdAndTitleAndDeleted")
     @ApiOperation(
         value = "findByUserIdAndCreatedDateLessThanAndDocumentMetadataTitleContainingOrderByCreatedDateDesc"
@@ -89,6 +47,28 @@ public interface DocumentRepository extends JpaRepository<Document, Long>{
              @Param("title") @RequestParam("title") String title,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {SELECT d FROM Document d}"
+    )
+    @Query(
+        value = "{SELECT d FROM Document d}"
+    )
+    @Transactional
+    List<Document> findAllDocument(
+    );
+
+    @ApiOperation(
+        value = "query-deleteAllDB", notes = "Query: DELETE Document d WHERE d.id = :id"
+    )
+    @Query(
+        value = "DELETE Document d WHERE d.id = :id"
+    )
+    @Modifying
+    @Transactional
+    Integer deleteDocumentById(
+             @Param("id") @RequestParam("id") Long id
     );
 
     @Override
