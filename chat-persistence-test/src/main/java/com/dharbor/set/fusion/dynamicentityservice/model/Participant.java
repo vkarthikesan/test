@@ -44,32 +44,12 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findByIdNotAndConversationIdOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndParticipantType",
-                def = "{'participantType':1 ,'deleted':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndUserId",
-                def = "{'deleted':1 ,'userId':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByIdAndConversationId",
-                def = "{'deleted':1 ,'id':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationId",
-                def = "{'conversationId':1 ,'deleted':1 }"
-            ),
-            @CompoundIndex(
                 name = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
                 def = "{'joinedOn':1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
-                name = "findByConversationIdAndUserIdAndParticipantType",
-                def = "{'participantType':1 ,'deleted':1 ,'userId':1 ,'conversationId':1 }"
+                name = "findByIdNotAndConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'conversationId':1 }"
             )
         }
 )
@@ -79,6 +59,7 @@ public @Data class Participant implements BaseEntity {
 
     @Id
     private String id;
+    public void setId(String value) {}
 
  	private Long joinedOn = 0L;
 

@@ -34,57 +34,30 @@ import java.util.*;
 @Api(tags = "Participant:")
 @RepositoryRestResource
 public interface ParticipantRepository extends MongoRepository<Participant, String>{
-    @RestResource(path="AllConversationId")
+    @RestResource(path="findByConversationJoinedOn")
     @ApiOperation(
-        value = "findByConversationId"
+        value = "query-conversation", notes = "Query: {'conversationId': '?0'}"
     )
-    List<Participant> findByConversationIdAndDeleted(
+    @Query(
+        value = "{'conversationId': '?0'}"
+    )
+    Page<Participant> findByConversationIdOrderByJoinedOnAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="ConversationType")
+    @RestResource(path="findByIdConversationDeleted")
     @ApiOperation(
-        value = "findByConversationIdAndParticipantType"
+        value = "findByIdNotAndConversationIdOrderByJoinedOnAsc"
     )
-    List<Participant> findByConversationIdAndParticipantTypeAndDeleted(
-             @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("participantType") @RequestParam("participantType") ParticipantType participantType,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @RestResource(path="ConversationUser")
-    @ApiOperation(
-        value = "findByConversationIdAndUserId"
-    )
-    List<Participant> findByConversationIdAndUserIdAndDeleted(
-             @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("userId") @RequestParam("userId") String userId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @RestResource(path="ConversationUserType")
-    @ApiOperation(
-        value = "findByConversationIdAndUserIdAndParticipantType"
-    )
-    List<Participant> findByConversationIdAndUserIdAndParticipantTypeAndDeleted(
-             @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("userId") @RequestParam("userId") String userId,
-             @Param("participantType") @RequestParam("participantType") ParticipantType participantType,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
-    );
-
-    @RestResource(path="ConversationJoinedOn")
-    @ApiOperation(
-        value = "findByConversationIdOrderByJoinedOnAsc"
-    )
-    Page<Participant> findByConversationIdAndDeletedOrderByJoinedOnAsc(
+    Page<Participant> findByIdNotAndConversationIdAndDeletedOrderByJoinedOnAsc(
+             @Param("id") @RequestParam("id") String id,
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversatioDeletedJoinedOn")
+    @RestResource(path="findByConversationDeletedJoinedOn")
     @ApiOperation(
         value = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
@@ -95,7 +68,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByIdConversatioDeletedJoinedOn")
+    @RestResource(path="findByIdConversationDeletedJoinedOn")
     @ApiOperation(
         value = "findByIdNotAndConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
@@ -107,25 +80,47 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByIdConversatioDeleted")
+    @RestResource(path="findByConversationType")
     @ApiOperation(
-        value = "findByIdNotAndConversationIdOrderByJoinedOnAsc"
+        value = "query-conversationType", notes = "Query: {'conversationId': '?0', 'participantType': '?1'}"
     )
-    Page<Participant> findByIdNotAndConversationIdAndDeletedOrderByJoinedOnAsc(
-             @Param("id") @RequestParam("id") String id,
+    @Query(
+        value = "{'conversationId': '?0', 'participantType': '?1'}"
+    )
+    List<Participant> findByConversationIdAndParticipantType(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
+             @Param("participantType") @RequestParam("participantType") ParticipantType participantType
     );
 
-    @RestResource(path="IdConversation")
+    @RestResource(path="findByConversationUser")
     @ApiOperation(
-        value = "findByIdAndConversationId"
+        value = "query-conversationUser", notes = "Query: {'conversationId': '?0', 'userId': '?1'}"
     )
-    List<Participant> findByIdAndConversationIdAndDeleted(
-             @Param("id") @RequestParam("id") String id,
+    @Query(
+        value = "{'conversationId': '?0', 'userId': '?1'}"
+    )
+    List<Participant> findByConversationIdAndUserId(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
+             @Param("userId") @RequestParam("userId") String userId
+    );
+
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {}"
+    )
+    @Query(
+        value = "{}"
+    )
+    List<Participant> findAllParticipant(
+    );
+
+    @ApiOperation(
+        value = "query-DeleteAllDB", notes = "Query: {'id': ?0}"
+    )
+    @Query(
+        value = "{'id': ?0}", delete = true
+    )
+    Integer deleteParticipantById(
+             @Param("id") @RequestParam("id") String id
     );
 
     @Override
