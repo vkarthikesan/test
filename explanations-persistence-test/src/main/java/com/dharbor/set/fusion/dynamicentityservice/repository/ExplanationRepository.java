@@ -44,4 +44,15 @@ public interface ExplanationRepository extends JpaRepository<Explanation, Long>{
              @Param("resourceId") @RequestParam("resourceId") String resourceId
     );
 
+    @ApiOperation(
+        value = "query-selectAllExplanation", notes = "Query: SELECT e FROM Explanation e"
+    )
+    @Query(
+        value = "SELECT e FROM Explanation e"
+    )
+    @Transactional
+    Page<Explanation> findAllExplanation(
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
 }

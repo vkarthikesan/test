@@ -36,7 +36,7 @@ import java.util.*;
 @Api(tags = "Message:")
 @RepositoryRestResource
 public interface MessageRepository extends JpaRepository<Message, Long>{
-    @RestResource(path="ExplanationDateDeleted")
+    @RestResource(path="findByExplanationDateDeleted")
     @ApiOperation(
         value = "findByExplanationIdAndCreatedDateLessThanOrderByCreatedDateDesc"
     )
@@ -48,6 +48,7 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @RestResource(path="findByExplanationIdDate")
     @ApiOperation(
         value = "query-idAndbeforeDate", notes = "Query: SELECT m FROM Message m JOIN m.explanation e WHERE e.id = :id AND m.createdDate < :date"
     )
@@ -55,7 +56,7 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
         value = "SELECT m FROM Message m JOIN m.explanation e WHERE e.id = :id AND m.createdDate < :date"
     )
     @Transactional
-    Page<Message> findByExplanationIdAndCreatedDate(
+    Page<Message> findByExplanationIdAndCreatedDateOrderByCreatedDateDesc(
              @Param("id") @RequestParam("id") Long id,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("date") @RequestParam("date") Date date,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
@@ -84,13 +85,14 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
     );
 
     @ApiOperation(
-        value = "findAllMessages", notes = "Query: SELECT m FROM Message m"
+        value = "query-selectAllMessage", notes = "Query: SELECT m FROM Message m"
     )
     @Query(
         value = "SELECT m FROM Message m"
     )
     @Transactional
-    List<Message> findAllMessages(
+    Page<Message> findAllMessage(
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
     @Override

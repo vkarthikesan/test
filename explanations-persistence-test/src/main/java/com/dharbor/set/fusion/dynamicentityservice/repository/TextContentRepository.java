@@ -57,13 +57,14 @@ public interface TextContentRepository extends JpaRepository<TextContent, Long>{
     );
 
     @ApiOperation(
-        value = "findAllTextContent", notes = "Query: SELECT t FROM TextContent t"
+        value = "query-selectAllTextContent", notes = "Query: SELECT t FROM TextContent t"
     )
     @Query(
         value = "SELECT t FROM TextContent t"
     )
     @Transactional
-    List<TextContent> findAllTextContent(
+    Page<TextContent> findAllTextContent(
+             @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
 }
