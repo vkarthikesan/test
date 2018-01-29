@@ -61,7 +61,6 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
-    @RestResource(path="AllParticipant")
     @ApiOperation(
         value = "findByParticipantId"
     )

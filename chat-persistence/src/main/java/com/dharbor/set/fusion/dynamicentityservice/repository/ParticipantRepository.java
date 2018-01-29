@@ -46,7 +46,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByIdConversatioDeleted")
+    @RestResource(path="findByIdConversationDeleted")
     @ApiOperation(
         value = "findByIdNotAndConversationIdOrderByJoinedOnAsc"
     )
@@ -57,7 +57,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversatioDeletedJoinedOn")
+    @RestResource(path="findByConversationDeletedJoinedOn")
     @ApiOperation(
         value = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
@@ -68,7 +68,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByIdConversatioDeletedJoinedOn")
+    @RestResource(path="findByIdConversationDeletedJoinedOn")
     @ApiOperation(
         value = "findByIdNotAndConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )

@@ -41,18 +41,6 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-@CompoundIndexes(
-        value = {
-            @CompoundIndex(
-                name = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc",
-                def = "{'createdDate':-1 ,'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
-            ),
-            @CompoundIndex(
-                name = "findTop1ByConversationIdAndMessageTypeAndSeen",
-                def = "{'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
-            )
-        }
-)
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public @Data class Message implements BaseEntity {
