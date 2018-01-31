@@ -39,6 +39,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
                 columnList = "resourceId,createdDate,deleted"
             ),
             @Index(
+                name = "findByResourceId",
+                columnList = "resourceId,deleted"
+            ),
+            @Index(
                 name = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
                 columnList = "deleted,createdDate"
             )

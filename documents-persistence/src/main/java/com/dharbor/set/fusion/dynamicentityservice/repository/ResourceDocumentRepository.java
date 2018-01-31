@@ -36,7 +36,7 @@ import java.util.*;
 @Api(tags = "ResourceDocument:")
 @RepositoryRestResource
 public interface ResourceDocumentRepository extends JpaRepository<ResourceDocument, Long>{
-    @RestResource(path="findOneByDocumentId")
+    @RestResource(path="findTop1ByDocumentId")
     @ApiOperation(
         value = "query-documentId", notes = "Query: SELECT rd FROM ResourceDocument rd JOIN rd.document d WHERE d.id = :id"
     )
@@ -58,6 +58,15 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
              @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
+    );
+
+    @ApiOperation(
+        value = "findByResourceId"
+    )
+    @Transactional
+    List<ResourceDocument> findByResourceIdAndDeleted(
+             @Param("resourceId") @RequestParam("resourceId") String resourceId,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
     @RestResource(path="findByUserIdAndBeforeDateAndDeleted")
