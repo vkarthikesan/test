@@ -56,7 +56,8 @@ public @Data class JoinRequest implements BaseEntity {
     @Id
     private String id;
 
- 	private JoinRequestType joinRequestType = JoinRequestType.REQUEST;
+    @NotNull(message = "joinRequestType is required")
+ 	private JoinRequestType joinRequestType;
 
     @NotBlank(message = "targetParticipantId is required")
     @Length(max = 255)
@@ -64,7 +65,8 @@ public @Data class JoinRequest implements BaseEntity {
 
  	private Date createdDate;
 
- 	private JoinState joinState = JoinState.SENT;
+    @NotNull(message = "joinState is required")
+ 	private JoinState joinState;
 
     @NotBlank(message = "conversationId is required")
     @Length(max = 255)

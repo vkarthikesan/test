@@ -34,12 +34,8 @@ import java.util.*;
 @Api(tags = "Message:")
 @RepositoryRestResource
 public interface MessageRepository extends MongoRepository<Message, String>{
-    @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
-        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
-    )
-    @Query(
-        value = "{'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
+        value = "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc"
     )
     Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
@@ -47,12 +43,8 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationIdCreatedDateGt")
     @ApiOperation(
-        value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
-    )
-    @Query(
-        value = "{'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
+        value = "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc"
     )
     Page<Message> findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
@@ -60,12 +52,16 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationSeenTypeDateLess")
     @ApiOperation(
-        value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
+        value = "findByConversationIdAndCreatedDateGreaterThan"
     )
-    @Query(
-        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
+    List<Message> findByConversationIdAndCreatedDateGreaterThan(
+             @Param("conversationId") @RequestParam("conversationId") String conversationId,
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate
+    );
+
+    @ApiOperation(
+        value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc"
     )
     Page<Message> findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
@@ -75,39 +71,13 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationSeenType")
     @ApiOperation(
-        value = "findTop1ByConversationIdAndMessageTypeAndSeen", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
+        value = "findTop1ByConversationIdAndSeenAndMessageType"
     )
-    @Query(
-        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
-    )
-    Message findTop1ByConversationIdAndMessageTypeAndSeen(
+    Message findTop1ByConversationIdAndSeenAndMessageType(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("seen") @RequestParam("seen") Boolean seen,
              @Param("messageType") @RequestParam("messageType") MessageType messageType
     );
 
-    @ApiOperation(
-        value = "query-selectAll", notes = "Query: {}"
-    )
-    @Query(
-        value = "{}"
-    )
-    List<Message> findAllMessages(
-    );
-
-    @ApiOperation(
-        value = "query-DeleteAllDB", notes = "Query: {'id': ?0}"
-    )
-    @Query(
-        value = "{'id': ?0}", delete = true
-    )
-    Integer deleteMessageById(
-             @Param("id") @RequestParam("id") String id
-    );
-
-    @Override
-    @RestResource(exported = false)
-    public void delete(Message entity);
 }

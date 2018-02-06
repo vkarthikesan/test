@@ -34,11 +34,10 @@ import java.util.*;
 @Api(tags = "Conversation:")
 @RepositoryRestResource
 public interface ConversationRepository extends MongoRepository<Conversation, String>{
-    @RestResource(path="findByResourceLabel")
     @ApiOperation(
-        value = "ResourceIdLabel"
+        value = "findByResourceIdAndLabel"
     )
-    List<Conversation> findByResourceIdAndLabelContaining(
+    List<Conversation> findByResourceIdAndLabel(
              @Param("resourceId") @RequestParam("resourceId") String resourceId,
              @Param("label") @RequestParam("label") String label
     );
@@ -48,15 +47,6 @@ public interface ConversationRepository extends MongoRepository<Conversation, St
     )
     List<Conversation> findByResourceId(
              @Param("resourceId") @RequestParam("resourceId") String resourceId
-    );
-
-    @ApiOperation(
-        value = "query-selectAll", notes = "Query: {}"
-    )
-    @Query(
-        value = "{}"
-    )
-    List<Conversation> findAllConversations(
     );
 
 }
