@@ -20,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -51,20 +53,43 @@ import lombok.Data;
 )
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class TextContent implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class TextContent implements BaseEntity {
+
+    TextContent () {}
 
     @Id
     private String id;
+
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
+    }
 
     @NotBlank(message = "messageId is required")
     @Length(max = 255)
  	private String messageId;
 
+ 	@JsonProperty("messageId")
+    public String getMessageId (){
+        return this.messageId;
+     }
+
     @Length(max = 1650)
  	private String value;
 
+ 	@JsonProperty("value")
+    public String getValue (){
+        return this.value;
+     }
+
     @NotNull(message = "objectType is required")
  	private ObjectType objectType;
+
+ 	@JsonProperty("objectType")
+    public ObjectType getObjectType (){
+        return this.objectType;
+     }
 
 
 

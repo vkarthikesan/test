@@ -41,4 +41,13 @@ public interface TextContentRepository extends MongoRepository<TextContent, Stri
              @Param("messageId") @RequestParam("messageId") String messageId
     );
 
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {}"
+    )
+    @Query(
+        value = "{}"
+    )
+    List<TextContent> findAllTextContent(
+    );
+
 }

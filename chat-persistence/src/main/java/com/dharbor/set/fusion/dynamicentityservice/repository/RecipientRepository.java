@@ -34,6 +34,7 @@ import java.util.*;
 @Api(tags = "Recipient:")
 @RepositoryRestResource
 public interface RecipientRepository extends MongoRepository<Recipient, String>{
+    @RestResource(path="findByParticipantMessage")
     @ApiOperation(
         value = "findByParticipantIdAndMessageId"
     )
@@ -42,20 +43,21 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("messageId") @RequestParam("messageId") String messageId
     );
 
+    @RestResource(path="CountParticipantState")
     @ApiOperation(
-        value = "findByMessageIdAndParticipantIdAndRecipientState"
+        value = "countByParticipantIdAndRecipientState"
     )
-    List<Recipient> findByMessageIdAndParticipantIdAndRecipientState(
-             @Param("messageId") @RequestParam("messageId") String messageId,
+    Long countByParticipantIdAndRecipientState(
              @Param("participantId") @RequestParam("participantId") String participantId,
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
+    @RestResource(path="CountMessageState")
     @ApiOperation(
-        value = "findByParticipantIdAndRecipientState"
+        value = "countByMessageIdAndRecipientState"
     )
-    List<Recipient> findByParticipantIdAndRecipientState(
-             @Param("participantId") @RequestParam("participantId") String participantId,
+    Long countByMessageIdAndRecipientState(
+             @Param("messageId") @RequestParam("messageId") String messageId,
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
@@ -66,6 +68,17 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("participantId") @RequestParam("participantId") String participantId
     );
 
+    @RestResource(path="findByMessageParticipantState")
+    @ApiOperation(
+        value = "findByMessageIdAndParticipantIdAndRecipientState"
+    )
+    List<Recipient> findByMessageIdAndParticipantIdAndRecipientState(
+             @Param("messageId") @RequestParam("messageId") String messageId,
+             @Param("participantId") @RequestParam("participantId") String participantId,
+             @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
+    );
+
+    @RestResource(path="CountMessageParticipantState")
     @ApiOperation(
         value = "countByMessageIdAndParticipantIdAndRecipientState"
     )
@@ -76,19 +89,12 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
     );
 
     @ApiOperation(
-        value = "countByParticipantIdAndRecipientState"
+        value = "query-selectAll", notes = "Query: {}"
     )
-    Long countByParticipantIdAndRecipientState(
-             @Param("participantId") @RequestParam("participantId") String participantId,
-             @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
-    );
-
-    @ApiOperation(
-        value = "countByMessageIdAndRecipientState"
+    @Query(
+        value = "{}"
     )
-    Long countByMessageIdAndRecipientState(
-             @Param("messageId") @RequestParam("messageId") String messageId,
-             @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
+    List<Recipient> findAllRecipient(
     );
 
 }

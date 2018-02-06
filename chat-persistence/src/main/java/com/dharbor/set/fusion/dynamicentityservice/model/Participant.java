@@ -20,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -44,63 +46,84 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findByConversationIdAndParticipantType",
-                def = "{'participantType':1 ,'conversationId':1 }"
+                name = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
-                name = "findByConversationIdAndUserId",
-                def = "{'userId':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByIdNotAndConversationIdAndRemovedOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'id':1 ,'removed':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByIdAndConversationId",
-                def = "{'conversationId':1 ,'id':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationId",
-                def = "{'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'removed':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndUserIdAndParticipantType",
-                def = "{'participantType':1 ,'userId':1 ,'conversationId':1 }"
+                name = "findByIdNotAndConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'conversationId':1 }"
             )
         }
 )
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class Participant implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class Participant implements BaseEntity {
+
+    Participant () {}
 
     @Id
     private String id;
+    public void setId(String value) {}
+
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
+    }
+
 
  	private Long joinedOn = 0L;
 
+ 	@JsonProperty("joinedOn")
+    public Long getJoinedOn (){
+        return this.joinedOn;
+     }
+
  	private Date createdDate;
 
- 	private Boolean removed = false;
+ 	@JsonProperty("createdDate")
+    public Date getCreatedDate (){
+        return this.createdDate;
+     }
+
+ 	private Boolean deleted = false;
+
+ 	@JsonProperty("deleted")
+    public Boolean getDeleted (){
+        return this.deleted;
+     }
 
     @NotBlank(message = "conversationId is required")
     @Length(max = 255)
  	private String conversationId;
 
+ 	@JsonProperty("conversationId")
+    public String getConversationId (){
+        return this.conversationId;
+     }
+
  	private Date lastUpdateDate;
 
+ 	@JsonProperty("lastUpdateDate")
+    public Date getLastUpdateDate (){
+        return this.lastUpdateDate;
+     }
+
  	private ParticipantType participantType = ParticipantType.DEFAULT;
+
+ 	@JsonProperty("participantType")
+    public ParticipantType getParticipantType (){
+        return this.participantType;
+     }
 
     @NotBlank(message = "userId is required")
     @Length(max = 255)
  	private String userId;
+
+ 	@JsonProperty("userId")
+    public String getUserId (){
+        return this.userId;
+     }
 
 
     public void onBeforeCreate() {

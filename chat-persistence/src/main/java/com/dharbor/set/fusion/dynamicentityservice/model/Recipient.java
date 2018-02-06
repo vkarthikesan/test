@@ -20,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -67,21 +69,43 @@ import lombok.Data;
 )
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class Recipient implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class Recipient implements BaseEntity {
+
+    Recipient () {}
 
     @Id
     private String id;
+
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
+    }
 
     @NotBlank(message = "participantId is required")
     @Length(max = 255)
  	private String participantId;
 
+ 	@JsonProperty("participantId")
+    public String getParticipantId (){
+        return this.participantId;
+     }
+
     @NotBlank(message = "messageId is required")
     @Length(max = 255)
  	private String messageId;
 
-    @NotNull(message = "recipientState is required")
- 	private RecipientState recipientState;
+ 	@JsonProperty("messageId")
+    public String getMessageId (){
+        return this.messageId;
+     }
+
+ 	private RecipientState recipientState = RecipientState.UNREAD;
+
+ 	@JsonProperty("recipientState")
+    public RecipientState getRecipientState (){
+        return this.recipientState;
+     }
 
 
 
