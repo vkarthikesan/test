@@ -113,16 +113,6 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
     List<Participant> findAllParticipant(
     );
 
-    @ApiOperation(
-        value = "query-DeleteAllDB", notes = "Query: {'id': ?0}"
-    )
-    @Query(
-        value = "{'id': ?0}", delete = true
-    )
-    Integer deleteParticipantById(
-             @Param("id") @RequestParam("id") String id
-    );
-
     @Override
     @RestResource(exported = false)
     public void delete(Participant entity);
