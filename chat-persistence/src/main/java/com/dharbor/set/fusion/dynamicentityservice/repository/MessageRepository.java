@@ -49,12 +49,14 @@ public interface MessageRepository extends MongoRepository<Message, String>{
 
     @RestResource(path="findByConversationIdCreatedDateGt")
     @ApiOperation(
-        value = "query-conversationDateGt"
+        value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
     )
-    Page<Message> findByConversationIdAndCreatedDateGreaterThanAndDeletedOrderByCreatedDateAsc(
+    @Query(
+        value = "{'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
+    )
+    Page<Message> findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
