@@ -62,14 +62,16 @@ public interface MessageRepository extends MongoRepository<Message, String>{
 
     @RestResource(path="findByConversationSeenTypeDateLess")
     @ApiOperation(
-        value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc"
+        value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
     )
-    Page<Message> findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
+    @Query(
+        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
+    )
+    Page<Message> findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("seen") @RequestParam("seen") Boolean seen,
              @Param("messageType") @RequestParam("messageType") MessageType messageType,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
