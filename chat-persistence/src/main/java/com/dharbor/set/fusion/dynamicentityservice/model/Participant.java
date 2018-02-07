@@ -91,13 +91,6 @@ public @Setter class Participant implements BaseEntity {
         return this.deleted;
      }
 
- 	private Boolean removed = false;
-
- 	@JsonProperty("removed")
-    public Boolean getRemoved (){
-        return this.removed;
-     }
-
     @NotBlank(message = "conversationId is required")
     @Length(max = 255)
  	private String conversationId;
