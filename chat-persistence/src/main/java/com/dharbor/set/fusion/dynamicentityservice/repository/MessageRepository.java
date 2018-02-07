@@ -77,12 +77,12 @@ public interface MessageRepository extends MongoRepository<Message, String>{
 
     @RestResource(path="findByConversationSeenType")
     @ApiOperation(
-        value = "findOneByConversationIdAndMessageTypeAndSeen", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
+        value = "findByConversationIdAndMessageTypeAndSeen", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
     )
     @Query(
         value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
     )
-    Message findOneByConversationIdAndMessageTypeAndSeen(
+    Message findByConversationIdAndMessageTypeAndSeen(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("seen") @RequestParam("seen") Boolean seen,
              @Param("messageType") @RequestParam("messageType") MessageType messageType
