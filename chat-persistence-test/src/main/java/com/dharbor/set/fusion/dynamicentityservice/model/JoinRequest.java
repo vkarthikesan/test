@@ -20,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -51,30 +53,73 @@ import lombok.Data;
 )
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class JoinRequest implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class JoinRequest implements BaseEntity {
+
+    JoinRequest () {}
 
     @Id
     private String id;
 
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
+    }
+
  	private JoinRequestType joinRequestType = JoinRequestType.REQUEST;
+
+ 	@JsonProperty("joinRequestType")
+    public JoinRequestType getJoinRequestType (){
+        return this.joinRequestType;
+     }
 
     @NotBlank(message = "targetParticipantId is required")
     @Length(max = 255)
  	private String targetParticipantId;
 
+ 	@JsonProperty("targetParticipantId")
+    public String getTargetParticipantId (){
+        return this.targetParticipantId;
+     }
+
  	private Date createdDate;
 
+ 	@JsonProperty("createdDate")
+    public Date getCreatedDate (){
+        return this.createdDate;
+     }
+
  	private JoinState joinState = JoinState.SENT;
+
+ 	@JsonProperty("joinState")
+    public JoinState getJoinState (){
+        return this.joinState;
+     }
 
     @NotBlank(message = "conversationId is required")
     @Length(max = 255)
  	private String conversationId;
 
+ 	@JsonProperty("conversationId")
+    public String getConversationId (){
+        return this.conversationId;
+     }
+
     @NotBlank(message = "sourceParticipantId is required")
     @Length(max = 255)
  	private String sourceParticipantId;
 
+ 	@JsonProperty("sourceParticipantId")
+    public String getSourceParticipantId (){
+        return this.sourceParticipantId;
+     }
+
  	private Date responseDate;
+
+ 	@JsonProperty("responseDate")
+    public Date getResponseDate (){
+        return this.responseDate;
+     }
 
 
     public void onBeforeCreate() {

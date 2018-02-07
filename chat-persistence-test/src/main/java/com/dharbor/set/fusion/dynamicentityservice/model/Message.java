@@ -20,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -43,38 +45,97 @@ import lombok.Data;
 
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class Message implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class Message implements BaseEntity {
+
+    Message () {}
 
     @Id
     private String id;
     public void setId(String value) {}
 
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
+    }
+
+
     @Length(max = 255)
  	private String joinRequestId;
 
+ 	@JsonProperty("joinRequestId")
+    public String getJoinRequestId (){
+        return this.joinRequestId;
+     }
+
  	private Boolean deleted = false;
 
+ 	@JsonProperty("deleted")
+    public Boolean getDeleted (){
+        return this.deleted;
+     }
+
  	private Date createdDate;
+
+ 	@JsonProperty("createdDate")
+    public Date getCreatedDate (){
+        return this.createdDate;
+     }
 
     @NotNull(message = "messageType is required")
  	private MessageType messageType;
 
+ 	@JsonProperty("messageType")
+    public MessageType getMessageType (){
+        return this.messageType;
+     }
+
  	private Boolean edited = false;
+
+ 	@JsonProperty("edited")
+    public Boolean getEdited (){
+        return this.edited;
+     }
 
     @DBRef
     @RestResource(exported = false)
  	private Participant sender;
 
+ 	@JsonProperty("sender")
+    public Participant getSender (){
+        return this.sender;
+     }
+
     @NotBlank(message = "conversationId is required")
     @Length(max = 255)
  	private String conversationId;
 
+ 	@JsonProperty("conversationId")
+    public String getConversationId (){
+        return this.conversationId;
+     }
+
  	private Date lastUpdateDate;
+
+ 	@JsonProperty("lastUpdateDate")
+    public Date getLastUpdateDate (){
+        return this.lastUpdateDate;
+     }
 
     @NotNull(message = "contentType is required")
  	private ContentType contentType;
 
+ 	@JsonProperty("contentType")
+    public ContentType getContentType (){
+        return this.contentType;
+     }
+
  	private Boolean seen = false;
+
+ 	@JsonProperty("seen")
+    public Boolean getSeen (){
+        return this.seen;
+     }
 
 
     public void onBeforeCreate() {

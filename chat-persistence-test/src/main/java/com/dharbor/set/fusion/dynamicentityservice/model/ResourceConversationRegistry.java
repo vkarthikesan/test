@@ -20,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -51,30 +53,63 @@ import lombok.Data;
 )
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class ResourceConversationRegistry implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class ResourceConversationRegistry implements BaseEntity {
+
+    ResourceConversationRegistry () {}
 
     @Id
     private String id;
+
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
+    }
 
     @NotBlank(message = "appResourceId is required")
     @Length(max = 255)
  	private String appResourceId;
 
+ 	@JsonProperty("appResourceId")
+    public String getAppResourceId (){
+        return this.appResourceId;
+     }
+
     @NotBlank(message = "resourceId is required")
     @Length(max = 255)
  	private String resourceId;
+
+ 	@JsonProperty("resourceId")
+    public String getResourceId (){
+        return this.resourceId;
+     }
 
     @NotBlank(message = "conversationId is required")
     @Length(max = 255)
  	private String conversationId;
 
+ 	@JsonProperty("conversationId")
+    public String getConversationId (){
+        return this.conversationId;
+     }
+
     @NotBlank(message = "userId is required")
     @Length(max = 255)
  	private String userId;
 
+ 	@JsonProperty("userId")
+    public String getUserId (){
+        return this.userId;
+     }
+
     @NotBlank(message = "resourceUUID is required")
     @Length(max = 255)
  	private String resourceUUID;
+
+ 	@JsonProperty("resourceUUID")
+    public String getResourceUUID (){
+        return this.resourceUUID;
+     }
 
 
 

@@ -36,10 +36,10 @@ import java.util.*;
 public interface MessageRepository extends MongoRepository<Message, String>{
     @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
-        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': '?1'}}"
+        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
     )
     @Query(
-        value = "{'conversationId':'?0', 'createdDate': {'$lt': '?1'}}"
+        value = "{'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
     )
     Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
@@ -49,10 +49,10 @@ public interface MessageRepository extends MongoRepository<Message, String>{
 
     @RestResource(path="findByConversationIdCreatedDateGt")
     @ApiOperation(
-        value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': '?1'}}"
+        value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
     )
     @Query(
-        value = "{'conversationId':'?0', 'createdDate': {'$gt': '?1'}}"
+        value = "{'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
     )
     Page<Message> findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
@@ -62,10 +62,10 @@ public interface MessageRepository extends MongoRepository<Message, String>{
 
     @RestResource(path="findByConversationSeenTypeDateLess")
     @ApiOperation(
-        value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': '?3'}}"
+        value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
     )
     @Query(
-        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': '?3'}}"
+        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
     )
     Page<Message> findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
