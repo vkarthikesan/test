@@ -50,10 +50,6 @@ import lombok.Data;
                 def = "{'createdDate':-1 ,'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
             ),
             @CompoundIndex(
-                name = "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc",
-                def = "{'createdDate':-1 ,'deleted':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
                 name = "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc",
                 def = "{'createdDate':1 ,'deleted':1 ,'conversationId':1 }"
             ),
