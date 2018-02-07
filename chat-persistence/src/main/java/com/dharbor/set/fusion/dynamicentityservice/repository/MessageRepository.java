@@ -82,7 +82,7 @@ public interface MessageRepository extends MongoRepository<Message, String>{
     @Query(
         value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
     )
-    Message findByConversationIdAndMessageTypeAndSeen(
+    List<Message> findByConversationIdAndMessageTypeAndSeen(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("seen") @RequestParam("seen") Boolean seen,
              @Param("messageType") @RequestParam("messageType") MessageType messageType
