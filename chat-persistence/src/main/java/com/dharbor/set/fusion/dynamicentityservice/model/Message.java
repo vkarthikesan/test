@@ -60,11 +60,13 @@ public @Setter class Message implements BaseEntity {
 
     @Id
     private String id;
+    public void setId(String value) {}
 
     @JsonProperty("id")
     public String getId(){
         return this.id;
     }
+
 
     @Length(max = 255)
  	private String joinRequestId;
