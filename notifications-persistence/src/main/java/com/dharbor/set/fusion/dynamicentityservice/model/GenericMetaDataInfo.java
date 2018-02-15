@@ -12,59 +12,47 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
-
 package com.dharbor.set.fusion.dynamicentityservice.model;
 
-import com.dharbor.set.fusion.dynamicentityservice.enums.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import lombok.Setter;
-import lombok.EqualsAndHashCode;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.CompoundIndexes;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.rest.core.annotation.RestResource;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.boot.actuate.info.Info;
+import org.springframework.boot.actuate.info.InfoContributor;
 
-import java.io.Serializable;
+/**
+ * Created by sjanardan on 11-01-2018.
+ */
+@Component
+public class GenericMetaDataInfo implements InfoContributor{
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+    String persistenceBuilderVersion;
+    String dynamicServiceVersion;
+    String publishedDateOfDynamicEntityService;
 
-import lombok.Data;
-
-@Document
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
-public @Setter class NotificationPayload implements BaseEntity {
-
-    NotificationPayload () {}
-
-    @Id
-    private String id;
-
-    @JsonProperty("id")
-    public String getId(){
-        return this.id;
+    GenericMetaDataInfo(){
+        this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
+        this.dynamicServiceVersion = "0.0.1-SNAPSHOT";
+        this.publishedDateOfDynamicEntityService = "2018-Feb-15 14:01:18";
     }
 
- 	private Map<String, String> data;
+    @Override
+        public void contribute(Info.Builder builder) {
+            builder.withDetail("persistenceBuilderVersion", this.persistenceBuilderVersion);
+            builder.withDetail("dynamicServiceVersion",this.dynamicServiceVersion);
+            builder.withDetail("publishedDateOfDynamicEntityService",this.publishedDateOfDynamicEntityService);
+        }
 
- 	@JsonProperty("data")
-    public Map<String, String> getData (){
-        return this.data;
-     }
+    public String getPersistenceBuilderVersion(){
+        return persistenceBuilderVersion;
+    }
 
+    public String getDynamicServiceVersion(){
+        return dynamicServiceVersion;
+    }
 
+    public String getPublishedDateOfDynamicEntityService(){
+            return publishedDateOfDynamicEntityService;
+        }
 
 }

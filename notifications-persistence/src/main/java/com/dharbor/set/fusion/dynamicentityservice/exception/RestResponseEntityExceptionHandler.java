@@ -60,7 +60,7 @@ class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler 
         for(ConstraintViolation v : violations) {
             message.append((v.getPropertyPath() != null
                     && !v.getMessage().startsWith(String.valueOf(v.getPropertyPath())))
-                    ? v.getPropertyPath() + embeddedMessage + " " : (v.getMessage()) + " ").append("; ");
+                     ? (v.getMessage()) + " " : (v.getPropertyPath() + embeddedMessage + " ")).append("; ");
         }
 
         return handleExceptionInternal(ex,

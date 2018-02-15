@@ -34,6 +34,7 @@ import java.util.*;
 @Api(tags = "EmailNotification:")
 @RepositoryRestResource
 public interface EmailNotificationRepository extends MongoRepository<EmailNotification, String>{
+    @RestResource(path="findByUserIdSubjectAndDateDesc")
     @ApiOperation(
         value = "findByUserIdAndSubjectAndNotificationDateLessThanOrderByNotificationDateDesc"
     )
@@ -47,16 +48,17 @@ public interface EmailNotificationRepository extends MongoRepository<EmailNotifi
     @ApiOperation(
         value = "findByResourceId"
     )
-    Page<EmailNotification> findByResourceId(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
+    List<EmailNotification> findByResourceId(
+             @Param("resourceId") @RequestParam("resourceId") String resourceId
     );
 
     @ApiOperation(
-        value = "countByUserId"
+        value = "query-selectAll", notes = "Query: {}"
     )
-    Long countByUserId(
-             @Param("userId") @RequestParam("userId") String userId
+    @Query(
+        value = "{}"
+    )
+    List<EmailNotification> findAllEmailNotification(
     );
 
 }

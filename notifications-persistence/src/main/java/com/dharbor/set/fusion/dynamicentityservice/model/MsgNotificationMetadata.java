@@ -20,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -43,18 +45,36 @@ import lombok.Data;
 
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class MsgNotificationMetadata implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class MsgNotificationMetadata implements BaseEntity {
+
+    MsgNotificationMetadata () {}
 
     @Id
     private String id;
+
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
+    }
 
     @NotBlank(message = "serviceCode is required")
     @Length(max = 255)
  	private String serviceCode;
 
+ 	@JsonProperty("serviceCode")
+    public String getServiceCode (){
+        return this.serviceCode;
+     }
+
     @NotBlank(message = "actionCode is required")
     @Length(max = 255)
  	private String actionCode;
+
+ 	@JsonProperty("actionCode")
+    public String getActionCode (){
+        return this.actionCode;
+     }
 
 
 

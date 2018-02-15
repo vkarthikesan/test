@@ -20,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -33,6 +34,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -44,10 +46,6 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "countByUserId",
-                def = "{'userId':1 }"
-            ),
-            @CompoundIndex(
                 name = "countByUserIdAndState",
                 def = "{'userId':1 ,'state':1 }"
             ),
@@ -58,44 +56,88 @@ import lombok.Data;
             @CompoundIndex(
                 name = "findByUserIdAndNotificationDateLessThan",
                 def = "{'userId':1 ,'notificationDate':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByUserIdOrderByNotificationDateDesc",
-                def = "{'userId':1 ,'notificationDate':-1 }"
             )
         }
 )
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class MsgNotification implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class MsgNotification implements BaseEntity {
+
+    MsgNotification () {}
 
     @Id
     private String id;
 
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
+    }
+
     @Length(max = 255)
  	private String resourceId;
+
+ 	@JsonProperty("resourceId")
+    public String getResourceId (){
+        return this.resourceId;
+     }
 
     @DBRef
     @RestResource(exported = false)
  	private MsgNotificationMetadata metadata;
 
+ 	@JsonProperty("metadata")
+    public MsgNotificationMetadata getMetadata (){
+        return this.metadata;
+     }
+
     @Length(max = 255)
  	private String senderUserId;
+
+ 	@JsonProperty("senderUserId")
+    public String getSenderUserId (){
+        return this.senderUserId;
+     }
 
     @DBRef
     @RestResource(exported = false)
  	private NotificationPayload payload;
 
+ 	@JsonProperty("payload")
+    public NotificationPayload getPayload (){
+        return this.payload;
+     }
+
     @Length(max = 255)
  	private String label;
+
+ 	@JsonProperty("label")
+    public String getLabel (){
+        return this.label;
+     }
 
     @NotNull(message = "state is required")
  	private MsgNotificationState state;
 
+ 	@JsonProperty("state")
+    public MsgNotificationState getState (){
+        return this.state;
+     }
+
     @Length(max = 255)
  	private String userId;
 
+ 	@JsonProperty("userId")
+    public String getUserId (){
+        return this.userId;
+     }
+
  	private Date notificationDate;
+
+ 	@JsonProperty("notificationDate")
+    public Date getNotificationDate (){
+        return this.notificationDate;
+     }
 
 
     public void onBeforeCreate() {

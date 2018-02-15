@@ -34,6 +34,7 @@ import java.util.*;
 @Api(tags = "MsgNotification:")
 @RepositoryRestResource
 public interface MsgNotificationRepository extends MongoRepository<MsgNotification, String>{
+    @RestResource(path="findByUserIdStateDateDesc")
     @ApiOperation(
         value = "findByUserIdAndStateAndNotificationDateLessThanOrderByNotificationDateDesc"
     )
@@ -44,20 +45,13 @@ public interface MsgNotificationRepository extends MongoRepository<MsgNotificati
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
+    @RestResource(path="findUserIdDate")
     @ApiOperation(
         value = "findByUserIdAndNotificationDateLessThan"
     )
     Page<MsgNotification> findByUserIdAndNotificationDateLessThan(
              @Param("userId") @RequestParam("userId") String userId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("notificationDate") @RequestParam("notificationDate") Date notificationDate,
-             @Param("pageable") @RequestParam("pageable") Pageable pageable
-    );
-
-    @ApiOperation(
-        value = "findByUserIdOrderByNotificationDateDesc"
-    )
-    Page<MsgNotification> findByUserIdOrderByNotificationDateDesc(
-             @Param("userId") @RequestParam("userId") String userId,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
@@ -70,10 +64,12 @@ public interface MsgNotificationRepository extends MongoRepository<MsgNotificati
     );
 
     @ApiOperation(
-        value = "countByUserId"
+        value = "query-selectAll", notes = "Query: {}"
     )
-    Long countByUserId(
-             @Param("userId") @RequestParam("userId") String userId
+    @Query(
+        value = "{}"
+    )
+    List<MsgNotification> findAllMsgNotification(
     );
 
 }
