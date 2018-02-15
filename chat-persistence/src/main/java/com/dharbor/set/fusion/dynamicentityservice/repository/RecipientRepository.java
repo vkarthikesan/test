@@ -34,7 +34,6 @@ import java.util.*;
 @Api(tags = "Recipient:")
 @RepositoryRestResource
 public interface RecipientRepository extends MongoRepository<Recipient, String>{
-    @RestResource(path="findByParticipantMessage")
     @ApiOperation(
         value = "findByParticipantIdAndMessageId"
     )
@@ -43,7 +42,6 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("messageId") @RequestParam("messageId") String messageId
     );
 
-    @RestResource(path="CountParticipantState")
     @ApiOperation(
         value = "countByParticipantIdAndRecipientState"
     )
@@ -52,7 +50,6 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
-    @RestResource(path="CountMessageState")
     @ApiOperation(
         value = "countByMessageIdAndRecipientState"
     )

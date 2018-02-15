@@ -34,7 +34,6 @@ import java.util.*;
 @Api(tags = "ResourceConversationRegistry:")
 @RepositoryRestResource
 public interface ResourceConversationRegistryRepository extends MongoRepository<ResourceConversationRegistry, String>{
-    @RestResource(path="findByUserResource")
     @ApiOperation(
         value = "findOneByUserIdAndResourceId"
     )
