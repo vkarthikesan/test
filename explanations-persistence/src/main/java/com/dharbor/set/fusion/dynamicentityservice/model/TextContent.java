@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,28 +32,47 @@ import javax.validation.Valid;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class TextContent implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class TextContent implements BaseEntity {
+
+    TextContent () {}
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("id")
+    public Long getId(){
+        return this.id;
+    }
+
     @OneToOne(
             optional = true,
-            cascade = {CascadeType.MERGE,CascadeType.PERSIST},
+            cascade = {CascadeType.MERGE,CascadeType.REFRESH},
             fetch = FetchType.EAGER
     )
     @JoinColumn(unique = true)
     @RestResource(exported = false)
  	private Message message;
 
+    @JsonProperty("message")
+    public Message getMessage (){
+        return this.message;
+    }
+
     @NotBlank(message = "value is required")
     @Length(max = 1600)
  	private String value;
+
+    @JsonProperty("value")
+    public String getValue (){
+        return this.value;
+    }
 
 }
 

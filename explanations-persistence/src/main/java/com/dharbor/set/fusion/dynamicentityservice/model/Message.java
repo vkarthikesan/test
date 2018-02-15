@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(
         indexes = {
@@ -46,36 +48,79 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 )
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class Message implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class Message implements BaseEntity {
+
+    Message () {}
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("id")
+    public Long getId(){
+        return this.id;
+    }
+
  	private Date createdDate;
+
+    @JsonProperty("createdDate")
+    public Date getCreatedDate (){
+        return this.createdDate;
+    }
 
  	private Boolean deleted = false;
 
+    @JsonProperty("deleted")
+    public Boolean getDeleted (){
+        return this.deleted;
+    }
+
  	private Boolean edited = false;
+
+    @JsonProperty("edited")
+    public Boolean getEdited (){
+        return this.edited;
+    }
 
  	private Date updatedDate;
 
+    @JsonProperty("updatedDate")
+    public Date getUpdatedDate (){
+        return this.updatedDate;
+    }
+
     @ManyToOne(
             optional = true,
-            cascade = {CascadeType.ALL},
+            cascade = {CascadeType.MERGE,CascadeType.REMOVE},
             fetch = FetchType.EAGER
     )
-    @RestResource(exported = true)
+    @RestResource(exported = false)
  	private Explanation explanation;
+
+    @JsonProperty("explanation")
+    public Explanation getExplanation (){
+        return this.explanation;
+    }
 
     @NotBlank(message = "userId is required")
     @Length(max = 255)
  	private String userId;
 
+    @JsonProperty("userId")
+    public String getUserId (){
+        return this.userId;
+    }
+
     @NotNull(message = "contentType is required")
     @Enumerated(EnumType.STRING)
  	private ContentType contentType;
+
+    @JsonProperty("contentType")
+    public ContentType getContentType (){
+        return this.contentType;
+    }
 
     public void onBeforeCreate() {
         Date sysDate = new Date();

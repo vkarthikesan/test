@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(
         indexes = {
@@ -42,26 +44,54 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 )
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class Explanation implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class Explanation implements BaseEntity {
+
+    Explanation () {}
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("id")
+    public Long getId(){
+        return this.id;
+    }
+
  	private Long indicator = 0L;
+
+    @JsonProperty("indicator")
+    public Long getIndicator (){
+        return this.indicator;
+    }
 
     @NotBlank(message = "resourceId is required")
     @Length(max = 255)
  	private String resourceId;
 
+    @JsonProperty("resourceId")
+    public String getResourceId (){
+        return this.resourceId;
+    }
+
     @NotBlank(message = "appResourceId is required")
     @Length(max = 255)
  	private String appResourceId;
 
+    @JsonProperty("appResourceId")
+    public String getAppResourceId (){
+        return this.appResourceId;
+    }
+
     @NotBlank(message = "resourceUUID is required")
     @Length(max = 255)
  	private String resourceUUID;
+
+    @JsonProperty("resourceUUID")
+    public String getResourceUUID (){
+        return this.resourceUUID;
+    }
 
 }
 
