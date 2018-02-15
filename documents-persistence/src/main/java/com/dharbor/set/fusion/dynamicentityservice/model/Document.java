@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,16 +32,17 @@ import javax.validation.Valid;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(
         indexes = {
             @Index(
-                name = "findByUserIdAndDocumentIsVisibleOrderByDocumentCreatedDateDesc",
-                columnList = "createdDate,isVisible"
+                name = "findByDocumentUserIdAndDocumentCreatedDateLessThanAndDeletedOrderByCreatedDateDesc",
+                columnList = "userId,createdDate"
             ),
             @Index(
-                name = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc",
-                columnList = "userId,createdDate"
+                name = "findByUserIdAndDocumentIsVisibleOrderByDocumentCreatedDateDesc",
+                columnList = "createdDate,isVisible"
             ),
             @Index(
                 name = "findByUserIdAndCreatedDateLessThanAndDocumentMetadataTitleContainingOrderByCreatedDateDesc",
@@ -50,19 +52,32 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 )
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class Document implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class Document implements BaseEntity {
+
+    Document () {}
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("id")
+    public Long getId(){
+        return this.id;
+    }
+
     @NotBlank(message = "dmsId is required")
     @Length(max = 255)
  	private String dmsId;
 
+    @JsonProperty("dmsId")
+    public String getDmsId (){
+        return this.dmsId;
+    }
+
     @OneToOne(
-            optional = true,
+            optional = false,
             cascade = {CascadeType.ALL},
             fetch = FetchType.EAGER
     )
@@ -70,25 +85,70 @@ public @Data class Document implements BaseEntity {
     @RestResource(exported = false)
  	private DocumentMetadata documentMetadata;
 
+    @JsonProperty("documentMetadata")
+    public DocumentMetadata getDocumentMetadata (){
+        return this.documentMetadata;
+    }
+
  	private Boolean deleted = false;
+
+    @JsonProperty("deleted")
+    public Boolean getDeleted (){
+        return this.deleted;
+    }
 
  	private Date createdDate;
 
+    @JsonProperty("createdDate")
+    public Date getCreatedDate (){
+        return this.createdDate;
+    }
+
  	private Date deletedDate;
+
+    @JsonProperty("deletedDate")
+    public Date getDeletedDate (){
+        return this.deletedDate;
+    }
 
  	private Boolean isSensitive = false;
 
+    @JsonProperty("isSensitive")
+    public Boolean getIsSensitive (){
+        return this.isSensitive;
+    }
+
  	private Long currentVersionId = 0L;
+
+    @JsonProperty("currentVersionId")
+    public Long getCurrentVersionId (){
+        return this.currentVersionId;
+    }
 
     @NotBlank(message = "location is required")
     @Length(max = 255)
  	private String location;
 
+    @JsonProperty("location")
+    public String getLocation (){
+        return this.location;
+    }
+
  	private Boolean isVisible = false;
+
+    @JsonProperty("isVisible")
+    public Boolean getIsVisible (){
+        return this.isVisible;
+    }
 
     @NotBlank(message = "userId is required")
     @Length(max = 255)
  	private String userId;
+
+    @JsonProperty("userId")
+    public String getUserId (){
+        return this.userId;
+    }
 
     public void onBeforeCreate() {
         Date sysDate = new Date();

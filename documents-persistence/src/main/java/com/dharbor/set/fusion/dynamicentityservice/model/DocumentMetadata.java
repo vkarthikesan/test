@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(
         indexes = {
@@ -46,21 +48,44 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 )
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class DocumentMetadata implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class DocumentMetadata implements BaseEntity {
+
+    DocumentMetadata () {}
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("id")
+    public Long getId(){
+        return this.id;
+    }
+
     @Length(max = 255)
  	private String name;
+
+    @JsonProperty("name")
+    public String getName (){
+        return this.name;
+    }
 
     @Length(max = 500)
  	private String description = "TEXT";
 
+    @JsonProperty("description")
+    public String getDescription (){
+        return this.description;
+    }
+
     @Length(max = 255)
  	private String title;
+
+    @JsonProperty("title")
+    public String getTitle (){
+        return this.title;
+    }
 
 }
 

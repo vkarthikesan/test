@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(
         indexes = {
@@ -42,15 +44,28 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 )
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class DocumentGroup implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class DocumentGroup implements BaseEntity {
+
+    DocumentGroup () {}
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("id")
+    public Long getId(){
+        return this.id;
+    }
+
     @Length(max = 255)
  	private String resourceId;
+
+    @JsonProperty("resourceId")
+    public String getResourceId (){
+        return this.resourceId;
+    }
 
     @OneToOne(
             optional = false,
@@ -61,8 +76,18 @@ public @Data class DocumentGroup implements BaseEntity {
     @RestResource(exported = false)
  	private Document document;
 
+    @JsonProperty("document")
+    public Document getDocument (){
+        return this.document;
+    }
+
     @Length(max = 255)
  	private String userId;
+
+    @JsonProperty("userId")
+    public String getUserId (){
+        return this.userId;
+    }
 
 }
 

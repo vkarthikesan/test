@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(
         indexes = {
@@ -42,32 +44,70 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 )
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class VersionMetadata implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class VersionMetadata implements BaseEntity {
+
+    VersionMetadata () {}
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("id")
+    public Long getId(){
+        return this.id;
+    }
+
     @NotBlank(message = "fileName is required")
     @Length(max = 255)
  	private String fileName;
 
+    @JsonProperty("fileName")
+    public String getFileName (){
+        return this.fileName;
+    }
+
     @NotNull(message = "fileSize is required")
  	private Long fileSize;
+
+    @JsonProperty("fileSize")
+    public Long getFileSize (){
+        return this.fileSize;
+    }
 
     @Length(max = 255)
  	private String name;
 
+    @JsonProperty("name")
+    public String getName (){
+        return this.name;
+    }
+
     @Length(max = 500)
  	private String description = "TEXT";
+
+    @JsonProperty("description")
+    public String getDescription (){
+        return this.description;
+    }
 
     @Length(max = 255)
  	private String title;
 
+    @JsonProperty("title")
+    public String getTitle (){
+        return this.title;
+    }
+
     @NotBlank(message = "contentType is required")
     @Length(max = 255)
  	private String contentType;
+
+    @JsonProperty("contentType")
+    public String getContentType (){
+        return this.contentType;
+    }
 
 }
 

@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(
         indexes = {
@@ -50,29 +52,67 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 )
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public @Data class DocumentVersion implements BaseEntity {
+@EqualsAndHashCode
+public @Setter class DocumentVersion implements BaseEntity {
+
+    DocumentVersion () {}
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("id")
+    public Long getId(){
+        return this.id;
+    }
+
     @NotBlank(message = "dmsId is required")
     @Length(max = 255)
  	private String dmsId;
+
+    @JsonProperty("dmsId")
+    public String getDmsId (){
+        return this.dmsId;
+    }
 
     @NotBlank(message = "versionId is required")
     @Length(max = 255)
  	private String versionId;
 
+    @JsonProperty("versionId")
+    public String getVersionId (){
+        return this.versionId;
+    }
+
     @NotNull(message = "isDefault is required")
  	private Boolean isDefault;
 
+    @JsonProperty("isDefault")
+    public Boolean getIsDefault (){
+        return this.isDefault;
+    }
+
  	private Boolean deleted = false;
+
+    @JsonProperty("deleted")
+    public Boolean getDeleted (){
+        return this.deleted;
+    }
 
  	private Date createdDate;
 
+    @JsonProperty("createdDate")
+    public Date getCreatedDate (){
+        return this.createdDate;
+    }
+
  	private Date deletedDate;
+
+    @JsonProperty("deletedDate")
+    public Date getDeletedDate (){
+        return this.deletedDate;
+    }
 
     @OneToOne(
             optional = false,
@@ -83,8 +123,18 @@ public @Data class DocumentVersion implements BaseEntity {
     @RestResource(exported = false)
  	private VersionMetadata versionMetadata;
 
+    @JsonProperty("versionMetadata")
+    public VersionMetadata getVersionMetadata (){
+        return this.versionMetadata;
+    }
+
     @NotNull(message = "documentId is required")
  	private Long documentId;
+
+    @JsonProperty("documentId")
+    public Long getDocumentId (){
+        return this.documentId;
+    }
 
     public void onBeforeCreate() {
         Date sysDate = new Date();

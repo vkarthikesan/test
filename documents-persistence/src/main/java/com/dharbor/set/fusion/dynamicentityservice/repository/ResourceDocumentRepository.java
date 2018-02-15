@@ -50,7 +50,7 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
 
     @RestResource(path="findByResourceIdAndBeforeDateAndDeleted")
     @ApiOperation(
-        value = "findByResourceIdAndCreatedDateLessThanOrderByCreatedDateDesc"
+        value = "findByResourceIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc"
     )
     @Transactional
     Page<ResourceDocument> findByResourceIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
@@ -64,14 +64,13 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
         value = "findByResourceId"
     )
     @Transactional
-    List<ResourceDocument> findByResourceIdAndDeleted(
-             @Param("resourceId") @RequestParam("resourceId") String resourceId,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
+    List<ResourceDocument> findByResourceId(
+             @Param("resourceId") @RequestParam("resourceId") String resourceId
     );
 
     @RestResource(path="findByUserIdAndBeforeDateAndDeleted")
     @ApiOperation(
-        value = "findByDocumentUserIdAndDocumentCreatedDateLessThanOrderByCreatedDateDesc"
+        value = "findByDocumentUserIdAndDocumentCreatedDateLessThanAndDeletedOrderByCreatedDateDesc"
     )
     @Transactional
     Page<ResourceDocument> findByDocumentUserIdAndDocumentCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
@@ -103,7 +102,4 @@ public interface ResourceDocumentRepository extends JpaRepository<ResourceDocume
              @Param("id") @RequestParam("id") Long id
     );
 
-    @Override
-    @RestResource(exported = false)
-    public void delete(ResourceDocument entity);
 }

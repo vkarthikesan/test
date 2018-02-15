@@ -12,34 +12,47 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
-package com.dharbor.set.fusion.dynamicentityservice.controller;
+package com.dharbor.set.fusion.dynamicentityservice.model;
 
-import com.dharbor.set.fusion.dynamicentityservice.repository.*;
-import com.dharbor.set.fusion.dynamicentityservice.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.boot.actuate.info.Info;
+import org.springframework.boot.actuate.info.InfoContributor;
 
-@RepositoryRestController
-public class ResourceDocumentController {
-    private final ResourceDocumentRepository repository;
+/**
+ * Created by sjanardan on 11-01-2018.
+ */
+@Component
+public class GenericMetaDataInfo implements InfoContributor{
 
-    @Autowired
-    public ResourceDocumentController(ResourceDocumentRepository repository){
-        this.repository = repository;
+    String persistenceBuilderVersion;
+    String dynamicServiceVersion;
+    String publishedDateOfDynamicEntityService;
+
+    GenericMetaDataInfo(){
+        this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
+        this.dynamicServiceVersion = "0.0.1-SNAPSHOT";
+        this.publishedDateOfDynamicEntityService = "2018-Feb-15 14:03:17";
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/resourceDocuments/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(required = true) Long id){
-        ResourceDocument entity = repository.findOne(id);
-        if(entity == null) {
-            return ResponseEntity.notFound().build();
+    @Override
+        public void contribute(Info.Builder builder) {
+            builder.withDetail("persistenceBuilderVersion", this.persistenceBuilderVersion);
+            builder.withDetail("dynamicServiceVersion",this.dynamicServiceVersion);
+            builder.withDetail("publishedDateOfDynamicEntityService",this.publishedDateOfDynamicEntityService);
         }
-        entity.setDeleted(true);
-        repository.save(entity);
-        return ResponseEntity.noContent().build();
+
+    public String getPersistenceBuilderVersion(){
+        return persistenceBuilderVersion;
     }
+
+    public String getDynamicServiceVersion(){
+        return dynamicServiceVersion;
+    }
+
+    public String getPublishedDateOfDynamicEntityService(){
+            return publishedDateOfDynamicEntityService;
+        }
+
 }
