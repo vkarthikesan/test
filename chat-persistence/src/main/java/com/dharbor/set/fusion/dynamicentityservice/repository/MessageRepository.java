@@ -60,7 +60,7 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationSeenTypeDateLess")
+    @RestResource(path="findByConversationIdSeeMsgTypeAndCreatedDateDesc")
     @ApiOperation(
         value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
     )
@@ -75,7 +75,7 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationSeenType")
+    @RestResource(path="findByConversationIdSeenAndMsgType")
     @ApiOperation(
         value = "findOneByConversationIdAndMessageTypeAndSeen"
     )

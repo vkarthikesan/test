@@ -68,7 +68,7 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("participantId") @RequestParam("participantId") String participantId
     );
 
-    @RestResource(path="findByMessageParticipantState")
+    @RestResource(path="findByMessageIdParticipantIdAndRecipientState")
     @ApiOperation(
         value = "findByMessageIdAndParticipantIdAndRecipientState"
     )
@@ -78,7 +78,7 @@ public interface RecipientRepository extends MongoRepository<Recipient, String>{
              @Param("recipientState") @RequestParam("recipientState") RecipientState recipientState
     );
 
-    @RestResource(path="CountMessageParticipantState")
+    @RestResource(path="countMessageIdParticipantIdAndRecipientState")
     @ApiOperation(
         value = "countByMessageIdAndParticipantIdAndRecipientState"
     )
