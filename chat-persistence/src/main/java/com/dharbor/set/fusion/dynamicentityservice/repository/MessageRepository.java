@@ -34,7 +34,7 @@ import java.util.*;
 @Api(tags = "Message:")
 @RepositoryRestResource
 public interface MessageRepository extends MongoRepository<Message, String>{
-    @RestResource(path="findByConversationIdCreatedDateGt")
+    @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
         value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
     )
@@ -47,7 +47,7 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationIdCreatedDateLt")
+    @RestResource(path="findByConversationIdCreatedDateGt")
     @ApiOperation(
         value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
     )
