@@ -34,7 +34,7 @@ import java.util.*;
 @Api(tags = "Message:")
 @RepositoryRestResource
 public interface MessageRepository extends MongoRepository<Message, String>{
-    @RestResource(path="findByConversationIdCreatedDateGt")
+    @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
         value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
     )
@@ -47,7 +47,7 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationIdCreatedDateLt")
+    @RestResource(path="findByConversationIdCreatedDateGt")
     @ApiOperation(
         value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
     )
@@ -60,7 +60,7 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationIdSeeMsgTypeAndCreatedDateDesc")
+    @RestResource(path="findByConversationSeenTypeDateLess")
     @ApiOperation(
         value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
     )
@@ -75,15 +75,17 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationIdSeenAndMsgType")
+    @RestResource(path="findByConversationSeenType")
     @ApiOperation(
-        value = "findOneByConversationIdAndMessageTypeAndSeen"
+        value = "findOneByConversationIdAndMessageTypeAndSeen", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
     )
-    Message findOneByConversationIdAndMessageTypeAndSeenAndDeleted(
+    @Query(
+        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
+    )
+    Message findOneByConversationIdAndMessageTypeAndSeen(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
-             @Param("messageType") @RequestParam("messageType") MessageType messageType,
              @Param("seen") @RequestParam("seen") Boolean seen,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
+             @Param("messageType") @RequestParam("messageType") MessageType messageType
     );
 
     @ApiOperation(
