@@ -36,10 +36,7 @@ import java.util.*;
 public interface MessageRepository extends MongoRepository<Message, String>{
     @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
-        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {$lt: ?1}}"
-    )
-    @Query(
-        value = "{'conversationId':'?0', 'createdDate': {$lt: ?1}}"
+        value = "query-conversationDateLt"
     )
     Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
@@ -49,10 +46,7 @@ public interface MessageRepository extends MongoRepository<Message, String>{
 
     @RestResource(path="findByConversationIdCreatedDateGt")
     @ApiOperation(
-        value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {$gt: ?1}}"
-    )
-    @Query(
-        value = "{'conversationId':'?0', 'createdDate': {$gt: ?1}}"
+        value = "query-conversationDateGt"
     )
     Page<Message> findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
@@ -79,11 +73,10 @@ public interface MessageRepository extends MongoRepository<Message, String>{
     @ApiOperation(
         value = "findOneByConversationIdAndMessageTypeAndSeen"
     )
-    Message findOneByConversationIdAndMessageTypeAndSeenAndDeleted(
+    Message findOneByConversationIdAndMessageTypeAndSeen(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @Param("messageType") @RequestParam("messageType") MessageType messageType,
-             @Param("seen") @RequestParam("seen") Boolean seen,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted
+             @Param("seen") @RequestParam("seen") Boolean seen
     );
 
     @ApiOperation(
@@ -105,7 +98,4 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("id") @RequestParam("id") String id
     );
 
-    @Override
-    @RestResource(exported = false)
-    public void delete(Message entity);
 }
