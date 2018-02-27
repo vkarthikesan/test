@@ -46,15 +46,7 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc",
-                def = "{'conversationId':1 ,'createdDate':-1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc",
-                def = "{'conversationId':1 ,'createdDate':1 }"
-            ),
-            @CompoundIndex(
-                name = "findOneByConversationIdAndMessageTypeAndSeenAndDeleted",
+                name = "findOneByConversationIdAndMessageTypeAndSeen",
                 def = "{'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
             )
         }
