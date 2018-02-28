@@ -46,12 +46,12 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findByResourceId",
-                def = "{'resourceId':1 }"
+                name = "findByResourceIdAndLabel",
+                def = "{'resourceId':1 ,'label':1 }"
             ),
             @CompoundIndex(
-                name = "findByResourceIdAndLabelContaining",
-                def = "{'resourceId':1 ,'label':1 }"
+                name = "findByResourceId",
+                def = "{'resourceId':1 }"
             )
         }
 )

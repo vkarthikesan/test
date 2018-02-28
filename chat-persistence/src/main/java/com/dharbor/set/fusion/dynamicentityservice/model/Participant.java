@@ -46,12 +46,36 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'deleted':1 ,'conversationId':1 }"
+                name = "findByConversationIdAndParticipantType",
+                def = "{'participantType':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
-                name = "findByIdNotAndConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'conversationId':1 }"
+                name = "findByConversationIdAndUserId",
+                def = "{'userId':1 ,'conversationId':1 }"
+            ),
+            @CompoundIndex(
+                name = "findByIdNotAndConversationIdAndRemovedOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'id':1 ,'removed':1 ,'conversationId':1 }"
+            ),
+            @CompoundIndex(
+                name = "findByIdAndConversationId",
+                def = "{'conversationId':1 ,'id':1 }"
+            ),
+            @CompoundIndex(
+                name = "findByConversationId",
+                def = "{'conversationId':1 }"
+            ),
+            @CompoundIndex(
+                name = "findByConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'removed':1 ,'conversationId':1 }"
+            ),
+            @CompoundIndex(
+                name = "findByConversationIdOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'conversationId':1 }"
+            ),
+            @CompoundIndex(
+                name = "findByConversationIdAndUserIdAndParticipantType",
+                def = "{'participantType':1 ,'userId':1 ,'conversationId':1 }"
             )
         }
 )
@@ -84,11 +108,11 @@ public @Setter class Participant implements BaseEntity {
         return this.createdDate;
      }
 
- 	private Boolean deleted = false;
+ 	private Boolean removed = false;
 
- 	@JsonProperty("deleted")
-    public Boolean getDeleted (){
-        return this.deleted;
+ 	@JsonProperty("removed")
+    public Boolean getRemoved (){
+        return this.removed;
      }
 
     @NotBlank(message = "conversationId is required")

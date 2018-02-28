@@ -46,7 +46,7 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findOneByConversationIdAndMessageTypeAndSeen",
+                name = "findOneByConversationIdAndMessageTypeAndSeenAndDeleted",
                 def = "{'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
             )
         }
@@ -60,13 +60,11 @@ public @Setter class Message implements BaseEntity {
 
     @Id
     private String id;
-    public void setId(String value) {}
 
     @JsonProperty("id")
     public String getId(){
         return this.id;
     }
-
 
     @Length(max = 255)
  	private String joinRequestId;
