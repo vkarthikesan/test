@@ -36,10 +36,10 @@ import java.util.*;
 public interface MessageRepository extends MongoRepository<Message, String>{
     @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
-        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}, 'sort': {'createdDate': ?1}}"
+        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}, 'sort': {'createdDate': -1}}"
     )
     @Query(
-        value = "{'conversationId':'?0', 'createdDate': {'$lt': ?1}, 'sort': {'createdDate': ?1}}"
+        value = "{'conversationId':'?0', 'createdDate': {'$lt': ?1}, 'sort': {'createdDate': -1}}"
     )
     Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
