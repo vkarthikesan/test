@@ -38,12 +38,10 @@ public interface MessageRepository extends MongoRepository<Message, String>{
     @ApiOperation(
         value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
     )
-    @Query(
-        value = "{'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
-    )
-    Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
+    Page<Message> findByConversationIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
