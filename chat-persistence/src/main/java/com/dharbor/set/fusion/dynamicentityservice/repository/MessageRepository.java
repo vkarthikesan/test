@@ -34,6 +34,7 @@ import java.util.*;
 @Api(tags = "Message:")
 @RepositoryRestResource
 public interface MessageRepository extends MongoRepository<Message, String>{
+    @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
         value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
     )
