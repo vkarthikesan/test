@@ -36,12 +36,14 @@ import java.util.*;
 public interface MessageRepository extends MongoRepository<Message, String>{
     @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
-        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
+        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}, 'sort': {'createdDate': ?1}}"
     )
-    Page<Message> findByConversationIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
+    @Query(
+        value = "{'conversationId':'?0', 'createdDate': {'$lt': ?1}, 'sort': {'createdDate': ?1}}"
+    )
+    Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
