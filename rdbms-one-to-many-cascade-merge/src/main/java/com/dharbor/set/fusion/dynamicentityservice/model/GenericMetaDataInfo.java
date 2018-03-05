@@ -12,24 +12,47 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
+package com.dharbor.set.fusion.dynamicentityservice.model;
 
-package com.dharbor.set.fusion.dynamicentityservice.repository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.boot.actuate.info.Info;
+import org.springframework.boot.actuate.info.InfoContributor;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
+/**
+ * Created by sjanardan on 11-01-2018.
+ */
+@Component
+public class GenericMetaDataInfo implements InfoContributor{
 
-import org.springframework.stereotype.Repository;
-import com.dharbor.set.fusion.dynamicentityservice.model.*;
+    String persistenceBuilderVersion;
+    String dynamicServiceVersion;
+    String publishedDateOfDynamicEntityService;
 
-@Configuration
-public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
+    GenericMetaDataInfo(){
+        this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
+        this.dynamicServiceVersion = "0.0.1-SNAPSHOT";
+        this.publishedDateOfDynamicEntityService = "2018-Mar-05 12:39:38";
+    }
 
     @Override
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-         	config.exposeIdsFor(Employee.class);
-         	config.exposeIdsFor(ProfilePicture.class);
-         	config.exposeIdsFor(Address.class);
-         	config.exposeIdsFor(Salary.class);
+        public void contribute(Info.Builder builder) {
+            builder.withDetail("persistenceBuilderVersion", this.persistenceBuilderVersion);
+            builder.withDetail("dynamicServiceVersion",this.dynamicServiceVersion);
+            builder.withDetail("publishedDateOfDynamicEntityService",this.publishedDateOfDynamicEntityService);
+        }
+
+    public String getPersistenceBuilderVersion(){
+        return persistenceBuilderVersion;
     }
+
+    public String getDynamicServiceVersion(){
+        return dynamicServiceVersion;
+    }
+
+    public String getPublishedDateOfDynamicEntityService(){
+            return publishedDateOfDynamicEntityService;
+        }
+
 }
