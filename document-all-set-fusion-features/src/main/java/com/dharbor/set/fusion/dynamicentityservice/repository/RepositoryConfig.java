@@ -28,7 +28,6 @@ public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
          	config.exposeIdsFor(AllDataTypes.class);
-         	config.exposeIdsFor(SoftDeleteEntity.class);
          	config.exposeIdsFor(PPKInteger.class);
          	config.exposeIdsFor(PPKUuidWithIdField.class);
          	config.exposeIdsFor(PPKLong.class);
