@@ -12,24 +12,34 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
+package com.dharbor.set.fusion.dynamicentityservice.controller;
 
-package com.dharbor.set.fusion.dynamicentityservice.repository;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
-
-import org.springframework.stereotype.Repository;
+import com.dharbor.set.fusion.dynamicentityservice.repository.*;
 import com.dharbor.set.fusion.dynamicentityservice.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-@Configuration
-public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
+@RepositoryRestController
+public class AddressController {
+    private final AddressRepository repository;
 
-    @Override
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-         	config.exposeIdsFor(Employee.class);
-         	config.exposeIdsFor(ProfilePicture.class);
-         	config.exposeIdsFor(Address.class);
-         	config.exposeIdsFor(Salary.class);
+    @Autowired
+    public AddressController(AddressRepository repository){
+        this.repository = repository;
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/addresses/{id}")
+    public ResponseEntity<Object> delete(@PathVariable(required = true) String id){
+        Address entity = repository.findOne(id);
+        if(entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        entity.setDeleted(true);
+        repository.save(entity);
+        return ResponseEntity.noContent().build();
     }
 }
