@@ -179,14 +179,6 @@ public @Setter class Employee implements BaseEntity {
         return this.lengthString;
      }
 
-    @NotNull(message = "department is required")
- 	private Department department;
-
- 	@JsonProperty("department")
-    public Department getDepartment (){
-        return this.department;
-     }
-
     @Length(max = 10000)
  	private String largeString;
 

@@ -15,6 +15,6 @@ photocopying, recording, or otherwise, without written permission of Digital Har
 
 package com.dharbor.set.fusion.dynamicentityservice.enums;
 
-public enum Department {
-    OWNER,EMPLOYEE,CONTRACTOR;
+public enum DummyEnum {
+    DUMMY;
 }
