@@ -12,47 +12,45 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
-package com.dharbor.set.fusion.dynamicentityservice.model;
 
+package com.dharbor.set.fusion.dynamicentityservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.boot.actuate.info.Info;
-import org.springframework.boot.actuate.info.InfoContributor;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
+import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.beans.factory.annotation.Value;
 
-/**
- * Created by sjanardan on 11-01-2018.
- */
-@Component
-public class GenericMetaDataInfo implements InfoContributor{
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
 
-    String persistenceBuilderVersion;
-    String dynamicServiceVersion;
-    String publishedDateOfDynamicEntityService;
+@EnableDiscoveryClient
+@SpringBootApplication
+@EnableMongoAuditing
+public class DynamicPersistenceApplication {
 
-    GenericMetaDataInfo(){
-        this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
-        this.dynamicServiceVersion = "0.0.1";
-        this.publishedDateOfDynamicEntityService = "2018-Mar-21 06:56:00";
+	public static void main(String[] args) {
+		SpringApplication.run(DynamicPersistenceApplication.class, args);
+	}
+
+	@Bean
+    public ValidatingMongoEventListener validatingMongoEventListener() {
+        return new ValidatingMongoEventListener(validator());
     }
 
-    @Override
-        public void contribute(Info.Builder builder) {
-            builder.withDetail("persistenceBuilderVersion", this.persistenceBuilderVersion);
-            builder.withDetail("dynamicServiceVersion",this.dynamicServiceVersion);
-            builder.withDetail("publishedDateOfDynamicEntityService",this.publishedDateOfDynamicEntityService);
-        }
-
-    public String getPersistenceBuilderVersion(){
-        return persistenceBuilderVersion;
+    @Bean
+    public LocalValidatorFactoryBean validator() {
+        return new LocalValidatorFactoryBean();
     }
 
-    public String getDynamicServiceVersion(){
-        return dynamicServiceVersion;
+    @Value("${application.default.timezone:UTC}")
+    private String applicationTimezone;
+
+    @PostConstruct
+    void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone(applicationTimezone));
     }
-
-    public String getPublishedDateOfDynamicEntityService(){
-            return publishedDateOfDynamicEntityService;
-        }
-
 }

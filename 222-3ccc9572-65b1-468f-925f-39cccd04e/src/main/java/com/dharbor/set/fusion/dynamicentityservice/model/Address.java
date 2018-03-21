@@ -12,47 +12,67 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
+
 package com.dharbor.set.fusion.dynamicentityservice.model;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.boot.actuate.info.Info;
-import org.springframework.boot.actuate.info.InfoContributor;
+import com.dharbor.set.fusion.dynamicentityservice.enums.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created by sjanardan on 11-01-2018.
- */
-@Component
-public class GenericMetaDataInfo implements InfoContributor{
+import java.io.Serializable;
 
-    String persistenceBuilderVersion;
-    String dynamicServiceVersion;
-    String publishedDateOfDynamicEntityService;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-    GenericMetaDataInfo(){
-        this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
-        this.dynamicServiceVersion = "0.0.1";
-        this.publishedDateOfDynamicEntityService = "2018-Mar-21 06:56:00";
+import lombok.Data;
+
+@Document
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode
+public @Setter class Address implements BaseEntity {
+
+    Address () {}
+
+    @Id
+    private String id;
+
+    @JsonProperty("id")
+    public String getId(){
+        return this.id;
     }
 
-    @Override
-        public void contribute(Info.Builder builder) {
-            builder.withDetail("persistenceBuilderVersion", this.persistenceBuilderVersion);
-            builder.withDetail("dynamicServiceVersion",this.dynamicServiceVersion);
-            builder.withDetail("publishedDateOfDynamicEntityService",this.publishedDateOfDynamicEntityService);
-        }
+ 	private Boolean deleted = false;
 
-    public String getPersistenceBuilderVersion(){
-        return persistenceBuilderVersion;
-    }
+ 	@JsonProperty("deleted")
+    public Boolean getDeleted (){
+        return this.deleted;
+     }
 
-    public String getDynamicServiceVersion(){
-        return dynamicServiceVersion;
-    }
+    @Length(max = 255)
+ 	private String place;
 
-    public String getPublishedDateOfDynamicEntityService(){
-            return publishedDateOfDynamicEntityService;
-        }
+ 	@JsonProperty("place")
+    public String getPlace (){
+        return this.place;
+     }
+
+
 
 }
