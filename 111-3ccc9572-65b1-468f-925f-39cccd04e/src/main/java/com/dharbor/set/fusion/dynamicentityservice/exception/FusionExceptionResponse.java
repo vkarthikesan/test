@@ -12,47 +12,21 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
-package com.dharbor.set.fusion.dynamicentityservice.model;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.boot.actuate.info.Info;
-import org.springframework.boot.actuate.info.InfoContributor;
+package com.dharbor.set.fusion.dynamicentityservice.exception;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
- * Created by sjanardan on 11-01-2018.
+ * Created by vkarthikesan on 3/1/2017.
+ *
+ * Transfer object for exception response
  */
-@Component
-public class GenericMetaDataInfo implements InfoContributor{
+@Data
+@AllArgsConstructor
+public class FusionExceptionResponse {
 
-    String persistenceBuilderVersion;
-    String dynamicServiceVersion;
-    String publishedDateOfDynamicEntityService;
-
-    GenericMetaDataInfo(){
-        this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
-        this.dynamicServiceVersion = "0.0.1";
-        this.publishedDateOfDynamicEntityService = "2018-Mar-21 06:37:03";
-    }
-
-    @Override
-        public void contribute(Info.Builder builder) {
-            builder.withDetail("persistenceBuilderVersion", this.persistenceBuilderVersion);
-            builder.withDetail("dynamicServiceVersion",this.dynamicServiceVersion);
-            builder.withDetail("publishedDateOfDynamicEntityService",this.publishedDateOfDynamicEntityService);
-        }
-
-    public String getPersistenceBuilderVersion(){
-        return persistenceBuilderVersion;
-    }
-
-    public String getDynamicServiceVersion(){
-        return dynamicServiceVersion;
-    }
-
-    public String getPublishedDateOfDynamicEntityService(){
-            return publishedDateOfDynamicEntityService;
-        }
-
+    private int status;
+    private String reason;
 }

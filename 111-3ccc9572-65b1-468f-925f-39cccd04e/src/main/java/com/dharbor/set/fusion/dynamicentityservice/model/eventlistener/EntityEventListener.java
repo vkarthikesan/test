@@ -12,47 +12,26 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
-package com.dharbor.set.fusion.dynamicentityservice.model;
 
-import org.springframework.context.annotation.Bean;
+package com.dharbor.set.fusion.dynamicentityservice.model.eventlistener;
+
+import com.dharbor.set.fusion.dynamicentityservice.model.BaseEntity;
+import org.springframework.data.rest.core.event.AbstractRepositoryEventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.boot.actuate.info.Info;
-import org.springframework.boot.actuate.info.InfoContributor;
 
 /**
- * Created by sjanardan on 11-01-2018.
+ * Created by vkarthikesan on 8/8/2017.
  */
 @Component
-public class GenericMetaDataInfo implements InfoContributor{
+public class EntityEventListener<T extends BaseEntity> extends AbstractRepositoryEventListener<T> {
 
-    String persistenceBuilderVersion;
-    String dynamicServiceVersion;
-    String publishedDateOfDynamicEntityService;
-
-    GenericMetaDataInfo(){
-        this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
-        this.dynamicServiceVersion = "0.0.1";
-        this.publishedDateOfDynamicEntityService = "2018-Mar-21 06:37:03";
+    @Override
+    protected void onBeforeCreate(T entity) {
+        entity.onBeforeCreate();
     }
 
     @Override
-        public void contribute(Info.Builder builder) {
-            builder.withDetail("persistenceBuilderVersion", this.persistenceBuilderVersion);
-            builder.withDetail("dynamicServiceVersion",this.dynamicServiceVersion);
-            builder.withDetail("publishedDateOfDynamicEntityService",this.publishedDateOfDynamicEntityService);
-        }
-
-    public String getPersistenceBuilderVersion(){
-        return persistenceBuilderVersion;
+    protected void onBeforeSave(T entity) {
+        entity.onBeforeSave();
     }
-
-    public String getDynamicServiceVersion(){
-        return dynamicServiceVersion;
-    }
-
-    public String getPublishedDateOfDynamicEntityService(){
-            return publishedDateOfDynamicEntityService;
-        }
-
 }
