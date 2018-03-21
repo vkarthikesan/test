@@ -12,47 +12,40 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
-package com.dharbor.set.fusion.dynamicentityservice.model;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.boot.actuate.info.Info;
-import org.springframework.boot.actuate.info.InfoContributor;
+package com.dharbor.set.fusion.dynamicentityservice.repository;
 
-/**
- * Created by sjanardan on 11-01-2018.
- */
-@Component
-public class GenericMetaDataInfo implements InfoContributor{
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.dharbor.set.fusion.dynamicentityservice.model.Employee;
+import com.dharbor.set.fusion.dynamicentityservice.enums.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
-    String persistenceBuilderVersion;
-    String dynamicServiceVersion;
-    String publishedDateOfDynamicEntityService;
+import java.util.*;
 
-    GenericMetaDataInfo(){
-        this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
-        this.dynamicServiceVersion = "0.0.1";
-        this.publishedDateOfDynamicEntityService = "2018-Mar-21 09:45:04";
-    }
+@Api(tags = "Employee:")
+@RepositoryRestResource
+public interface EmployeeRepository extends MongoRepository<Employee, String>{
+    @ApiOperation(
+        value = "findById"
+    )
+    Employee findById(
+             @Param("id") @RequestParam("id") String id
+    );
 
-    @Override
-        public void contribute(Info.Builder builder) {
-            builder.withDetail("persistenceBuilderVersion", this.persistenceBuilderVersion);
-            builder.withDetail("dynamicServiceVersion",this.dynamicServiceVersion);
-            builder.withDetail("publishedDateOfDynamicEntityService",this.publishedDateOfDynamicEntityService);
-        }
-
-    public String getPersistenceBuilderVersion(){
-        return persistenceBuilderVersion;
-    }
-
-    public String getDynamicServiceVersion(){
-        return dynamicServiceVersion;
-    }
-
-    public String getPublishedDateOfDynamicEntityService(){
-            return publishedDateOfDynamicEntityService;
-        }
+    @ApiOperation(
+        value = "findByLargeString"
+    )
+    Employee findByLargeString(
+             @Param("largeString") @RequestParam("largeString") String largeString
+    );
 
 }
