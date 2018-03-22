@@ -43,14 +43,6 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-@CompoundIndexes(
-        value = {
-            @CompoundIndex(
-                name = "findOneByConversationIdAndMessageTypeAndSeen",
-                def = "{'deleted':1 ,'messageType':1 ,'conversationId':1 ,'seen':1 }"
-            )
-        }
-)
 @Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
@@ -60,11 +52,13 @@ public @Setter class Message implements BaseEntity {
 
     @Id
     private String id;
+    public void setId(String value) {}
 
     @JsonProperty("id")
     public String getId(){
         return this.id;
     }
+
 
     @Length(max = 255)
  	private String joinRequestId;

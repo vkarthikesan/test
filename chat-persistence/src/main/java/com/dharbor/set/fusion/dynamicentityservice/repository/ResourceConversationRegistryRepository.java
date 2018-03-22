@@ -34,12 +34,22 @@ import java.util.*;
 @Api(tags = "ResourceConversationRegistry:")
 @RepositoryRestResource
 public interface ResourceConversationRegistryRepository extends MongoRepository<ResourceConversationRegistry, String>{
+    @RestResource(path="findByUserResource")
     @ApiOperation(
-        value = "findTop1ByUserIdAndResourceId"
+        value = "findOneByUserIdAndResourceId"
     )
-    ResourceConversationRegistry findTop1ByUserIdAndResourceId(
+    ResourceConversationRegistry findOneByUserIdAndResourceId(
              @Param("userId") @RequestParam("userId") String userId,
              @Param("resourceId") @RequestParam("resourceId") String resourceId
+    );
+
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {}"
+    )
+    @Query(
+        value = "{}"
+    )
+    List<ResourceConversationRegistry> findAllResourceConversationRegistry(
     );
 
 }

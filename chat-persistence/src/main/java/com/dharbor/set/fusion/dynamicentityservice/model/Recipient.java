@@ -100,8 +100,7 @@ public @Setter class Recipient implements BaseEntity {
         return this.messageId;
      }
 
-    @NotNull(message = "recipientState is required")
- 	private RecipientState recipientState;
+ 	private RecipientState recipientState = RecipientState.UNREAD;
 
  	@JsonProperty("recipientState")
     public RecipientState getRecipientState (){

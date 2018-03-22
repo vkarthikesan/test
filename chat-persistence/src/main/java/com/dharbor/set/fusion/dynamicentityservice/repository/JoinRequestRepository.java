@@ -41,4 +41,13 @@ public interface JoinRequestRepository extends MongoRepository<JoinRequest, Stri
              @Param("conversationId") @RequestParam("conversationId") String conversationId
     );
 
+    @ApiOperation(
+        value = "query-selectAll", notes = "Query: {}"
+    )
+    @Query(
+        value = "{}"
+    )
+    List<JoinRequest> findAllJoinRequests(
+    );
+
 }

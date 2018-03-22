@@ -12,9 +12,34 @@ damages, including but not limited to special, incidental, consequential, or oth
 Copyright © 2002-2018, Digital Harbor, Inc. All rights reserved. No part of this publication, including its interior design and\
 icons, may be reproduced, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical,
 photocopying, recording, or otherwise, without written permission of Digital Harbor.*/
+package com.dharbor.set.fusion.dynamicentityservice.controller;
 
-package com.dharbor.set.fusion.dynamicentityservice.enums;
+import com.dharbor.set.fusion.dynamicentityservice.repository.*;
+import com.dharbor.set.fusion.dynamicentityservice.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-public enum JoinState {
-    ACCEPTED,SENT,REJECTED;
+@RepositoryRestController
+public class ParticipantController {
+    private final ParticipantRepository repository;
+
+    @Autowired
+    public ParticipantController(ParticipantRepository repository){
+        this.repository = repository;
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/participants/{id}")
+    public ResponseEntity<Object> delete(@PathVariable(required = true) String id){
+        Participant entity = repository.findOne(id);
+        if(entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        entity.setDeleted(true);
+        repository.save(entity);
+        return ResponseEntity.noContent().build();
+    }
 }

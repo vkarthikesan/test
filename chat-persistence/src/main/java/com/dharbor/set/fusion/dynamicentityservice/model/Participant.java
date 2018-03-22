@@ -46,36 +46,12 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findByConversationIdAndParticipantType",
-                def = "{'participantType':1 ,'conversationId':1 }"
+                name = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'deleted':1 ,'conversationId':1 }"
             ),
             @CompoundIndex(
-                name = "findByConversationIdAndUserId",
-                def = "{'userId':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByIdNotAndConversationIdAndRemovedOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'id':1 ,'removed':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByIdAndConversationId",
-                def = "{'conversationId':1 ,'id':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationId",
-                def = "{'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndRemovedAndJoinedOnGreaterThanOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'removed':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdOrderByJoinedOnAsc",
-                def = "{'joinedOn':1 ,'conversationId':1 }"
-            ),
-            @CompoundIndex(
-                name = "findByConversationIdAndUserIdAndParticipantType",
-                def = "{'participantType':1 ,'userId':1 ,'conversationId':1 }"
+                name = "findByIdNotAndConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc",
+                def = "{'joinedOn':1 ,'deleted':1 ,'id':1 ,'conversationId':1 }"
             )
         }
 )
@@ -88,11 +64,13 @@ public @Setter class Participant implements BaseEntity {
 
     @Id
     private String id;
+    public void setId(String value) {}
 
     @JsonProperty("id")
     public String getId(){
         return this.id;
     }
+
 
  	private Long joinedOn = 0L;
 
@@ -108,11 +86,11 @@ public @Setter class Participant implements BaseEntity {
         return this.createdDate;
      }
 
- 	private Boolean removed = false;
+ 	private Boolean deleted = false;
 
- 	@JsonProperty("removed")
-    public Boolean getRemoved (){
-        return this.removed;
+ 	@JsonProperty("deleted")
+    public Boolean getDeleted (){
+        return this.deleted;
      }
 
     @NotBlank(message = "conversationId is required")

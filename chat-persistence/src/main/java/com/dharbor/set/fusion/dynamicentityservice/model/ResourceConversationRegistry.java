@@ -46,7 +46,7 @@ import lombok.Data;
 @CompoundIndexes(
         value = {
             @CompoundIndex(
-                name = "findTop1ByUserIdAndResourceId",
+                name = "findOneByUserIdAndResourceId",
                 def = "{'userId':1 ,'resourceId':1 }"
             )
         }
