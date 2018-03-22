@@ -7,7 +7,7 @@
 #
 FROM set-nexus.digitalharbor.us:18444/set-fusion/dh-java-1.8
 VOLUME /tmp
-ADD target/explanations-persistence-0.0.1-SNAPSHOT.jar /
+ADD explanations-persistence-0.0.1-SNAPSHOT.jar /
 RUN sh -c 'touch /explanations-persistence-0.0.1-SNAPSHOT.jar'
 ENV JAVA_OPTS=""
 CMD [ "sh", "-c", "java $JAVA_OPTS -jar /explanations-persistence-0.0.1-SNAPSHOT.jar" ]

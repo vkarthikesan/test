@@ -33,7 +33,7 @@ public class GenericMetaDataInfo implements InfoContributor{
     GenericMetaDataInfo(){
         this.persistenceBuilderVersion = "2.0.0-SNAPSHOT";
         this.dynamicServiceVersion = "0.0.1-SNAPSHOT";
-        this.publishedDateOfDynamicEntityService = "2018-Mar-22 20:39:31";
+        this.publishedDateOfDynamicEntityService = "2018-Mar-22 22:08:01";
     }
 
     @Override
