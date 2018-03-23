@@ -64,13 +64,11 @@ public @Setter class Participant implements BaseEntity {
 
     @Id
     private String id;
-    public void setId(String value) {}
 
     @JsonProperty("id")
     public String getId(){
         return this.id;
     }
-
 
  	private Long joinedOn = 0L;
 

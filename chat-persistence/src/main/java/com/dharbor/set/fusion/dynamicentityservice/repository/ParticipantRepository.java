@@ -80,7 +80,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationType")
+    @RestResource(path="findByConversationIdAndParticipantType")
     @ApiOperation(
         value = "query-conversationType", notes = "Query: {'conversationId': '?0', 'participantType': '?1'}"
     )
@@ -92,7 +92,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("participantType") @RequestParam("participantType") ParticipantType participantType
     );
 
-    @RestResource(path="findByConversationUser")
+    @RestResource(path="findByConversationIdAndUserId")
     @ApiOperation(
         value = "query-conversationUser", notes = "Query: {'conversationId': '?0', 'userId': '?1'}"
     )
@@ -111,16 +111,6 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
         value = "{}"
     )
     List<Participant> findAllParticipant(
-    );
-
-    @ApiOperation(
-        value = "query-DeleteAllDB", notes = "Query: {'id': ?0}"
-    )
-    @Query(
-        value = "{'id': ?0}", delete = true
-    )
-    Integer deleteParticipantById(
-             @Param("id") @RequestParam("id") String id
     );
 
     @Override

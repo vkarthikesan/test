@@ -36,36 +36,32 @@ import java.util.*;
 public interface MessageRepository extends MongoRepository<Message, String>{
     @RestResource(path="findByConversationIdCreatedDateLt")
     @ApiOperation(
-        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': '?1'}}"
+        value = "query-conversationDateLt"
     )
-    @Query(
-        value = "{'conversationId':'?0', 'createdDate': {'$lt': '?1'}}"
-    )
-    Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
+    Page<Message> findByConversationIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
     @RestResource(path="findByConversationIdCreatedDateGt")
     @ApiOperation(
-        value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': '?1'}}"
+        value = "query-conversationDateGt"
     )
-    @Query(
-        value = "{'conversationId':'?0', 'createdDate': {'$gt': '?1'}}"
-    )
-    Page<Message> findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc(
+    Page<Message> findByConversationIdAndCreatedDateGreaterThanAndDeletedOrderByCreatedDateAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
+             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationSeenTypeDateLess")
+    @RestResource(path="findByConversationIdSeeMsgTypeAndCreatedDateDesc")
     @ApiOperation(
-        value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': '?3'}}"
+        value = "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
     )
     @Query(
-        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': '?3'}}"
+        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2', createdDate': {'$lt': ?3}}"
     )
     Page<Message> findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
@@ -75,17 +71,15 @@ public interface MessageRepository extends MongoRepository<Message, String>{
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationSeenType")
+    @RestResource(path="findByConversationIdSeenAndMsgType")
     @ApiOperation(
-        value = "findTop1ByConversationIdAndMessageTypeAndSeen", notes = "Query: {'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
+        value = "findOneByConversationIdAndMessageTypeAndSeen"
     )
-    @Query(
-        value = "{'conversationId':'?0', 'seen': '?1', 'messageType': '?2'}"
-    )
-    Message findTop1ByConversationIdAndMessageTypeAndSeen(
+    Message findOneByConversationIdAndMessageTypeAndSeenAndDeleted(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
+             @Param("messageType") @RequestParam("messageType") MessageType messageType,
              @Param("seen") @RequestParam("seen") Boolean seen,
-             @Param("messageType") @RequestParam("messageType") MessageType messageType
+             @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
     @ApiOperation(

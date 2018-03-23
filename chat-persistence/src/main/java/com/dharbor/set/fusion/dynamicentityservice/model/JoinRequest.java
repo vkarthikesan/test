@@ -66,7 +66,8 @@ public @Setter class JoinRequest implements BaseEntity {
         return this.id;
     }
 
- 	private JoinRequestType joinRequestType = JoinRequestType.REQUEST;
+    @NotNull(message = "joinRequestType is required")
+ 	private JoinRequestType joinRequestType;
 
  	@JsonProperty("joinRequestType")
     public JoinRequestType getJoinRequestType (){
@@ -89,7 +90,8 @@ public @Setter class JoinRequest implements BaseEntity {
         return this.createdDate;
      }
 
- 	private JoinState joinState = JoinState.SENT;
+    @NotNull(message = "joinState is required")
+ 	private JoinState joinState;
 
  	@JsonProperty("joinState")
     public JoinState getJoinState (){
