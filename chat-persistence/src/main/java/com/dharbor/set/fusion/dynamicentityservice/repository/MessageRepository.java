@@ -34,25 +34,29 @@ import java.util.*;
 @Api(tags = "Message:")
 @RepositoryRestResource
 public interface MessageRepository extends MongoRepository<Message, String>{
-    @RestResource(path="findByConversationIdCreatedDateLt")
+    @RestResource(path="findByConversationIdCreatedDateDesc")
     @ApiOperation(
-        value = "query-conversationDateLt"
+        value = "query-conversationDateLt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
     )
-    Page<Message> findByConversationIdAndCreatedDateLessThanAndDeletedOrderByCreatedDateDesc(
+    @Query(
+        value = "{'conversationId':'?0', 'createdDate': {'$lt': ?1}}"
+    )
+    Page<Message> findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationIdCreatedDateGt")
+    @RestResource(path="findByConversationIdCreatedDateAsc")
     @ApiOperation(
-        value = "query-conversationDateGt"
+        value = "query-conversationDateGt", notes = "Query: {'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
     )
-    Page<Message> findByConversationIdAndCreatedDateGreaterThanAndDeletedOrderByCreatedDateAsc(
+    @Query(
+        value = "{'conversationId':'?0', 'createdDate': {'$gt': ?1}}"
+    )
+    Page<Message> findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc(
              @Param("conversationId") @RequestParam("conversationId") String conversationId,
              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Param("createdDate") @RequestParam("createdDate") Date createdDate,
-             @Param("deleted") @RequestParam("deleted") Boolean deleted,
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 

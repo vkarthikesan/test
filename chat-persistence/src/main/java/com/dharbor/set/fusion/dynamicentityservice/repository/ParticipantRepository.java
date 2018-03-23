@@ -34,7 +34,7 @@ import java.util.*;
 @Api(tags = "Participant:")
 @RepositoryRestResource
 public interface ParticipantRepository extends MongoRepository<Participant, String>{
-    @RestResource(path="findByConversationJoinedOn")
+    @RestResource(path="findByConversationIdJoinedOnAsc")
     @ApiOperation(
         value = "query-conversation", notes = "Query: {'conversationId': '?0'}"
     )
@@ -46,7 +46,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByIdConversationDeleted")
+    @RestResource(path="findByIdConversationIdDeleted")
     @ApiOperation(
         value = "findByIdNotAndConversationIdOrderByJoinedOnAsc"
     )
@@ -57,7 +57,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByConversationDeletedJoinedOn")
+    @RestResource(path="findByConversationIdDeletedAndJoinedOnAsc")
     @ApiOperation(
         value = "findByConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
@@ -68,7 +68,7 @@ public interface ParticipantRepository extends MongoRepository<Participant, Stri
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findByIdConversationDeletedJoinedOn")
+    @RestResource(path="findByIdConversationIdDeletedAndJoinedOnAsc")
     @ApiOperation(
         value = "findByIdNotAndConversationIdAndJoinedOnGreaterThanOrderByJoinedOnAsc"
     )
