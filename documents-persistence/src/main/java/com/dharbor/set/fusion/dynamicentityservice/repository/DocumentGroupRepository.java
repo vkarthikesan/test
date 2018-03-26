@@ -36,7 +36,7 @@ import java.util.*;
 @Api(tags = "DocumentGroup:")
 @RepositoryRestResource
 public interface DocumentGroupRepository extends JpaRepository<DocumentGroup, Long>{
-    @RestResource(path="findGroupByUserId")
+    @RestResource(path="findByUserIdCreatedDateLtAndIsVisible")
     @ApiOperation(
         value = "findByUserIdAndDocumentCreatedDateLessThanAndDocumentIsVisibleOrderByDocumentCreatedDateDesc"
     )
@@ -48,7 +48,7 @@ public interface DocumentGroupRepository extends JpaRepository<DocumentGroup, Lo
              @Param("pageable") @RequestParam("pageable") Pageable pageable
     );
 
-    @RestResource(path="findGroupByUserIdPage")
+    @RestResource(path="findByUserIdAndIsVisiblePage")
     @ApiOperation(
         value = "findByUserIdAndDocumentIsVisibleOrderByDocumentCreatedDateDesc"
     )

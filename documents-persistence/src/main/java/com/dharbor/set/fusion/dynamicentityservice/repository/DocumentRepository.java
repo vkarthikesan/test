@@ -36,7 +36,7 @@ import java.util.*;
 @Api(tags = "Document:")
 @RepositoryRestResource
 public interface DocumentRepository extends JpaRepository<Document, Long>{
-    @RestResource(path="findByUserIdAndTitleAndDeleted")
+    @RestResource(path="findByUserIdCreatedDateLtTitleAndDeleted")
     @ApiOperation(
         value = "findByUserIdAndCreatedDateLessThanAndDocumentMetadataTitleContainingOrderByCreatedDateDesc"
     )

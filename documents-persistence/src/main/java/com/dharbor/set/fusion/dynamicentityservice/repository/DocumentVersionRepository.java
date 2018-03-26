@@ -45,7 +45,7 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
              @Param("deleted") @RequestParam("deleted") Boolean deleted
     );
 
-    @RestResource(path="findByDocumentDmsVersion")
+    @RestResource(path="findByDocumentIdDmsIdAndVersionId")
     @ApiOperation(
         value = "query-documentDmsVersion", notes = "Query: SELECT dv FROM DocumentVersion dv WHERE dv.documentId = :documentId AND dv.dmsId = :dmsId AND dv.versionId = :versionId"
     )
@@ -59,7 +59,7 @@ public interface DocumentVersionRepository extends JpaRepository<DocumentVersion
              @Param("versionId") @RequestParam("versionId") String versionId
     );
 
-    @RestResource(path="findByDocxIdAndDateAndDeleted")
+    @RestResource(path="findByDocxIdCreatedDateAndDeleted")
     @ApiOperation(
         value = "findByDocumentIdAndCreatedDateLessThanOrderByCreatedDateDesc"
     )
